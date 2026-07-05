@@ -24,17 +24,17 @@ jobs:
 
       - name: PHP syntax check (php -l)
         run: |
-          find src/app/code/Truper src/app/design/frontend/Truper -name '*.php' -o -name '*.phtml' \
+          find src/app/code/EdicionesMox src/app/design/frontend/EdicionesMox -name '*.php' -o -name '*.phtml' \
             | xargs -n1 -I{} php -l {}
 
       - name: Well-formed XML check
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq libxml2-utils
-          find src/app/code/Truper src/app/design/frontend/Truper -name '*.xml' \
+          find src/app/code/EdicionesMox src/app/design/frontend/EdicionesMox -name '*.xml' \
             | xargs -n1 xmllint --noout
 
       # warning-severity=0: el ruleset Magento2 genera ~70 warnings de estilo CSS/LESS
-      # preexistentes (comillas, mayúsculas de color) en el tema Truper. El gate falla
+      # preexistentes (comillas, mayúsculas de color) en el tema Ediciones Mox. El gate falla
       # solo por errores reales; subir la severidad de warnings queda como tarea de
       # limpieza incremental, no como bloqueo del primer CI.
       - name: Magento Coding Standard (phpcs)

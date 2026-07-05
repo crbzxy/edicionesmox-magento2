@@ -30,7 +30,7 @@ ps:
 cache-flush:
 	docker compose exec php-fpm bin/magento cache:flush
 
-# Despliega estáticos del tema Truper + corrige permisos (tras cambios en LESS/CSS)
+# Despliega estáticos del tema Ediciones Mox + corrige permisos (tras cambios en LESS/CSS)
 #
 # En developer mode, setup:static-content:deploy NO recompila los .css ya
 # materializados: styles-m.css/styles-l.css se generan una sola vez, al vuelo,
@@ -39,8 +39,8 @@ cache-flush:
 # borra los .css compilados del tema antes de redeployar, para forzar que la
 # próxima petición los recompile con los cambios de LESS.
 theme-deploy:
-	docker compose exec php-fpm bash -c 'rm -f pub/static/frontend/Truper/default/*/css/styles-*.css pub/static/frontend/Truper/default/*/css/critical.css'
-	docker compose exec php-fpm bin/magento setup:static-content:deploy es_MX -f --theme Truper/default --jobs=4
+	docker compose exec php-fpm bash -c 'rm -f pub/static/frontend/EdicionesMox/default/*/css/styles-*.css pub/static/frontend/EdicionesMox/default/*/css/critical.css'
+	docker compose exec php-fpm bin/magento setup:static-content:deploy es_MX -f --theme EdicionesMox/default --jobs=4
 	docker compose exec php-fpm chown -R www-data:www-data pub/static
 	docker compose exec php-fpm bin/magento cache:flush
 
@@ -58,8 +58,8 @@ perf-setup:
 upgrade:
 	docker compose exec php-fpm bin/magento setup:upgrade
 	docker compose exec php-fpm bin/magento setup:di:compile
-	docker compose exec php-fpm bash -c 'rm -f pub/static/frontend/Truper/default/*/css/styles-*.css pub/static/frontend/Truper/default/*/css/critical.css'
-	docker compose exec php-fpm bin/magento setup:static-content:deploy es_MX en_US -f --theme Truper/default --jobs=4
+	docker compose exec php-fpm bash -c 'rm -f pub/static/frontend/EdicionesMox/default/*/css/styles-*.css pub/static/frontend/EdicionesMox/default/*/css/critical.css'
+	docker compose exec php-fpm bin/magento setup:static-content:deploy es_MX en_US -f --theme EdicionesMox/default --jobs=4
 	docker compose exec php-fpm bin/magento indexer:reindex
 	docker compose exec php-fpm chown -R www-data:www-data var generated pub/static
 	docker compose exec php-fpm bin/magento cache:flush
@@ -75,10 +75,10 @@ perf-check:
 		echo "=== Magento perf-check ==="; \
 		bin/magento deploy:mode:show; \
 		test -f generated/code/Magento/Framework/App/Http/Interceptor.php && echo "generated: OK" || echo "generated: FAIL — ejecuta: make compile"; \
-		STATIC=$$(find pub/static/frontend/Truper/default/es_MX -type f 2>/dev/null | wc -l); \
-		echo "static files (Truper/default/es_MX): $$STATIC"; \
+		STATIC=$$(find pub/static/frontend/EdicionesMox/default/es_MX -type f 2>/dev/null | wc -l); \
+		echo "static files (EdicionesMox/default/es_MX): $$STATIC"; \
 		[ "$$STATIC" -ge 100 ] 2>/dev/null && echo "static: OK" || echo "static: FAIL — ejecuta: make theme-deploy (o make upgrade)"; \
-		JS=$$(curl -s -o /dev/null -w "%{time_total}" http://nginx/static/frontend/Truper/default/es_MX/requirejs/require.js); \
+		JS=$$(curl -s -o /dev/null -w "%{time_total}" http://nginx/static/frontend/EdicionesMox/default/es_MX/requirejs/require.js); \
 		echo "js sample time: $${JS}s (objetivo: < 0.05s)"; \
 	'
 
@@ -86,7 +86,7 @@ perf-check:
 # tras un upgrade de Magento/Luma. Correr después de `composer update`.
 diff-luma-base:
 	docker compose exec php-fpm diff \
-		app/design/frontend/Truper/default/web/css/source/_luma-base.less \
+		app/design/frontend/EdicionesMox/default/web/css/source/_luma-base.less \
 		vendor/magento/theme-frontend-luma/web/css/source/_theme.less \
 		&& echo "diff-luma-base: sin cambios" \
 		|| echo "diff-luma-base: _luma-base.less desincronizado — revisar diff arriba y actualizar"

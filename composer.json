@@ -1,6 +1,6 @@
 {
-    "name": "truper/magento2-boilerplate-tooling",
-    "description": "Dev-only tooling (coding standard) for the custom Truper code in src/app/code and src/app/design. Not the Magento project itself — that lives in src/composer.json.",
+    "name": "edicionesmox/magento2-boilerplate-tooling",
+    "description": "Dev-only tooling (coding standard) for the custom EdicionesMox code in src/app/code and src/app/design. Not the Magento project itself — that lives in src/composer.json.",
     "type": "project",
     "license": "proprietary",
     "require-dev": {

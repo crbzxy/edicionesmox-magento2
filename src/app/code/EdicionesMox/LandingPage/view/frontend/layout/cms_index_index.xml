@@ -5,7 +5,7 @@
         <referenceContainer name="content">
             <block class="Magento\Framework\View\Element\Template"
                    name="landingpage.home.link"
-                   template="Truper_LandingPage::page/home-link.phtml"
+                   template="EdicionesMox_LandingPage::page/home-link.phtml"
                    before="-"/>
         </referenceContainer>
     </body>

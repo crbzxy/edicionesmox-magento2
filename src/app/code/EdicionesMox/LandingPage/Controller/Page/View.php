@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Truper\LandingPage\Controller\Page;
+namespace EdicionesMox\LandingPage\Controller\Page;
 
 use Magento\Framework\App\Action\HttpGetActionInterface;
 use Magento\Framework\View\Result\PageFactory;

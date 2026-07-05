@@ -52,7 +52,7 @@ Sin esto, `composer create-project` y cualquier llamada a APIs externas
 fallarán con errores de certificado dentro del contenedor — el mismo síntoma
 que ya viste con Cursor y Claude Code fuera de Docker.
 
-Si no estás en la red de Truper (por ejemplo, trabajando desde casa), deja
+Si no estás en la red de Ediciones Mox (por ejemplo, trabajando desde casa), deja
 la carpeta vacía y este paso se ignora solo.
 
 ## 2. Levantar el entorno
@@ -174,7 +174,7 @@ make logs          # logs de nginx + php-fpm
 make restart       # reinicia todos los contenedores
 make down          # apaga todo (los datos persisten en volúmenes Docker)
 make cache-flush   # bin/magento cache:flush
-make theme-deploy  # redeploya estáticos de Truper/default (usar tras editar LESS/CSS)
+make theme-deploy  # redeploya estáticos de EdicionesMox/default (usar tras editar LESS/CSS)
 make upgrade       # script único: setup:upgrade + di:compile + static-deploy + reindex + chown
 make perf-check    # diagnóstico rápido de rendimiento
 make perf-setup    # despliega estáticos + compila DI (tras borrar volúmenes)
@@ -204,7 +204,7 @@ desplegados (nginx sirve JS/CSS directo, sin pasar por `static.php`).
 make perf-check
 ```
 
-Objetivo: `static files (Truper/default/es_MX)` > 1000, `js sample time` < 0.05 s.
+Objetivo: `static files (EdicionesMox/default/es_MX)` > 1000, `js sample time` < 0.05 s.
 
 > **Nota developer mode**: `styles-m.css`/`styles-l.css` se compilan al vuelo la
 > primera vez que se piden (vía `static.php`) y luego nginx los sirve tal cual
@@ -223,7 +223,7 @@ trae `magento/magento-coding-standard`. Antes de un PR:
 
 ```bash
 composer install                              # una vez, instala phpcs + el standard
-vendor/bin/phpcs --standard=phpcs.xml.dist     # solo escanea código Truper, no core/vendor
+vendor/bin/phpcs --standard=phpcs.xml.dist     # solo escanea código EdicionesMox, no core/vendor
 ```
 
 CI (`.github/workflows/ci.yml`) corre esto mismo en cada push/PR, más `php -l`

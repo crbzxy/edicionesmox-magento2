@@ -6,7 +6,7 @@
         <referenceContainer name="content">
             <block class="Magento\Framework\View\Element\Template"
                    name="landingpage.view"
-                   template="Truper_LandingPage::page/view.phtml"/>
+                   template="EdicionesMox_LandingPage::page/view.phtml"/>
         </referenceContainer>
     </body>
 </page>

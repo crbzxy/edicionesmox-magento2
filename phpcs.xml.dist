@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
-<ruleset name="Truper">
-    <description>Magento Coding Standard applied to custom Truper code only (core/vendor excluded).</description>
+<ruleset name="EdicionesMox">
+    <description>Magento Coding Standard applied to custom EdicionesMox code only (core/vendor excluded).</description>
 
-    <file>src/app/code/Truper</file>
-    <file>src/app/design/frontend/Truper</file>
+    <file>src/app/code/EdicionesMox</file>
+    <file>src/app/design/frontend/EdicionesMox</file>
 
     <arg name="basepath" value="."/>
     <arg name="colors"/>

@@ -1,6 +1,6 @@
 {
-    "name": "truper/module-landing-page",
-    "description": "Custom landing page controller and templates for the Truper storefront.",
+    "name": "edicionesmox/module-landing-page",
+    "description": "Custom landing page controller and templates for the Ediciones Mox storefront.",
     "type": "magento2-module",
     "license": "proprietary",
     "require": {
@@ -13,7 +13,7 @@
             "registration.php"
         ],
         "psr-4": {
-            "Truper\\LandingPage\\": ""
+            "EdicionesMox\\LandingPage\\": ""
         }
     }
 }

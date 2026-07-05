@@ -1,5 +1,5 @@
 ---
-description: Contexto, buenas prácticas, riesgos y flujo de trabajo para este boilerplate Magento 2.4.8 + Docker (Truper).
+description: Contexto, buenas prácticas, riesgos y flujo de trabajo para este boilerplate Magento 2.4.8 + Docker (Ediciones Mox).
 alwaysApply: true
 ---
 
@@ -14,7 +14,7 @@ Este repo **no** deriva de Adobe Commerce Cloud Docker, Warden, DDEV ni markshus
 - Volúmenes Docker para `var/`, `generated/`, `pub/static/`, `vendor/` (mitiga I/O lento en Windows/NTFS)
 - Git versiona solo `src/app/code/**` y `src/app/design/**` (código custom; core/vendor en volumen)
 
-**Contexto de uso: solo desarrollo local, repo público en GitHub** (`crbzxy/magento2-boilerplate`).
+**Contexto de uso: solo desarrollo local, repo público en GitHub** (`crbzxy/edicionesmox-magento2`).
 Esto cambia qué riesgos importan: los puertos expuestos y OpenSearch sin auth
 NO son un problema mientras nadie más que este host acceda a ellos — son
 correctos para este caso de uso, no un defecto a corregir. Ver sección
@@ -31,7 +31,7 @@ Alineación con buenas prácticas Magento: **buena para el alcance actual**. La 
 | DB | MariaDB 11.4 |
 | Search | OpenSearch 2.19 (Elasticsearch compatible) |
 | Cache/sessions | Redis 7.2 |
-| Tema storefront | `Truper/default` (child de Luma) |
+| Tema storefront | `EdicionesMox/default` (child de Luma) |
 | Locale principal | `es_MX` |
 | Modo dev | `developer` (local) |
 
@@ -51,7 +51,7 @@ vía `docker compose exec` (ver `Makefile`).
 ### `make upgrade` — script único post-upgrade/post-volumen-borrado
 
 Encadena `setup:upgrade` → purge de CSS compilado del tema → `setup:di:compile`
-→ `setup:static-content:deploy` (es_MX en_US, `Truper/default`) → `indexer:reindex`
+→ `setup:static-content:deploy` (es_MX en_US, `EdicionesMox/default`) → `indexer:reindex`
 → `chown www-data` → `cache:flush`. Ejecutar tras `composer update`,
 `setup:upgrade` manual, cambios en `di.xml`/módulos, o cuando
 `docker compose down -v` dejó `generated/`/`pub/static`/`var` vacíos.
@@ -61,22 +61,22 @@ Validado end-to-end en este repo (2026-07-05): con `generated/` y
 
 ## Convenciones de código custom
 
-### Módulos (`src/app/code/Truper/`)
+### Módulos (`src/app/code/EdicionesMox/`)
 
-- Namespace: `Truper\{ModuleName}`; un módulo = una responsabilidad
-- Estructura estándar Magento: `registration.php`, `etc/module.xml`, `composer.json` (ya presente en `Truper_LandingPage`), `di.xml`, `routes.xml`, layout XML en `view/frontend/layout/`
+- Namespace: `EdicionesMox\{ModuleName}`; un módulo = una responsabilidad
+- Estructura estándar Magento: `registration.php`, `etc/module.xml`, `composer.json` (ya presente en `EdicionesMox_LandingPage`), `di.xml`, `routes.xml`, layout XML en `view/frontend/layout/`
 - Templates `.phtml`: usar `$escaper->escapeHtml()` / `escapeUrl()` — **no** `$block->escapeHtml()` (deprecado 2.4.8)
 - Preferir plugins/observers sobre overrides de clases core; evitar `preference` salvo necesidad documentada
 - No editar `vendor/` ni parchear core sin módulo propio
-- **Coding standard**: `composer.json` (raíz del repo, no `src/`) trae `magento/magento-coding-standard` + `dealerdirect/phpcodesniffer-composer-installer`. Correr `vendor/bin/phpcs --standard=phpcs.xml.dist` (escanea solo `src/app/code/Truper` y `src/app/design/frontend/Truper`). CI (`.github/workflows/ci.yml`) corre esto en cada push/PR con `--warning-severity=0` (solo bloquea por errores; hay ~70 warnings de estilo CSS/LESS preexistentes en el tema, limpieza pendiente en P1).
+- **Coding standard**: `composer.json` (raíz del repo, no `src/`) trae `magento/magento-coding-standard` + `dealerdirect/phpcodesniffer-composer-installer`. Correr `vendor/bin/phpcs --standard=phpcs.xml.dist` (escanea solo `src/app/code/EdicionesMox` y `src/app/design/frontend/EdicionesMox`). CI (`.github/workflows/ci.yml`) corre esto en cada push/PR con `--warning-severity=0` (solo bloquea por errores; hay ~70 warnings de estilo CSS/LESS preexistentes en el tema, limpieza pendiente en P1).
 
-### Tema (`src/app/design/frontend/Truper/default/`)
+### Tema (`src/app/design/frontend/EdicionesMox/default/`)
 
 - Child de Luma; overrides en `_theme.less`, extensiones en `_extend.less`
-- Tokens de diseño: `_truper-tokens.less`, `_m3-tokens.less` — **no** hardcodear colores en componentes
-- `_luma-base.less` es copia textual de `vendor/magento/theme-frontend-luma/web/css/source/_theme.less` (100.4.8) — necesaria porque el fallback de temas hace que el `_theme.less` de Truper reemplace por completo al de Luma. **Verificar con `make diff-luma-base` tras cada upgrade de Magento** (mantener el archivo sin comentarios propios para que el diff sea limpio).
+- Tokens de diseño: `_edicionesmox-tokens.less`, `_m3-tokens.less` — **no** hardcodear colores en componentes
+- `_luma-base.less` es copia textual de `vendor/magento/theme-frontend-luma/web/css/source/_theme.less` (100.4.8) — necesaria porque el fallback de temas hace que el `_theme.less` de EdicionesMox reemplace por completo al de Luma. **Verificar con `make diff-luma-base` tras cada upgrade de Magento** (mantener el archivo sin comentarios propios para que el diff sea limpio).
 - Fuentes: Roboto autoalojada (`web/fonts/roboto-latin-variable.woff2`, subset latin, variable font 300–700, `web/css/source/_fonts.less`). Ya no se carga desde `fonts.googleapis.com` (se eliminó `Magento_Theme::layout/default_head_blocks.xml`, que solo hacía eso).
-- **Gotcha de developer mode (verificado en vivo)**: `setup:static-content:deploy` NO recompila `styles-m.css`/`styles-l.css` si ya existen en `pub/static` — esos se generan una sola vez al vuelo (`static.php`) la primera vez que el navegador los pide, y nginx los sirve desde disco indefinidamente después, aunque cambie el LESS fuente. `make theme-deploy` y `make upgrade` ya borran esos `.css` antes de redeployar; si se edita LESS manualmente sin pasar por esos targets, borrar `pub/static/frontend/Truper/default/*/css/styles-*.css` a mano.
+- **Gotcha de developer mode (verificado en vivo)**: `setup:static-content:deploy` NO recompila `styles-m.css`/`styles-l.css` si ya existen en `pub/static` — esos se generan una sola vez al vuelo (`static.php`) la primera vez que el navegador los pide, y nginx los sirve desde disco indefinidamente después, aunque cambie el LESS fuente. `make theme-deploy` y `make upgrade` ya borran esos `.css` antes de redeployar; si se edita LESS manualmente sin pasar por esos targets, borrar `pub/static/frontend/EdicionesMox/default/*/css/styles-*.css` a mano.
 
 ### Git
 
@@ -107,10 +107,10 @@ Validado end-to-end en este repo (2026-07-05): con `generated/` y
 
 ### P0 — Estabilidad del entorno — ✅ hecho
 - [x] `make upgrade`: upgrade → compile → static deploy → reindex → chown, validado en vivo
-- [x] `perf-check` corregido para `Truper/default` (antes apuntaba a Magento/luma)
+- [x] `perf-check` corregido para `EdicionesMox/default` (antes apuntaba a Magento/luma)
 
 ### P1 — Calidad de código — ✅ hecho
-- [x] `composer.json` en `Truper_LandingPage`
+- [x] `composer.json` en `EdicionesMox_LandingPage`
 - [x] Magento Coding Standard + CI mínimo (GitHub Actions: php -l, xmllint, phpcs)
 - [x] Revisión de `app/etc`: sin parches de riesgo que migrar (ver Git arriba)
 
@@ -133,7 +133,7 @@ Validado end-to-end en este repo (2026-07-05): con `generated/` y
 
 ## Al crear features nuevas
 
-1. ¿Es lógica de negocio? → módulo en `app/code/Truper/`
+1. ¿Es lógica de negocio? → módulo en `app/code/EdicionesMox/`
 2. ¿Es presentación? → tema o módulo con `view/frontend/`
 3. ¿Afecta admin? → `view/adminhtml/` + ACL si aplica
 4. Tras cambios: `cache:flush`; si PHP/DI: `setup:di:compile`; si LESS/layout: `make theme-deploy` (no solo `cache:flush` — ver gotcha de CSS stale arriba)
