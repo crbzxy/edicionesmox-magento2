@@ -1,0 +1,145 @@
+//
+//  Truper structural overrides
+//  _____________________________________________
+
+@import '_truper-tokens.less';
+
+& when (@media-common = true) {
+    //
+    //  Underline text inputs
+    //  ---------------------------------------------
+
+    input.input-text,
+    input[type="email"]:not(#newsletter),
+    input[type="password"],
+    input[type="tel"],
+    input[type="search"],
+    input[type="number"],
+    input[type="url"],
+    textarea {
+        border: none;
+        border-bottom: 1px solid @truper-color-stormy;
+        border-radius: 0;
+        box-shadow: none;
+        padding-left: 0;
+        padding-right: 0;
+
+        &:focus {
+            border-bottom-color: @truper-color-primary;
+            box-shadow: none;
+        }
+    }
+
+    .field._error {
+        .control input,
+        .control textarea {
+            border-bottom-color: @truper-color-error;
+        }
+    }
+
+    .mage-error {
+        color: @truper-color-error;
+        margin-top: 8px;
+    }
+
+    //
+    //  Select dropdowns
+    //  ---------------------------------------------
+
+    select,
+    .select {
+        border: 1px solid @truper-color-stormy;
+        border-radius: 4px;
+        min-height: 40px;
+
+        &:focus {
+            border-color: @truper-color-primary;
+            box-shadow: none;
+        }
+    }
+
+    //
+    //  Pill buttons
+    //  ---------------------------------------------
+
+    button:not(.subscribe),
+    .action:not(.subscribe) {
+        border-radius: 50px;
+        font-weight: @font-weight__regular;
+        transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+
+        &:disabled,
+        &[disabled] {
+            background: @truper-color-disabled;
+            border-color: @truper-color-disabled;
+            color: @truper-color-white;
+            opacity: 1;
+            cursor: not-allowed;
+        }
+    }
+
+    //
+    //  Newsletter footer
+    //  ---------------------------------------------
+
+    .block.newsletter {
+        .field .control {
+            &:before {
+                color: @truper-color-stormy;
+            }
+        }
+
+        input#newsletter {
+            background: @truper-color-white;
+            border: none;
+            border-bottom: 1px solid @truper-color-stormy;
+            border-radius: 0;
+            box-shadow: none;
+            height: 40px;
+            margin-right: 0;
+            padding: 0 16px 0 35px;
+
+            &:focus {
+                border-bottom-color: @truper-color-primary;
+                box-shadow: none;
+            }
+        }
+
+        .action.subscribe {
+            background: @truper-color-primary;
+            border: 1px solid @truper-color-primary;
+            border-radius: 0 50px 50px 0;
+            color: @truper-color-white;
+            height: 40px;
+            margin-left: -1px;
+            padding: 0 24px;
+            white-space: nowrap;
+
+            &:hover {
+                background: darken(@truper-color-primary, 8%);
+                border-color: darken(@truper-color-primary, 8%);
+                color: @truper-color-white;
+            }
+        }
+    }
+
+    //
+    //  Messages
+    //  ---------------------------------------------
+
+    .message {
+        border-radius: 8px;
+        font-size: 14px;
+
+        &.success,
+        &.error,
+        &.warning,
+        &.info,
+        &.notice {
+            a {
+                color: inherit;
+                text-decoration: underline;
+            }
+        }
+    }
+}

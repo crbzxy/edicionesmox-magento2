@@ -1,0 +1,10 @@
+<?php
+/** @var \Magento\Framework\View\Element\Template $block */
+/** @var \Magento\Framework\Escaper $escaper */
+?>
+<div class="landingpage-link">
+    <a class="action primary"
+       href="<?= $escaper->escapeUrl($block->getUrl('landingpage/page/view')) ?>">
+        <?= $escaper->escapeHtml(__('Ver mi nueva página')) ?>
+    </a>
+</div>

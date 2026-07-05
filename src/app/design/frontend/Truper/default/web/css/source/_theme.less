@@ -1,0 +1,115 @@
+//
+//  Truper theme overrides
+//  _____________________________________________
+
+@import '_luma-base.less';
+@import '_truper-tokens.less';
+
+//
+//  Typography
+//  ---------------------------------------------
+
+@font-family-name__base: 'Roboto';
+@font-family__base: @font-family-name__base, @font-family__sans-serif;
+
+@primary__color: @truper-color-text;
+@text__color: @truper-color-text;
+
+@font-size__base: 14px;
+@font-size__s: 12px;
+
+@h1__font-size: 40px;
+@h1__font-size-desktop: 40px;
+@h1__font-weight: @font-weight__regular;
+@h2__font-size: 30px;
+@h2__font-weight: @font-weight__regular;
+@h3__font-size: 18px;
+@h3__font-weight: @font-weight__regular;
+
+//
+//  Colors
+//  ---------------------------------------------
+
+@theme__color__primary: @truper-color-primary;
+@theme__color__primary-alt: darken(@truper-color-primary, 8%);
+@link__color: @truper-color-primary;
+@link__hover__color: @theme__color__primary-alt;
+@page__background-color: @truper-color-white;
+@error__color: @truper-color-error;
+@border-color__base: @truper-color-stormy;
+@focus__color: @truper-color-primary;
+
+//
+//  Buttons
+//  ---------------------------------------------
+
+@button__border-radius: 50px;
+@button__padding: 12px 32px;
+@button__font-weight: @font-weight__regular;
+
+@button__color: @truper-color-primary;
+@button__background: @truper-color-white;
+@button__border: 1px solid @truper-color-primary;
+@button__hover__color: @truper-color-white;
+@button__hover__background: @truper-color-primary;
+@button__hover__border: 1px solid @truper-color-primary;
+@button__active__color: @truper-color-white;
+@button__active__background: @theme__color__primary-alt;
+@button__active__border: 1px solid @theme__color__primary-alt;
+@button__disabled__opacity: 1;
+
+@button-primary__background: @truper-color-primary;
+@button-primary__border: 1px solid @truper-color-primary;
+@button-primary__color: @truper-color-white;
+@button-primary__hover__background: @theme__color__primary-alt;
+@button-primary__hover__border: 1px solid @theme__color__primary-alt;
+@button-primary__hover__color: @truper-color-white;
+@button-primary__active__background: darken(@truper-color-primary, 12%);
+@button-primary__active__border: 1px solid darken(@truper-color-primary, 12%);
+@button-primary__active__color: @truper-color-white;
+
+//
+//  Messages
+//  ---------------------------------------------
+
+@message__border-radius: 8px;
+@message__padding: 16px 24px 16px 56px;
+
+@message-success__color: @truper-color-white;
+@message-success__background: @truper-color-success;
+@message-success-icon__color-inner: @truper-color-white;
+@message-success-icon__background: @truper-color-success;
+@message-success-icon__color-lateral: @truper-color-white;
+
+@message-error__color: @truper-color-white;
+@message-error__background: @truper-color-error;
+@message-error-icon__color-inner: @truper-color-white;
+@message-error-icon__background: @truper-color-error;
+@message-error-icon__color-lateral: @truper-color-white;
+
+@message-info__color: @truper-color-primary;
+@message-info__background: @truper-color-disabled;
+@message-info-icon__color-inner: @truper-color-primary;
+@message-info-icon__background: @truper-color-disabled;
+@message-info-icon__color-lateral: @truper-color-primary;
+
+@message-warning__color: @truper-color-primary;
+@message-warning__background: @truper-color-disabled;
+@message-warning-icon__color-inner: @truper-color-primary;
+@message-warning-icon__background: @truper-color-disabled;
+@message-warning-icon__color-lateral: @truper-color-primary;
+
+//
+//  Forms
+//  ---------------------------------------------
+
+@form-element-input__border-radius: 0;
+@form-element-input__border-color: @truper-color-stormy;
+@form-element-input__focus__border-color: @truper-color-primary;
+@form-element-input-placeholder__color: @truper-color-stormy;
+
+@select__border: 1px solid @truper-color-stormy;
+@select__border-radius: 4px;
+@select__height: 40px;
+
+@form-field-label__font-weight: @font-weight__heavier;

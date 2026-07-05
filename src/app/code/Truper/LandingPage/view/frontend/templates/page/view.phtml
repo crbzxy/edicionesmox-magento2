@@ -1,0 +1,13 @@
+<?php
+/** @var \Magento\Framework\View\Element\Template $block */
+/** @var \Magento\Framework\Escaper $escaper */
+?>
+<div class="landing-custom-page">
+    <h1><?= $escaper->escapeHtml(__('Mi nueva página')) ?></h1>
+    <p><?= $escaper->escapeHtml(__('Contenido accesible desde la landing.')) ?></p>
+    <p>
+        <a href="<?= $escaper->escapeUrl($block->getUrl('')) ?>">
+            <?= $escaper->escapeHtml(__('Volver al inicio')) ?>
+        </a>
+    </p>
+</div>
