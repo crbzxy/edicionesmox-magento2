@@ -1,201 +1,24 @@
 //
-//  Material Design 3 component styles
-//  https://m3.material.io/
+//  MUI (Material UI) component styles
+//  https://mui.com/
 //  _____________________________________________
 
-@import '_m3-tokens.less';
-@import '_m3-mixins.less';
-
-& when (@media-common = true) {
-    //
-    //  Base / typography
-    //  ---------------------------------------------
-
-    body {
-        background: @m3-surface;
-        color: @m3-on-surface;
-        font-family: @m3-font-family;
-        font-size: @m3-body-md;
-        letter-spacing: 0.25px;
-        line-height: 1.5;
-    }
-
-    a {
-        .m3-transition(color);
-    }
-
-    //
-    //  M3 outlined text fields
-    //  ---------------------------------------------
-
-    input.input-text,
-    input[type="email"]:not(#newsletter),
-    input[type="password"],
-    input[type="tel"],
-    input[type="search"],
-    input[type="number"],
-    input[type="url"],
-    textarea {
-        .m3-outlined-field();
-
-        &:disabled {
-            background: fade(@m3-on-surface, 4%);
-            border-color: fade(@m3-on-surface, 12%);
-            color: fade(@m3-on-surface, 38%);
-        }
-    }
-
-    textarea {
-        height: auto;
-        min-height: 120px;
-        padding: 16px;
-    }
-
-    .field._error {
-        .control input,
-        .control textarea {
-            border-color: @m3-error;
-            border-width: 2px;
-        }
-    }
-
-    .mage-error {
-        color: @m3-error;
-        font-size: @m3-label-md;
-        margin-top: 8px;
-    }
-
-    .field .label {
-        color: @m3-on-surface-variant;
-        font-size: @m3-label-md;
-        font-weight: 500;
-        letter-spacing: 0.5px;
-        margin-bottom: 8px;
-    }
-
-    //
-    //  Select — M3 outlined
-    //  ---------------------------------------------
-
-    select,
-    .select {
-        .m3-outlined-field();
-        appearance: none;
-    }
-
-    //
-    //  Buttons — M3 filled / outlined / text
-    //  ---------------------------------------------
-
-    button:not(.subscribe),
-    .action:not(.subscribe) {
-        .m3-outlined-button();
-        text-transform: none;
-
-        &.primary {
-            .m3-filled-button();
-        }
-    }
-
-    //
-    //  Cards & product tiles — M3 elevation
-    //  ---------------------------------------------
-
-    .product-item,
-    .block,
-    .box,
-    .cart-summary,
-    .opc-block-summary {
-        background: @m3-surface-container;
-        border-radius: @m3-shape-md;
-        box-shadow: @m3-elevation-1;
-    }
-
-    .product-item-info {
-        background: @m3-surface-container;
-        border-radius: @m3-shape-md;
-        .m3-transition(box-shadow);
-
-        &:hover {
-            box-shadow: @m3-elevation-2;
-        }
-    }
-
-    //
-    //  Newsletter — M3 composite field
-    //  ---------------------------------------------
-
-    .block.newsletter {
-        .field .control:before {
-            color: @m3-on-surface-variant;
-        }
-
-        input#newsletter {
-            .m3-outlined-field();
-            border-bottom-right-radius: 0;
-            border-right: none;
-            border-top-right-radius: 0;
-            height: @m3-button-height;
-            margin-right: 0;
-            padding-left: 35px;
-
-            &:focus {
-                border-right: none;
-                padding-left: 34px;
-            }
-        }
-
-        .action.subscribe {
-            .m3-filled-button();
-            border-bottom-left-radius: 0;
-            border-top-left-radius: 0;
-            margin-left: -1px;
-            padding: 0 24px;
-        }
-    }
-
-    //
-    //  Messages — M3 snackbar style
-    //  ---------------------------------------------
-
-    .message {
-        border-radius: @m3-shape-sm;
-        box-shadow: @m3-elevation-2;
-        font-size: @m3-body-md;
-        letter-spacing: 0.25px;
-
-        &.success,
-        &.error,
-        &.warning,
-        &.info,
-        &.notice {
-            a {
-                color: inherit;
-                font-weight: 500;
-                text-decoration: underline;
-            }
-        }
-    }
-
-    //
-    //  Header / footer surfaces
-    //  ---------------------------------------------
-
-    .page-header,
-    .page-footer {
-        background: @m3-surface-container;
-    }
-
-    .page-footer {
-        border-top: 1px solid @m3-outline-variant;
-    }
-
-    //
-    //  Focus visible — M3 accessibility
-    //  ---------------------------------------------
-
-    :focus-visible {
-        outline: 2px solid @m3-primary;
-        outline-offset: 2px;
-    }
-}
+@import '_mui-tokens.less';
+@import '_mui-mixins.less';
+@import '_breakpoints.less';
+@import '_fonts.less';
+@import '_layout.less';
+@import 'components/_base.less';
+@import 'components/_forms.less';
+@import 'components/_buttons.less';
+@import 'components/_cards.less';
+@import 'components/_messages.less';
+@import 'components/_landing.less';
+@import 'components/_header.less';
+@import 'components/_navigation.less';
+@import 'components/_footer.less';
+@import 'components/_product-card.less';
+@import 'components/_toast.less';
+@import 'components/_catalog.less';
+@import 'components/_checkout.less';
+@import 'pages/_home.less';

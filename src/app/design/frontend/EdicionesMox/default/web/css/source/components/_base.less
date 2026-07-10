@@ -1,0 +1,41 @@
+//
+//  Base / typography / surfaces
+//  _____________________________________________
+
+& when (@media-common = true) {
+    body {
+        background: @mui-background-default;
+        color: @mui-text-primary;
+        font-family: @mui-font-family;
+        font-size: @mui-body-md;
+        letter-spacing: 0.25px;
+        line-height: 1.5;
+    }
+
+    a {
+        .mui-transition(color);
+        color: @mui-primary;
+
+        &:hover {
+            color: @mui-primary-dark;
+        }
+
+        &:visited {
+            color: @mui-primary-dark;
+        }
+    }
+
+    .page-header,
+    .page-footer {
+        background: @mui-background-paper;
+    }
+
+    .page-footer {
+        border-top: 1px solid @mui-divider;
+    }
+
+    :focus-visible {
+        outline: 2px solid @mui-primary;
+        outline-offset: 2px;
+    }
+}

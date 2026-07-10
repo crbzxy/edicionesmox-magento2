@@ -11,7 +11,7 @@ Este repo **no** deriva de Adobe Commerce Cloud Docker, Warden, DDEV ni markshus
 
 - Docker Compose manual (nginx + php-fpm 8.3 + MariaDB 11.4 + OpenSearch 2.19 + Redis 7 + Mailpit + cron)
 - Magento OSS instalado en `src/` vía `make install-oss` (mirror mage-os.org)
-- Volúmenes Docker para `var/`, `generated/`, `pub/static/`, `vendor/` (mitiga I/O lento en Windows/NTFS)
+- Volúmenes Docker para `var/`, `generated/`, `pub/static/`, `vendor/`, `lib/` (mitiga I/O lento en Windows/NTFS)
 - Git versiona solo `src/app/code/**` y `src/app/design/**` (código custom; core/vendor en volumen)
 
 **Contexto de uso: solo desarrollo local, repo público en GitHub** (`crbzxy/edicionesmox-magento2`).
@@ -73,7 +73,7 @@ Validado end-to-end en este repo (2026-07-05): con `generated/` y
 ### Tema (`src/app/design/frontend/EdicionesMox/default/`)
 
 - Child de Luma; overrides en `_theme.less`, extensiones en `_extend.less`
-- Tokens de diseño: `_edicionesmox-tokens.less`, `_m3-tokens.less` — **no** hardcodear colores en componentes
+- Tokens de diseño: `_edicionesmox-tokens.less`, `_mui-tokens.less` (paleta/tipografía/shape/elevación reales de MUI — https://mui.com/material-ui/customization/default-theme/, no una paleta "inspirada" en MUI) y `_mui-mixins.less` (botones contained/outlined/text, campo outlined, transición, state layer) — **no** hardcodear colores en componentes
 - `_luma-base.less` es copia textual de `vendor/magento/theme-frontend-luma/web/css/source/_theme.less` (100.4.8) — necesaria porque el fallback de temas hace que el `_theme.less` de EdicionesMox reemplace por completo al de Luma. **Verificar con `make diff-luma-base` tras cada upgrade de Magento** (mantener el archivo sin comentarios propios para que el diff sea limpio).
 - Fuentes: Roboto autoalojada (`web/fonts/roboto-latin-variable.woff2`, subset latin, variable font 300–700, `web/css/source/_fonts.less`). Ya no se carga desde `fonts.googleapis.com` (se eliminó `Magento_Theme::layout/default_head_blocks.xml`, que solo hacía eso).
 - **Gotcha de developer mode (verificado en vivo)**: `setup:static-content:deploy` NO recompila `styles-m.css`/`styles-l.css` si ya existen en `pub/static` — esos se generan una sola vez al vuelo (`static.php`) la primera vez que el navegador los pide, y nginx los sirve desde disco indefinidamente después, aunque cambie el LESS fuente. `make theme-deploy` y `make upgrade` ya borran esos `.css` antes de redeployar; si se edita LESS manualmente sin pasar por esos targets, borrar `pub/static/frontend/EdicionesMox/default/*/css/styles-*.css` a mano.

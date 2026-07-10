@@ -42,9 +42,14 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
 COPY --from=composer:2.9 /usr/bin/composer /usr/bin/composer
 
 # --- OPcache tuning básico para desarrollo ---
+# Valores alineados a la recomendación de Adobe para producción (memory_consumption=2048,
+# max_accelerated_files=130021): con vendor/ + generated/ + lib/ + tema, una instalación
+# completa de Magento fácilmente ronda o supera 60000 archivos PHP. Pasado ese límite,
+# OPcache deja de cachear archivos nuevos silenciosamente (sin error visible) y degrada
+# el rendimiento. La RAM extra es barata comparada con ese riesgo.
 RUN { \
-        echo 'opcache.memory_consumption=512'; \
-        echo 'opcache.max_accelerated_files=60000'; \
+        echo 'opcache.memory_consumption=2048'; \
+        echo 'opcache.max_accelerated_files=130021'; \
         echo 'opcache.validate_timestamps=1'; \
         echo 'opcache.revalidate_freq=2'; \
     } > /usr/local/etc/php/conf.d/opcache-recommended.ini

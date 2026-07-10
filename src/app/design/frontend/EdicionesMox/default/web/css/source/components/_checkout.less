@@ -1,0 +1,94 @@
+//
+//  Magento_Checkout — minicart + OPC (CSS-only)
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .edmox-page {
+        .minicart-wrapper {
+            .action.showcart {
+                .mui-transition(~"background-color, color");
+
+                &:hover {
+                    color: @mui-primary;
+                }
+            }
+
+            .counter {
+                background: @mui-primary;
+                border-radius: @mui-shape-full;
+                color: @mui-primary-contrast-text;
+                font-size: @mui-label-md;
+                font-weight: 500;
+            }
+
+            .counter-number {
+                text-shadow: none;
+            }
+        }
+
+        .block-minicart {
+            background: @mui-background-paper;
+            border: 1px solid @mui-divider;
+            border-radius: @mui-shape-md;
+            box-shadow: @mui-elevation-3;
+            margin-top: 8px;
+            padding: 16px;
+
+            .subtitle {
+                color: @mui-text-primary;
+                font-size: @mui-title-md;
+                font-weight: 500;
+            }
+
+            .items-total,
+            .subtotal {
+                color: @mui-text-secondary;
+                font-size: @mui-body-md;
+            }
+
+            .actions .action.primary.checkout {
+                .mui-contained-button();
+                width: 100%;
+            }
+        }
+    }
+
+    .edmox-page.checkout-index-index {
+        .opc-wrapper {
+            background: @mui-background-paper;
+            border-radius: @mui-shape-md;
+            box-shadow: @mui-elevation-1;
+            padding: 24px;
+        }
+
+        .opc-block-summary {
+            background: @mui-grey-50;
+            border-radius: @mui-shape-md;
+            padding: 24px;
+
+            .title {
+                color: @mui-text-primary;
+                font-size: @mui-title-lg;
+                font-weight: 500;
+            }
+        }
+
+        .opc-progress-bar-item._active > span:before {
+            background: @mui-primary;
+        }
+
+        .step-title {
+            color: @mui-text-primary;
+            font-size: @mui-title-md;
+            font-weight: 500;
+        }
+    }
+}
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+    .edmox-page {
+        .minicart-wrapper .block-minicart {
+            width: 390px;
+        }
+    }
+}

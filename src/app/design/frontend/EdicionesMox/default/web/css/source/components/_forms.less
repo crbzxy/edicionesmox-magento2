@@ -1,0 +1,90 @@
+//
+//  MUI outlined fields
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .edmox-page {
+        input.input-text,
+        input[type="email"]:not(#newsletter),
+        input[type="password"],
+        input[type="tel"],
+        input[type="number"],
+        input[type="url"],
+        textarea {
+            .mui-outlined-field();
+
+            &:disabled {
+                background: fade(@mui-text-primary, 4%);
+                border-color: fade(@mui-text-primary, 12%);
+                color: fade(@mui-text-primary, 38%);
+            }
+        }
+
+        textarea {
+            height: auto;
+            min-height: 120px;
+            padding: 16px;
+        }
+
+        .field._error {
+            .control input,
+            .control textarea {
+                border-color: @mui-error;
+                border-width: 2px;
+            }
+        }
+
+        .mage-error {
+            color: @mui-error;
+            font-size: @mui-label-md;
+            margin-top: 8px;
+        }
+
+        .field .label {
+            color: @mui-text-secondary;
+            font-size: @mui-label-md;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        select,
+        .select {
+            .mui-outlined-field();
+            appearance: none;
+        }
+
+        .block.newsletter {
+            .field .control:before {
+                color: @mui-text-secondary;
+            }
+
+            input#newsletter {
+                border-color: @mui-input-border;
+                border-radius: @form-element-input__border-radius 0 0 @form-element-input__border-radius;
+
+                &:focus {
+                    border-color: @mui-primary;
+                }
+            }
+
+            .action.subscribe {
+                background: @mui-primary;
+                border-color: @mui-primary;
+                border-radius: 0 @form-element-input__border-radius @form-element-input__border-radius 0;
+                color: @mui-primary-contrast-text;
+                height: @form-element-input__height;
+                line-height: @form-element-input__height;
+                min-width: auto;
+                padding: 0 16px;
+                white-space: nowrap;
+
+                &:hover {
+                    background: @mui-primary-dark;
+                    border-color: @mui-primary-dark;
+                    color: @mui-primary-contrast-text;
+                }
+            }
+        }
+    }
+}

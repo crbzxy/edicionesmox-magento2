@@ -1,0 +1,165 @@
+//  Navigation — MUI app bar + drawer móvil
+//  Navigation — MUI app bar + drawer móvil
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .edmox-page {
+        .nav-sections {
+            background: @mui-background-paper;
+            border-bottom: 1px solid @mui-divider;
+        }
+
+        .navigation {
+            background: @mui-background-paper;
+        }
+
+        .navigation .level0 > .level-top {
+            color: @mui-text-primary;
+            font-size: @mui-body-lg;
+            font-weight: 500;
+            letter-spacing: 0.15px;
+            .mui-transition(~"color, background-color");
+        }
+
+        .navigation .level0 > .level-top:hover,
+        .navigation .level0 > .level-top.ui-state-focus {
+            background: fade(@mui-primary, @mui-action-hover);
+            color: @mui-primary;
+        }
+
+        .navigation .level0.active > .level-top,
+        .navigation .level0.has-active > .level-top {
+            background: fade(@mui-primary, @mui-action-selected);
+            border-bottom: none;
+            color: @mui-primary;
+            font-weight: 600;
+        }
+
+        .navigation .submenu {
+            background: @mui-background-paper;
+
+            a {
+                color: @mui-text-secondary;
+                font-size: @mui-body-md;
+
+                &:hover,
+                &.ui-state-focus {
+                    background: fade(@mui-primary, @mui-action-hover);
+                    color: @mui-primary;
+                }
+            }
+        }
+
+        .nav-sections-item-title {
+            background: @mui-grey-50;
+            border-color: @mui-divider;
+            color: @mui-text-secondary;
+            font-size: @mui-label-lg;
+            font-weight: 500;
+
+            &.active {
+                background: @mui-background-paper;
+                color: @mui-primary;
+            }
+        }
+
+        .nav-sections-item-content {
+            background: @mui-background-paper;
+        }
+
+        .nav-open .nav-sections {
+            z-index: 100;
+        }
+
+        .nav-open .nav-toggle:after {
+            background: fade(@mui-text-primary, 40%);
+            z-index: 90;
+        }
+
+        .panel.header .header.links a,
+        .panel.header .customer-welcome .customer-name {
+            color: @mui-text-secondary;
+            font-size: @mui-body-md;
+            font-weight: 500;
+
+            &:hover {
+                color: @mui-primary;
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+    .edmox-page {
+        .navigation .level0 {
+            border-bottom: 1px solid @mui-divider;
+        }
+
+        .navigation .level0 > .level-top {
+            line-height: 1.4;
+            padding: 16px 0;
+        }
+
+        .navigation .submenu a {
+            padding: 12px 0 12px 16px;
+        }
+    }
+}
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+    .edmox-page {
+        .nav-sections {
+            box-shadow: @mui-elevation-1;
+            position: relative;
+            z-index: 5;
+        }
+
+        .navigation {
+            box-shadow: none;
+        }
+
+        .navigation .level0 {
+            margin: 0 2px;
+        }
+
+        .navigation .level0 > .level-top {
+            border-bottom: 2px solid transparent;
+            border-radius: @mui-shape-sm @mui-shape-sm 0 0;
+            color: @mui-text-secondary;
+            font-size: @mui-label-lg;
+            font-weight: 500;
+            letter-spacing: 0.1px;
+            line-height: @mui-button-height;
+            padding: @edmox-nav-item-padding;
+            .mui-transition(~"color, border-color, background-color");
+        }
+
+        .navigation .level0 > .level-top:hover,
+        .navigation .level0 > .level-top.ui-state-focus {
+            background: fade(@mui-primary, @mui-action-hover);
+            border-bottom-color: transparent;
+            color: @mui-primary;
+        }
+
+        .navigation .level0.active > .level-top,
+        .navigation .level0.has-active > .level-top {
+            background: fade(@mui-primary, @mui-action-selected);
+            border-bottom: 2px solid @mui-primary;
+            color: @mui-primary;
+            font-weight: 600;
+        }
+
+        .navigation .level0 .submenu {
+            border: 1px solid @mui-divider;
+            border-radius: @mui-shape-sm;
+            box-shadow: @mui-elevation-2;
+            min-width: 220px;
+            padding: 8px 0;
+            z-index: 25;
+
+            a {
+                padding: 10px 16px;
+            }
+        }
+    }
+}

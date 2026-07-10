@@ -1,0 +1,151 @@
+//
+//  MUI (Material UI, https://mui.com) component mixins
+//  _____________________________________________
+
+.mui-transition(@props: all) {
+    transition: @props @mui-transition-duration @mui-transition-easing;
+}
+
+//  Approximates MuiButtonBase's hover/focus overlay (theme.palette.action)
+//  with an inset box-shadow instead of a pseudo-element — same visual result.
+.mui-state-layer(@color: @mui-text-primary) {
+    position: relative;
+    overflow: hidden;
+
+    &:not(:disabled):hover {
+        box-shadow: inset 0 0 0 100vmax fade(@color, @mui-action-hover);
+    }
+
+    &:not(:disabled):active {
+        box-shadow: inset 0 0 0 100vmax fade(@color, @mui-action-focus);
+    }
+}
+
+//  MUI TextField, variant="outlined"
+.mui-outlined-field() {
+    background: @mui-background-paper;
+    border: 1px solid @mui-input-border;
+    border-radius: @mui-field-radius;
+    box-shadow: none;
+    color: @mui-text-primary;
+    font-family: @mui-font-family;
+    font-size: @mui-body-md;
+    height: @mui-field-height;
+    padding: 0 14px;
+    .mui-transition(~"border-color, box-shadow");
+
+    &::placeholder {
+        color: @mui-text-secondary;
+    }
+
+    &:hover {
+        border-color: @mui-input-border-hover;
+    }
+
+    &:focus {
+        border-color: @mui-primary;
+        border-width: 2px;
+        box-shadow: none;
+        outline: none;
+        padding: 0 13px;
+    }
+}
+
+//  MUI Button, variant="contained" — elevation 2 at rest, 4 on hover
+.mui-contained-button() {
+    background: @mui-primary;
+    border: none;
+    border-radius: @mui-button-radius;
+    box-shadow: @mui-elevation-1;
+    color: @mui-primary-contrast-text;
+    font-family: @mui-font-family;
+    font-size: @mui-label-lg;
+    font-weight: 500;
+    height: @mui-button-height;
+    letter-spacing: 0.02857em;
+    line-height: @mui-button-height;
+    min-width: 64px;
+    padding: 0 16px;
+    text-transform: uppercase;
+    .mui-transition(~"background-color, box-shadow, border-color");
+    .mui-state-layer(@mui-primary-contrast-text);
+
+    &:hover {
+        background: @mui-primary-dark;
+        box-shadow: @mui-elevation-2;
+        color: @mui-primary-contrast-text;
+    }
+
+    &:disabled,
+    &[disabled] {
+        background: fade(@mui-text-primary, @mui-action-disabled-bg);
+        box-shadow: none;
+        color: fade(@mui-text-primary, @mui-action-disabled);
+        cursor: not-allowed;
+        opacity: 1;
+    }
+}
+
+//  MUI Button, variant="outlined" — no elevation, primary-alpha border
+.mui-outlined-button() {
+    background: transparent;
+    border: 1px solid @mui-button-outlined-border;
+    border-radius: @mui-button-radius;
+    color: @mui-primary;
+    font-family: @mui-font-family;
+    font-size: @mui-label-lg;
+    font-weight: 500;
+    height: @mui-button-height;
+    letter-spacing: 0.02857em;
+    line-height: @mui-button-height;
+    min-width: 64px;
+    padding: 0 16px;
+    text-transform: uppercase;
+    .mui-transition(~"background-color, border-color, color");
+    .mui-state-layer(@mui-primary);
+
+    &:hover {
+        background: fade(@mui-primary, @mui-action-hover);
+        border-color: @mui-primary;
+        color: @mui-primary;
+    }
+
+    &:disabled,
+    &[disabled] {
+        border-color: fade(@mui-text-primary, @mui-action-disabled-bg);
+        color: fade(@mui-text-primary, @mui-action-disabled);
+        cursor: not-allowed;
+        opacity: 1;
+    }
+}
+
+//  MUI Button, variant="text" — no border, no elevation
+.mui-text-button() {
+    background: transparent;
+    border: none;
+    border-radius: @mui-button-radius;
+    color: @mui-primary;
+    font-family: @mui-font-family;
+    font-size: @mui-label-lg;
+    font-weight: 500;
+    height: @mui-button-height;
+    letter-spacing: 0.02857em;
+    line-height: @mui-button-height;
+    min-width: 64px;
+    padding: 0 8px;
+    text-transform: uppercase;
+    .mui-transition(~"background-color, color");
+    .mui-state-layer(@mui-primary);
+
+    &:hover {
+        background: fade(@mui-primary, @mui-action-hover);
+        color: @mui-primary;
+    }
+
+    &:disabled,
+    &[disabled] {
+        color: fade(@mui-text-primary, @mui-action-disabled);
+        cursor: not-allowed;
+        opacity: 1;
+    }
+}

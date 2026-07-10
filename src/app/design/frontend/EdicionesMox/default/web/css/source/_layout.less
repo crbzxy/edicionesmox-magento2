@@ -1,0 +1,73 @@
+//
+//  Ediciones Mox — gutter de página, utilidades flex/grid (escala base-8)
+//  Margen horizontal mínimo 1rem (16px); footer sin gutter extra.
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .edmox-page {
+        .panel.header,
+        .header.content,
+        .nav-sections,
+        .page-main,
+        .breadcrumbs,
+        .page.messages,
+        .top-container,
+        .page-wrapper > .widget,
+        .page-wrapper > .page-bottom {
+            padding-left: @edmox-page-gutter;
+            padding-right: @edmox-page-gutter;
+        }
+
+        #maincontent,
+        #contentarea,
+        .column.main {
+            scroll-margin-top: 120px;
+        }
+    }
+
+    .edmox-flex {
+        align-items: center;
+        display: flex;
+        gap: 16px;
+    }
+
+    .edmox-flex-wrap {
+        flex-wrap: wrap;
+    }
+
+    .edmox-flex-between {
+        justify-content: space-between;
+    }
+
+    .edmox-grid {
+        display: grid;
+        gap: 24px;
+    }
+
+    .edmox-grid-auto {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    }
+}
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+    .edmox-page {
+        .panel.header,
+        .header.content,
+        .nav-sections,
+        .page-main,
+        .breadcrumbs,
+        .page.messages,
+        .top-container,
+        .page-wrapper > .widget,
+        .page-wrapper > .page-bottom {
+            padding-left: @edmox-page-gutter-lg;
+            padding-right: @edmox-page-gutter-lg;
+        }
+
+        #maincontent,
+        #contentarea,
+        .column.main {
+            scroll-margin-top: 160px;
+        }
+    }
+}

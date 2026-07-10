@@ -1,0 +1,29 @@
+//
+//  Add-to-cart toast feedback
+//  _____________________________________________
+
+& when (@media-common = true) {
+    //  MUI Snackbar: SnackbarContent defaults to grey[900] in light mode
+    .edmox-toast {
+        background: @mui-grey-900;
+        border-radius: @mui-shape-sm;
+        bottom: 24px;
+        box-shadow: @mui-elevation-3;
+        color: @mui-common-white;
+        font-size: @mui-body-md;
+        left: 50%;
+        opacity: 0;
+        padding: 16px 24px;
+        pointer-events: none;
+        position: fixed;
+        transform: translateX(-50%) translateY(16px);
+        transition: opacity @mui-transition-duration @mui-transition-easing,
+            transform @mui-transition-duration @mui-transition-easing;
+        z-index: 900;
+    }
+
+    .edmox-toast--visible {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}

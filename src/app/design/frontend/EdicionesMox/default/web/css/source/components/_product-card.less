@@ -1,0 +1,21 @@
+//
+//  Product card — container queries
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .edmox-page {
+        .product-item-info {
+            container-name: product-card;
+            container-type: inline-size;
+        }
+    }
+}
+
+@container product-card (min-width: 260px) {
+    .product-item-details .product-item-actions {
+        align-items: center;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+}

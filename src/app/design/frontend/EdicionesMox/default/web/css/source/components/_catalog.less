@@ -1,0 +1,152 @@
+//
+//  Magento_Catalog — PLP grid + PDP layout + MUI surfaces
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .edmox-page.page-products {
+        .page-title-wrapper .page-title {
+            color: @mui-text-primary;
+            font-size: @mui-headline-md;
+            font-weight: @font-weight__regular;
+            letter-spacing: 0;
+            margin-bottom: 24px;
+        }
+
+        .breadcrumbs {
+            color: @mui-text-secondary;
+            font-size: @mui-body-md;
+            margin-bottom: 16px;
+
+            a {
+                color: @mui-primary;
+
+                &:hover {
+                    color: @mui-primary-dark;
+                }
+            }
+
+            strong {
+                color: @mui-text-primary;
+                font-weight: 500;
+            }
+        }
+
+        .sidebar-main,
+        .sidebar-additional {
+            .block {
+                background: @mui-background-paper;
+                border: 1px solid @mui-divider;
+                border-radius: @mui-shape-md;
+                box-shadow: @mui-elevation-1;
+                margin-bottom: 24px;
+                padding: 16px;
+            }
+
+            .block-title {
+                color: @mui-text-primary;
+                font-size: @mui-title-md;
+                font-weight: 500;
+                margin-bottom: 12px;
+            }
+
+            .items a {
+                color: @mui-text-secondary;
+                font-size: @mui-body-md;
+
+                &:hover {
+                    color: @mui-primary;
+                }
+            }
+        }
+
+        .products-grid .product-items {
+            display: grid;
+            gap: 24px;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            list-style: none;
+            margin: 0;
+            padding: 0;
+
+            &:before,
+            &:after {
+                display: none;
+            }
+        }
+
+        .products-grid .product-item {
+            display: block;
+            float: none;
+            margin: 0;
+            width: auto !important;
+        }
+
+        .toolbar-products {
+            background: @mui-background-paper;
+            border: 1px solid @mui-divider;
+            border-radius: @mui-shape-sm;
+            margin-bottom: 24px;
+            padding: 12px 16px;
+        }
+
+        .message.info.empty {
+            background: @mui-alert-info-bg;
+            border-radius: @mui-shape-md;
+            color: @mui-alert-info-color;
+            font-size: @mui-body-lg;
+            padding: 24px;
+        }
+
+        .edmox-plp .category-image {
+            border-radius: @mui-shape-md;
+            margin-bottom: 24px;
+            overflow: hidden;
+        }
+    }
+
+    .edmox-page.catalog-product-view {
+        .product.media {
+            container-name: product-gallery;
+            container-type: inline-size;
+            margin-bottom: 24px;
+        }
+
+        .page-title-wrapper .page-title {
+            font-size: @mui-headline-md;
+        }
+    }
+}
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+    .edmox-page.catalog-product-view {
+        .column.main {
+            display: grid;
+            gap: 32px;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .product.media {
+            margin-bottom: 0;
+        }
+    }
+
+    .edmox-page.page-products .products-grid .product-items {
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    }
+
+    .edmox-page.page-products .page-title-wrapper .page-title {
+        font-size: @mui-headline-lg;
+    }
+}
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__l) {
+    .edmox-page.page-products .products-grid .product-items {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    }
+}
+
+@container product-gallery (min-width: 400px) {
+    .fotorama__stage {
+        border-radius: @mui-shape-md;
+        overflow: hidden;
+    }
+}

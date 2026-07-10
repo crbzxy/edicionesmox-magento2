@@ -1,0 +1,27 @@
+//
+//  Cards & product tiles — MUI elevation
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .edmox-page {
+        .product-item,
+        .block,
+        .box,
+        .cart-summary,
+        .opc-block-summary {
+            background: @mui-background-paper;
+            border-radius: @mui-shape-md;
+            box-shadow: @mui-elevation-1;
+        }
+
+        .product-item-info {
+            background: @mui-background-paper;
+            border-radius: @mui-shape-md;
+            .mui-transition(box-shadow);
+
+            &:hover {
+                box-shadow: @mui-elevation-2;
+            }
+        }
+    }
+}

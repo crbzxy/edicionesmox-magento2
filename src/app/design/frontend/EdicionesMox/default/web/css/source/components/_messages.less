@@ -1,0 +1,26 @@
+//
+//  Messages — MUI Alert/Snackbar style
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .edmox-page {
+        .message {
+            border-radius: @mui-shape-sm;
+            box-shadow: @mui-elevation-2;
+            font-size: @mui-body-md;
+            letter-spacing: 0.25px;
+
+            &.success,
+            &.error,
+            &.warning,
+            &.info,
+            &.notice {
+                a {
+                    color: inherit;
+                    font-weight: 500;
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+}

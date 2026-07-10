@@ -1,6 +1,6 @@
 //
-//  Ediciones Mox theme — Material Design 3 overrides on Luma
-//  https://m3.material.io/
+//  Ediciones Mox theme — MUI (Material UI) default-theme overrides on Luma
+//  https://mui.com/material-ui/customization/default-theme/
 //  _____________________________________________
 
 //  _luma-base.less es una copia textual de
@@ -10,125 +10,135 @@
 //  existen (fuente de iconos, colores de panel, etc.). Tras cada `composer update` de Magento,
 //  correr `make diff-luma-base` para detectar drift antes de desplegar.
 @import '_luma-base.less';
-@import '_m3-tokens.less';
-@import '_fonts.less';
+@import '_mui-tokens.less';
 
 //
-//  Typography (M3 type scale)
+//  Typography (MUI type scale)
 //  ---------------------------------------------
 
 @font-family-name__base: 'Roboto';
-@font-family__base: @m3-font-family;
+@font-family__base: @mui-font-family;
 
-@primary__color: @m3-on-surface;
-@text__color: @m3-on-surface;
+@primary__color: @mui-text-primary;
+@text__color: @mui-text-primary;
 
-@font-size__base: @m3-body-md;
-@font-size__s: @m3-body-sm;
+@font-size__base: @mui-body-md;
+@font-size__s: @mui-body-sm;
 
-@h1__font-size: @m3-display-lg;
-@h1__font-size-desktop: @m3-display-lg;
+@h1__font-size: @mui-headline-lg;
+@h1__font-size-desktop: @mui-headline-lg;
 @h1__font-weight: @font-weight__regular;
-@h2__font-size: @m3-headline-lg;
+@h2__font-size: @mui-headline-lg;
 @h2__font-weight: @font-weight__regular;
-@h3__font-size: @m3-title-lg;
+@h3__font-size: @mui-title-lg;
 @h3__font-weight: @font-weight__regular;
 
 //
-//  Colors (M3 roles)
+//  Colors (MUI palette)
 //  ---------------------------------------------
 
-@theme__color__primary: @m3-primary;
-@theme__color__primary-alt: darken(@m3-primary, 8%);
-@link__color: @m3-primary;
-@link__hover__color: darken(@m3-primary, 12%);
-@page__background-color: @m3-surface;
-@error__color: @m3-error;
-@border-color__base: @m3-outline;
-@focus__color: @m3-primary;
-@panel__background-color: @m3-surface-container;
+@theme__color__primary: @mui-primary;
+@theme__color__primary-alt: @mui-primary-dark;
+@link__color: @mui-primary;
+@link__hover__color: @mui-primary-dark;
+@page__background-color: @mui-background-default;
+@error__color: @mui-error;
+@border-color__base: @mui-divider;
+@focus__color: @mui-primary;
+@panel__background-color: @mui-background-paper;
 
 //
-//  Buttons (M3 filled / outlined)
+//  Buttons (MUI contained / outlined)
 //  ---------------------------------------------
 
-@button__border-radius: @m3-button-radius;
-@button__padding: 0 24px;
+@button__border-radius: @mui-button-radius;
+@button__padding: 0 16px;
 @button__font-weight: 500;
-@button__font-size: @m3-label-lg;
+@button__font-size: @mui-label-lg;
 
-@button__color: @m3-primary;
+@button__color: @mui-primary;
 @button__background: transparent;
-@button__border: 1px solid @m3-outline;
-@button__hover__color: @m3-primary;
-@button__hover__background: fade(@m3-primary, @m3-state-hover);
-@button__hover__border: 1px solid @m3-primary;
-@button__active__color: @m3-primary;
-@button__active__background: fade(@m3-primary, @m3-state-pressed);
-@button__active__border: 1px solid @m3-primary;
+@button__border: 1px solid @mui-button-outlined-border;
+@button__hover__color: @mui-primary;
+@button__hover__background: fade(@mui-primary, @mui-action-hover);
+@button__hover__border: 1px solid @mui-primary;
+@button__active__color: @mui-primary;
+@button__active__background: fade(@mui-primary, @mui-action-focus);
+@button__active__border: 1px solid @mui-primary;
 @button__disabled__opacity: 1;
+@button__shadow: none;
+@button__shadow-active: none;
 
-@button-primary__background: @m3-primary;
-@button-primary__border: 1px solid @m3-primary;
-@button-primary__color: @m3-on-primary;
-@button-primary__hover__background: darken(@m3-primary, 6%);
-@button-primary__hover__border: 1px solid darken(@m3-primary, 6%);
-@button-primary__hover__color: @m3-on-primary;
-@button-primary__active__background: darken(@m3-primary, 12%);
-@button-primary__active__border: 1px solid darken(@m3-primary, 12%);
-@button-primary__active__color: @m3-on-primary;
+@button-primary__background: @mui-primary;
+@button-primary__border: 1px solid @mui-primary;
+@button-primary__color: @mui-primary-contrast-text;
+@button-primary__hover__background: @mui-primary-dark;
+@button-primary__hover__border: 1px solid @mui-primary-dark;
+@button-primary__hover__color: @mui-primary-contrast-text;
+@button-primary__active__background: @mui-primary-dark;
+@button-primary__active__border: 1px solid @mui-primary-dark;
+@button-primary__active__color: @mui-primary-contrast-text;
 
 //
-//  Messages (M3 snackbar / banner)
+//  Messages (MUI Alert / Snackbar)
 //  ---------------------------------------------
 
-@message__border-radius: @m3-shape-sm;
+@message__border-radius: @mui-shape-sm;
 @message__padding: 16px 24px 16px 56px;
 
-@message-success__color: @m3-on-success;
-@message-success__background: @m3-success;
-@message-success-icon__color-inner: @m3-on-success;
-@message-success-icon__background: @m3-success;
-@message-success-icon__color-lateral: @m3-on-success;
+@message-success__color: @mui-success-contrast-text;
+@message-success__background: @mui-success;
+@message-success-icon__color-inner: @mui-success-contrast-text;
+@message-success-icon__background: @mui-success;
+@message-success-icon__color-lateral: @mui-success-contrast-text;
 
-@message-error__color: @m3-on-error;
-@message-error__background: @m3-error;
-@message-error-icon__color-inner: @m3-on-error;
-@message-error-icon__background: @m3-error;
-@message-error-icon__color-lateral: @m3-on-error;
+@message-error__color: @mui-error-contrast-text;
+@message-error__background: @mui-error;
+@message-error-icon__color-inner: @mui-error-contrast-text;
+@message-error-icon__background: @mui-error;
+@message-error-icon__color-lateral: @mui-error-contrast-text;
 
-@message-info__color: @m3-on-primary-container;
-@message-info__background: @m3-primary-container;
-@message-info-icon__color-inner: @m3-on-primary-container;
-@message-info-icon__background: @m3-primary-container;
-@message-info-icon__color-lateral: @m3-on-primary-container;
+@message-info__color: @mui-alert-info-color;
+@message-info__background: @mui-alert-info-bg;
+@message-info-icon__color-inner: @mui-alert-info-color;
+@message-info-icon__background: @mui-alert-info-bg;
+@message-info-icon__color-lateral: @mui-alert-info-color;
 
-@message-warning__color: @m3-on-secondary-container;
-@message-warning__background: @m3-secondary-container;
-@message-warning-icon__color-inner: @m3-on-secondary-container;
-@message-warning-icon__background: @m3-secondary-container;
-@message-warning-icon__color-lateral: @m3-on-secondary-container;
+@message-warning__color: @mui-alert-warning-color;
+@message-warning__background: @mui-alert-warning-bg;
+@message-warning-icon__color-inner: @mui-alert-warning-color;
+@message-warning-icon__background: @mui-alert-warning-bg;
+@message-warning-icon__color-lateral: @mui-alert-warning-color;
 
 //
-//  Forms (M3 outlined fields)
+//  Forms (MUI TextField outlined)
 //  ---------------------------------------------
 
-@form-element-input__border-radius: @m3-field-radius;
-@form-element-input__border-color: @m3-outline;
-@form-element-input__focus__border-color: @m3-primary;
-@form-element-input-placeholder__color: @m3-on-surface-variant;
-@form-element-input__height: @m3-field-height;
+@form-element-input__border-radius: @mui-field-radius;
+@form-element-input__border-color: @mui-input-border;
+@form-element-input__focus__border-color: @mui-primary;
+@form-element-input-placeholder__color: @mui-text-secondary;
+@form-element-input__height: @mui-field-height;
 
-@select__border: 1px solid @m3-outline;
-@select__border-radius: @m3-field-radius;
-@select__height: @m3-field-height;
+@select__border: 1px solid @mui-input-border;
+@select__border-radius: @mui-field-radius;
+@select__height: @mui-field-height;
 
 @form-field-label__font-weight: 500;
-@form-field-label__font-size: @m3-label-md;
+@form-field-label__font-size: @mui-label-md;
 
 //
 //  Navigation
 //  ---------------------------------------------
 
-@navigation__background: @m3-surface-container;
-@navigation-level0-item__active__color: @m3-primary;
+@navigation__background: @mui-background-paper;
+@navigation-level0-item__active__color: @mui-primary;
+
+//
+//  Header panel (override Luma dark strip)
+//  ---------------------------------------------
+
+@header-panel__background-color: @mui-grey-50;
+@header-panel__text-color: @mui-text-primary;
+@header-icons-color: @mui-text-secondary;
+@header-icons-color-hover: @mui-primary;

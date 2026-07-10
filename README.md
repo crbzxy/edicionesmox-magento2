@@ -185,9 +185,12 @@ make diff-luma-base   # detecta drift entre _luma-base.less y Luma tras un upgra
 ## Rendimiento en Windows
 
 Magento en Docker Desktop sobre NTFS es lento por defecto. Este boilerplate
-mitiga eso con volúmenes Linux para `var/`, `generated/`, `pub/static/` y
-`vendor/`, OPcache sin `stat()` por request, php-fpm con 20 workers y estáticos
-desplegados (nginx sirve JS/CSS directo, sin pasar por `static.php`).
+mitiga eso con volúmenes Linux para `var/`, `generated/`, `pub/static/`,
+`vendor/` y `lib/` (el framework core de Magento — miles de archivos PHP que
+se autocargan en casi cada request), OPcache sin `stat()` por request y con
+`max_accelerated_files`/`memory_consumption` altos (evita que OPcache deje de
+cachear archivos nuevos en una instalación completa), php-fpm con 20 workers y
+estáticos desplegados (nginx sirve JS/CSS directo, sin pasar por `static.php`).
 
 ### Síntomas y soluciones
 
@@ -195,7 +198,7 @@ desplegados (nginx sirve JS/CSS directo, sin pasar por `static.php`).
 |---------|----------------|----------|
 | 100+ requests JS en pending, carga > 60 s | `pub/static/` vacío | `make perf-setup` |
 | `Http\Interceptor does not exist` | `generated/` vacío | `make compile` |
-| Error 500, permission denied en `var/` | permisos del volumen | `docker compose restart php-fpm` |
+| Error 500, permission denied en `var/` | permisos del volumen | borra el marker (`.chowned`) del volumen afectado y `docker compose restart php-fpm cron` — ver comentario en `docker/php/docker-entrypoint.sh` |
 | Todo lento tras `docker compose down -v` | volúmenes borrados | `make perf-setup` |
 
 ### Diagnóstico

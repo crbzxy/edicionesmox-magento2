@@ -39,7 +39,7 @@ cache-flush:
 # borra los .css compilados del tema antes de redeployar, para forzar que la
 # próxima petición los recompile con los cambios de LESS.
 theme-deploy:
-	docker compose exec php-fpm bash -c 'rm -f pub/static/frontend/EdicionesMox/default/*/css/styles-*.css pub/static/frontend/EdicionesMox/default/*/css/critical.css'
+	docker compose exec php-fpm bash -c 'rm -rf var/view_preprocessed/pub/static/frontend/EdicionesMox pub/static/frontend/EdicionesMox/default/*/css/styles-*.css pub/static/frontend/EdicionesMox/default/*/css/critical.css'
 	docker compose exec php-fpm bin/magento setup:static-content:deploy es_MX -f --theme EdicionesMox/default --jobs=4
 	docker compose exec php-fpm chown -R www-data:www-data pub/static
 	docker compose exec php-fpm bin/magento cache:flush
@@ -58,7 +58,8 @@ perf-setup:
 upgrade:
 	docker compose exec php-fpm bin/magento setup:upgrade
 	docker compose exec php-fpm bin/magento setup:di:compile
-	docker compose exec php-fpm bash -c 'rm -f pub/static/frontend/EdicionesMox/default/*/css/styles-*.css pub/static/frontend/EdicionesMox/default/*/css/critical.css'
+	docker compose exec php-fpm bash -c 'rm -rf var/view_preprocessed/pub/static/frontend/EdicionesMox pub/static/frontend/EdicionesMox/default/*/css/styles-*.css pub/static/frontend/EdicionesMox/default/*/css/critical.css'
+	docker compose exec php-fpm bin/magento setup:static-content:deploy es_MX en_US -f --area adminhtml --jobs=4
 	docker compose exec php-fpm bin/magento setup:static-content:deploy es_MX en_US -f --theme EdicionesMox/default --jobs=4
 	docker compose exec php-fpm bin/magento indexer:reindex
 	docker compose exec php-fpm chown -R www-data:www-data var generated pub/static

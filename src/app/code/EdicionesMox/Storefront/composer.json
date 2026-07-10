@@ -1,0 +1,22 @@
+{
+    "name": "edicionesmox/module-storefront",
+    "description": "Storefront ViewModels, RequireJS mixins and frontend helpers for Ediciones Mox.",
+    "type": "magento2-module",
+    "license": "proprietary",
+    "require": {
+        "php": "~8.3.0||~8.4.0",
+        "magento/framework": "*",
+        "magento/module-catalog": "*",
+        "magento/module-checkout": "*",
+        "magento/module-customer": "*",
+        "magento/module-theme": "*"
+    },
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "EdicionesMox\\Storefront\\": ""
+        }
+    }
+}

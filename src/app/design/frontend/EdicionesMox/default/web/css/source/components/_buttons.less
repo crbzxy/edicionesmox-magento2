@@ -1,0 +1,16 @@
+//
+//  MUI contained / outlined buttons (solo CTAs; no iconos de header/checkout)
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .edmox-page:not(.checkout-index-index) {
+        button.action:not(.subscribe):not(.search):not(.showcart),
+        a.action.primary:not(.showcart) {
+            .mui-outlined-button();
+
+            &.primary {
+                .mui-contained-button();
+            }
+        }
+    }
+}

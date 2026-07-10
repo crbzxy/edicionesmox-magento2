@@ -1,0 +1,43 @@
+//
+//  Landing page module templates
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .landing-custom-page {
+        background: @mui-background-paper;
+        border-radius: @mui-shape-md;
+        box-shadow: @mui-elevation-1;
+        margin-bottom: 32px;
+        padding: 32px;
+
+        h1 {
+            color: @mui-text-primary;
+            font-size: @mui-headline-lg;
+            font-weight: @font-weight__regular;
+            margin-bottom: 16px;
+        }
+
+        p {
+            color: @mui-text-secondary;
+            font-size: @mui-body-lg;
+            margin-bottom: 16px;
+        }
+
+        a {
+            color: @mui-primary;
+            font-weight: 500;
+
+            &:hover {
+                color: @mui-primary-dark;
+            }
+        }
+    }
+
+    .landingpage-link {
+        margin-bottom: 24px;
+
+        .action.primary {
+            .mui-contained-button();
+        }
+    }
+}
