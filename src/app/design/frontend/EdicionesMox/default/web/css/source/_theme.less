@@ -1,6 +1,5 @@
 //
-//  Ediciones Mox theme — MUI (Material UI) default-theme overrides on Luma
-//  https://mui.com/material-ui/customization/default-theme/
+//  Ediciones Mox theme — overrides Luma con tokens de marca (edmox / edicionesmox.art)
 //  _____________________________________________
 
 //  _luma-base.less es una copia textual de
@@ -138,7 +137,11 @@
 //  Header panel (override Luma dark strip)
 //  ---------------------------------------------
 
-@header-panel__background-color: @mui-grey-50;
-@header-panel__text-color: @mui-text-primary;
+@header-panel__background-color: transparent;
+@header-panel__text-color: @mui-text-secondary;
 @header-icons-color: @mui-text-secondary;
 @header-icons-color-hover: @mui-primary;
+
+@layout__max-width: @edmox-content-max;
+@copyright__background-color: @edmox-black;
+@footer__background-color: @mui-background-default;

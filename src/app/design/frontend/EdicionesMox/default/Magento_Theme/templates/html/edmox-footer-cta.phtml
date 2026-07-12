@@ -1,0 +1,24 @@
+<?php
+/**
+ * CTA Instagram del pie — alineado con edicionesmox.art
+ *
+ * @var \Magento\Framework\View\Element\Template $block
+ * @var \Magento\Framework\Escaper $escaper
+ */
+$instagramUrl = 'https://www.instagram.com/edicionesmox/?hl=es';
+$logoSrc = $block->getViewFileUrl('images/edmox/logo-edmox-footer.webp');
+?>
+<div class="edmox-footer-brand">
+    <img class="edmox-footer-brand__logo"
+         src="<?= $escaper->escapeUrl($logoSrc) ?>"
+         alt="<?= $escaper->escapeHtmlAttr(__('Ediciones Mox')) ?>"
+         width="120"
+         height="40"
+         loading="lazy"/>
+    <a class="action primary edmox-footer-brand__cta"
+       href="<?= $escaper->escapeUrl($instagramUrl) ?>"
+       target="_blank"
+       rel="noopener noreferrer">
+        <?= $escaper->escapeHtml(__('Escríbenos en Instagram →')) ?>
+    </a>
+</div>

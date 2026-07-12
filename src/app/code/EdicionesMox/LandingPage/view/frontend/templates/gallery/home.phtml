@@ -1,0 +1,190 @@
+<?php
+/**
+ * Home galería — adaptación de edicionesmox.art / crbzxy/edmox
+ *
+ * @var \Magento\Framework\View\Element\Template $block
+ * @var \Magento\Framework\Escaper $escaper
+ */
+
+$heroBg = $block->getViewFileUrl('images/edmox/hero-bg.webp');
+$heroFeatured = $block->getViewFileUrl('images/edmox/hero.webp');
+$specimens = [
+    [
+        'id' => 'mox-001',
+        'name' => 'CHUPALINAS / Edición GID',
+        'meta' => 'PLA pintado · 2026',
+        'artist' => 'Ediciones Mox',
+        'image' => 'images/edmox/specimen-mox-001.webp',
+    ],
+    [
+        'id' => 'mox-002',
+        'name' => 'GOLDITOS / Serie kawaii',
+        'meta' => 'PLA pintado · 2026',
+        'artist' => 'Ediciones Mox',
+        'image' => 'images/edmox/specimen-mox-002.webp',
+    ],
+    [
+        'id' => 'mox-003',
+        'name' => 'ZURASHI / Mutante dual',
+        'meta' => 'PLA pintado · 2026',
+        'artist' => 'Ediciones Mox',
+        'image' => 'images/edmox/specimen-mox-003.webp',
+    ],
+    [
+        'id' => 'mox-004',
+        'name' => 'CHUPALINAS / Gold Shift',
+        'meta' => 'PLA pintado · 2026',
+        'artist' => 'Ediciones Mox',
+        'image' => 'images/edmox/specimen-mox-004.webp',
+    ],
+];
+$pieceCount = count($specimens);
+$instagramUrl = 'https://www.instagram.com/edicionesmox/?hl=es';
+?>
+<div class="edmox-gallery">
+    <section class="edmox-hero" aria-label="<?= $escaper->escapeHtmlAttr(__('Archivo de soft vinyl')) ?>">
+        <div class="edmox-hero__bg" aria-hidden="true">
+            <img src="<?= $escaper->escapeUrl($heroBg) ?>" alt="" width="1600" height="900" loading="eager"/>
+            <div class="edmox-hero__veil"></div>
+        </div>
+        <div class="edmox-bounds edmox-hero__grid">
+            <div class="edmox-hero__copy">
+                <p class="edmox-overline edmox-overline--muted"><?= $escaper->escapeHtml(__('Archivo de soft vinyl')) ?></p>
+                <h1 class="edmox-hero__title">
+                    <?= $escaper->escapeHtml(__('Ediciones')) ?>
+                    <br/>
+                    <span class="edmox-hero__accent"><?= $escaper->escapeHtml(__('Mox')) ?></span>
+                </h1>
+                <p class="edmox-hero__desc">
+                    <?= $escaper->escapeHtml(__(
+                        'Una colección curada de figuras japonesas de soft vinyl (sofubi). '
+                        . 'Cada pieza documentada con precisión de archivo — desde kaijus GID '
+                        . 'hasta ediciones limitadas pintadas a mano.'
+                    )) ?>
+                </p>
+                <p class="edmox-hero__scroll edmox-overline edmox-overline--muted">
+                    <?= $escaper->escapeHtml(__('Desplázate para explorar')) ?>
+                </p>
+            </div>
+            <figure class="edmox-vitrine edmox-hero__feature">
+                <img
+                    src="<?= $escaper->escapeUrl($heroFeatured) ?>"
+                    alt="<?= $escaper->escapeHtmlAttr(__('Vitrina de piezas Ediciones Mox — kaiju y art toys en exhibición')) ?>"
+                    width="800"
+                    height="500"
+                    loading="eager"/>
+                <figcaption class="edmox-hero__feature-caption">
+                    <span class="edmox-overline edmox-overline--primary">
+                        <?= $escaper->escapeHtml(__('Colección destacada')) ?>
+                    </span>
+                    <span class="edmox-hero__feature-text">
+                        <?= $escaper->escapeHtml(__('Vitrinas de la galería — Temporada 2026')) ?>
+                    </span>
+                </figcaption>
+            </figure>
+        </div>
+    </section>
+
+    <section class="edmox-archive" id="archive">
+        <div class="edmox-bounds">
+            <header class="edmox-archive__header">
+                <div>
+                    <p class="edmox-overline edmox-overline--muted">
+                        <?= $escaper->escapeHtml(__('Archivo — %1 piezas', $pieceCount)) ?>
+                    </p>
+                    <h2 class="edmox-section-title"><?= $escaper->escapeHtml(__('La colección')) ?></h2>
+                </div>
+                <a class="edmox-chip" href="<?= $escaper->escapeUrl($block->getUrl('')) ?>#archive">
+                    <?= $escaper->escapeHtml(__('PLA pintado')) ?>
+                </a>
+            </header>
+            <ul class="edmox-archive__grid">
+                <?php foreach ($specimens as $specimen): ?>
+                    <li class="edmox-specimen">
+                        <a class="edmox-specimen__link"
+                           href="<?= $escaper->escapeUrl($instagramUrl) ?>"
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           aria-label="<?= $escaper->escapeHtmlAttr($specimen['name']) ?>">
+                            <span class="edmox-vitrine edmox-specimen__media">
+                                <img
+                                    src="<?= $escaper->escapeUrl($block->getViewFileUrl($specimen['image'])) ?>"
+                                    alt="<?= $escaper->escapeHtmlAttr($specimen['name']) ?>"
+                                    width="480"
+                                    height="480"
+                                    loading="lazy"/>
+                            </span>
+                            <span class="edmox-specimen__body">
+                                <span class="edmox-specimen__name"><?= $escaper->escapeHtml($specimen['name']) ?></span>
+                                <span class="edmox-specimen__meta"><?= $escaper->escapeHtml($specimen['meta']) ?></span>
+                                <span class="edmox-specimen__artist"><?= $escaper->escapeHtml($specimen['artist']) ?></span>
+                            </span>
+                        </a>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    </section>
+
+    <section class="edmox-about" id="about">
+        <div class="edmox-bounds edmox-about__grid">
+            <div class="edmox-about__intro">
+                <p class="edmox-overline edmox-overline--primary"><?= $escaper->escapeHtml(__('Sobre nosotros')) ?></p>
+                <h2 class="edmox-section-title">
+                    <?= $escaper->escapeHtml(__('La galería virtual')) ?>
+                    <br/>
+                    <?= $escaper->escapeHtml(__('de ')) ?>
+                    <span class="edmox-hero__accent"><?= $escaper->escapeHtml(__('sofubi')) ?></span>
+                </h2>
+                <p class="edmox-about__text">
+                    <?= $escaper->escapeHtml(__(
+                        'Ediciones Mox nace en Coyoacán, CDMX, de la pasión por el kaiju y el art toy '
+                        . 'independiente — escultura, impresión 3D en PLA y acabado pintado a mano con estética sofubi.'
+                    )) ?>
+                </p>
+                <p class="edmox-about__text">
+                    <?= $escaper->escapeHtml(__(
+                        'Fundada en 2026, documentamos y compartimos cada edición limitada desde nuestro '
+                        . 'taller en la Ciudad de México. Cada pieza del archivo es diseño propio, '
+                        . 'producción artesanal y tirajes numerados.'
+                    )) ?>
+                </p>
+            </div>
+            <div class="edmox-about__aside">
+                <ul class="edmox-stats">
+                    <li class="edmox-vitrine edmox-stats__item">
+                        <strong><?= $escaper->escapeHtml((string) $pieceCount) ?></strong>
+                        <span class="edmox-overline edmox-overline--muted"><?= $escaper->escapeHtml(__('Piezas documentadas')) ?></span>
+                    </li>
+                    <li class="edmox-vitrine edmox-stats__item">
+                        <strong><?= $escaper->escapeHtml(__('Coyoacán')) ?></strong>
+                        <span class="edmox-overline edmox-overline--muted"><?= $escaper->escapeHtml(__('Sede del taller')) ?></span>
+                    </li>
+                    <li class="edmox-vitrine edmox-stats__item">
+                        <strong><?= $escaper->escapeHtml(__('CDMX')) ?></strong>
+                        <span class="edmox-overline edmox-overline--muted"><?= $escaper->escapeHtml(__('Ciudad de origen')) ?></span>
+                    </li>
+                    <li class="edmox-vitrine edmox-stats__item">
+                        <strong>2026</strong>
+                        <span class="edmox-overline edmox-overline--muted"><?= $escaper->escapeHtml(__('Año de fundación')) ?></span>
+                    </li>
+                </ul>
+                <div class="edmox-vitrine edmox-values">
+                    <p class="edmox-values__title"><?= $escaper->escapeHtml(__('Nuestros valores')) ?></p>
+                    <div class="edmox-values__item">
+                        <p class="edmox-values__name"><?= $escaper->escapeHtml(__('Autenticidad')) ?></p>
+                        <p class="edmox-values__desc"><?= $escaper->escapeHtml(__('Solo piezas verificadas y originales de fabricantes autorizados.')) ?></p>
+                    </div>
+                    <div class="edmox-values__item">
+                        <p class="edmox-values__name"><?= $escaper->escapeHtml(__('Preservación')) ?></p>
+                        <p class="edmox-values__desc"><?= $escaper->escapeHtml(__('Documentación fotográfica y técnica de nivel archivístico.')) ?></p>
+                    </div>
+                    <div class="edmox-values__item">
+                        <p class="edmox-values__name"><?= $escaper->escapeHtml(__('Comunidad')) ?></p>
+                        <p class="edmox-values__desc"><?= $escaper->escapeHtml(__('Conectamos coleccionistas con artistas y estudios independientes.')) ?></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

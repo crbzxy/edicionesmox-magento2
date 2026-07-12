@@ -1,6 +1,5 @@
 //
 //  Ediciones Mox — gutter de página, utilidades flex/grid (escala base-8)
-//  Margen horizontal mínimo 1rem (16px); footer sin gutter extra.
 //  _____________________________________________
 
 & when (@media-common = true) {
@@ -13,7 +12,9 @@
         .page.messages,
         .top-container,
         .page-wrapper > .widget,
-        .page-wrapper > .page-bottom {
+        .page-wrapper > .page-bottom,
+        .page-footer .footer.content,
+        .copyright {
             padding-left: @edmox-page-gutter;
             padding-right: @edmox-page-gutter;
         }
@@ -59,7 +60,9 @@
         .page.messages,
         .top-container,
         .page-wrapper > .widget,
-        .page-wrapper > .page-bottom {
+        .page-wrapper > .page-bottom,
+        .page-footer .footer.content,
+        .copyright {
             padding-left: @edmox-page-gutter-lg;
             padding-right: @edmox-page-gutter-lg;
         }
