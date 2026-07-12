@@ -1,0 +1,53 @@
+<?php
+/**
+ * Hero de la home galería.
+ *
+ * @var \Magento\Framework\View\Element\Template $block
+ * @var \Magento\Framework\Escaper $escaper
+ */
+
+$heroBg = $block->getViewFileUrl('images/edmox/hero-bg.webp');
+$heroFeatured = $block->getViewFileUrl('images/edmox/hero.webp');
+?>
+<section class="edmox-hero" aria-label="<?= $escaper->escapeHtmlAttr(__('Archivo de soft vinyl')) ?>">
+    <div class="edmox-hero__bg" aria-hidden="true">
+        <img src="<?= $escaper->escapeUrl($heroBg) ?>" alt="" width="1600" height="900" loading="eager"/>
+        <div class="edmox-hero__veil"></div>
+    </div>
+    <div class="edmox-bounds edmox-hero__grid">
+        <div class="edmox-hero__copy">
+            <p class="edmox-overline edmox-overline--muted"><?= $escaper->escapeHtml(__('Archivo de soft vinyl')) ?></p>
+            <h1 class="edmox-hero__title">
+                <?= $escaper->escapeHtml(__('Ediciones')) ?>
+                <br/>
+                <span class="edmox-hero__accent"><?= $escaper->escapeHtml(__('Mox')) ?></span>
+            </h1>
+            <p class="edmox-hero__desc">
+                <?= $escaper->escapeHtml(__(
+                    'Una colección curada de figuras japonesas de soft vinyl (sofubi). '
+                    . 'Cada pieza documentada con precisión de archivo — desde kaijus GID '
+                    . 'hasta ediciones limitadas pintadas a mano.'
+                )) ?>
+            </p>
+            <p class="edmox-hero__scroll edmox-overline edmox-overline--muted">
+                <?= $escaper->escapeHtml(__('Desplázate para explorar')) ?>
+            </p>
+        </div>
+        <figure class="edmox-vitrine edmox-hero__feature">
+            <img
+                src="<?= $escaper->escapeUrl($heroFeatured) ?>"
+                alt="<?= $escaper->escapeHtmlAttr(__('Vitrina de piezas Ediciones Mox — kaiju y art toys en exhibición')) ?>"
+                width="800"
+                height="500"
+                loading="eager"/>
+            <figcaption class="edmox-hero__feature-caption">
+                <span class="edmox-overline edmox-overline--primary">
+                    <?= $escaper->escapeHtml(__('Colección destacada')) ?>
+                </span>
+                <span class="edmox-hero__feature-text">
+                    <?= $escaper->escapeHtml(__('Vitrinas de la galería — Temporada 2026')) ?>
+                </span>
+            </figcaption>
+        </figure>
+    </div>
+</section>

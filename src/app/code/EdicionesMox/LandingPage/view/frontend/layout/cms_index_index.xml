@@ -13,6 +13,18 @@
                         EdicionesMox\LandingPage\ViewModel\HomeGallery
                     </argument>
                 </arguments>
+                <block class="Magento\Framework\View\Element\Template"
+                       name="edmox.gallery.hero"
+                       as="hero"
+                       template="EdicionesMox_LandingPage::gallery/hero.phtml"/>
+                <block class="Magento\Framework\View\Element\Template"
+                       name="edmox.gallery.archive"
+                       as="archive"
+                       template="EdicionesMox_LandingPage::gallery/archive.phtml"/>
+                <block class="Magento\Framework\View\Element\Template"
+                       name="edmox.gallery.about"
+                       as="about"
+                       template="EdicionesMox_LandingPage::gallery/about.phtml"/>
             </block>
         </referenceContainer>
     </body>

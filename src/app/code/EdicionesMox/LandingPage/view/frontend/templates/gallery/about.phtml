@@ -1,0 +1,81 @@
+<?php
+/**
+ * About de la home galería.
+ *
+ * @var \Magento\Framework\View\Element\Template $block
+ * @var \Magento\Framework\Escaper $escaper
+ * @var \EdicionesMox\LandingPage\ViewModel\HomeGallery $gallery
+ */
+
+$gallery = $block->getParentBlock()->getData('gallery_view_model');
+$pieceCount = $gallery->getPieceCount();
+$instagramUrl = $gallery->getInstagramUrl();
+?>
+<section class="edmox-about" id="about">
+    <div class="edmox-bounds edmox-about__grid">
+        <div class="edmox-about__intro">
+            <p class="edmox-overline edmox-overline--primary"><?= $escaper->escapeHtml(__('Sobre nosotros')) ?></p>
+            <h2 class="edmox-section-title">
+                <?= $escaper->escapeHtml(__('La galería virtual')) ?>
+                <br/>
+                <?= $escaper->escapeHtml(__('de ')) ?>
+                <span class="edmox-hero__accent"><?= $escaper->escapeHtml(__('sofubi')) ?></span>
+            </h2>
+            <p class="edmox-about__text">
+                <?= $escaper->escapeHtml(__(
+                    'Ediciones Mox nace en Coyoacán, CDMX, de la pasión por el kaiju y el art toy '
+                    . 'independiente — escultura, impresión 3D en PLA y acabado pintado a mano con estética sofubi.'
+                )) ?>
+            </p>
+            <p class="edmox-about__text">
+                <?= $escaper->escapeHtml(__(
+                    'Fundada en 2026, documentamos y compartimos cada edición limitada desde nuestro '
+                    . 'taller en la Ciudad de México. Cada pieza del archivo es diseño propio, '
+                    . 'producción artesanal y tirajes numerados.'
+                )) ?>
+            </p>
+            <p class="edmox-about__text">
+                <a href="<?= $escaper->escapeUrl($instagramUrl) ?>"
+                   target="_blank"
+                   rel="noopener noreferrer">
+                    <?= $escaper->escapeHtml(__('Síguenos en Instagram')) ?>
+                </a>
+            </p>
+        </div>
+        <div class="edmox-about__aside">
+            <ul class="edmox-stats">
+                <li class="edmox-vitrine edmox-stats__item">
+                    <strong><?= $escaper->escapeHtml((string) $pieceCount) ?></strong>
+                    <span class="edmox-overline edmox-overline--muted"><?= $escaper->escapeHtml(__('Piezas documentadas')) ?></span>
+                </li>
+                <li class="edmox-vitrine edmox-stats__item">
+                    <strong><?= $escaper->escapeHtml(__('Coyoacán')) ?></strong>
+                    <span class="edmox-overline edmox-overline--muted"><?= $escaper->escapeHtml(__('Sede del taller')) ?></span>
+                </li>
+                <li class="edmox-vitrine edmox-stats__item">
+                    <strong><?= $escaper->escapeHtml(__('CDMX')) ?></strong>
+                    <span class="edmox-overline edmox-overline--muted"><?= $escaper->escapeHtml(__('Ciudad de origen')) ?></span>
+                </li>
+                <li class="edmox-vitrine edmox-stats__item">
+                    <strong>2026</strong>
+                    <span class="edmox-overline edmox-overline--muted"><?= $escaper->escapeHtml(__('Año de fundación')) ?></span>
+                </li>
+            </ul>
+            <div class="edmox-vitrine edmox-values">
+                <p class="edmox-values__title"><?= $escaper->escapeHtml(__('Nuestros valores')) ?></p>
+                <div class="edmox-values__item">
+                    <p class="edmox-values__name"><?= $escaper->escapeHtml(__('Autenticidad')) ?></p>
+                    <p class="edmox-values__desc"><?= $escaper->escapeHtml(__('Solo piezas verificadas y originales de fabricantes autorizados.')) ?></p>
+                </div>
+                <div class="edmox-values__item">
+                    <p class="edmox-values__name"><?= $escaper->escapeHtml(__('Preservación')) ?></p>
+                    <p class="edmox-values__desc"><?= $escaper->escapeHtml(__('Documentación fotográfica y técnica de nivel archivístico.')) ?></p>
+                </div>
+                <div class="edmox-values__item">
+                    <p class="edmox-values__name"><?= $escaper->escapeHtml(__('Comunidad')) ?></p>
+                    <p class="edmox-values__desc"><?= $escaper->escapeHtml(__('Conectamos coleccionistas con artistas y estudios independientes.')) ?></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

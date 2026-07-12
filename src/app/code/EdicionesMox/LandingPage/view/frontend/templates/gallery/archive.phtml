@@ -1,0 +1,58 @@
+<?php
+/**
+ * Archivo de piezas (categoría Destacados).
+ *
+ * @var \Magento\Framework\View\Element\Template $block
+ * @var \Magento\Framework\Escaper $escaper
+ * @var \EdicionesMox\LandingPage\ViewModel\HomeGallery $gallery
+ */
+
+$gallery = $block->getParentBlock()->getData('gallery_view_model');
+$specimens = $gallery->getSpecimens();
+$pieceCount = $gallery->getPieceCount();
+$coleccionUrl = $gallery->getColeccionUrl();
+?>
+<section class="edmox-archive" id="archive">
+    <div class="edmox-bounds">
+        <header class="edmox-archive__header">
+            <div>
+                <p class="edmox-overline edmox-overline--muted">
+                    <?= $escaper->escapeHtml(__('Archivo — %1 piezas', $pieceCount)) ?>
+                </p>
+                <h2 class="edmox-section-title"><?= $escaper->escapeHtml(__('La colección')) ?></h2>
+            </div>
+            <a class="edmox-chip" href="<?= $escaper->escapeUrl($coleccionUrl) ?>">
+                <?= $escaper->escapeHtml(__('Ver colección')) ?>
+            </a>
+        </header>
+        <?php if ($specimens === []): ?>
+            <p class="edmox-archive__empty">
+                <?= $escaper->escapeHtml(__('Pronto publicaremos las primeras piezas del archivo.')) ?>
+            </p>
+        <?php else: ?>
+            <ul class="edmox-archive__grid">
+                <?php foreach ($specimens as $specimen): ?>
+                    <li class="edmox-specimen">
+                        <a class="edmox-specimen__link"
+                           href="<?= $escaper->escapeUrl($specimen['url']) ?>"
+                           aria-label="<?= $escaper->escapeHtmlAttr($specimen['name']) ?>">
+                            <span class="edmox-vitrine edmox-specimen__media">
+                                <img
+                                    src="<?= $escaper->escapeUrl($specimen['imageUrl']) ?>"
+                                    alt="<?= $escaper->escapeHtmlAttr($specimen['name']) ?>"
+                                    width="480"
+                                    height="480"
+                                    loading="lazy"/>
+                            </span>
+                            <span class="edmox-specimen__body">
+                                <span class="edmox-specimen__name"><?= $escaper->escapeHtml($specimen['name']) ?></span>
+                                <span class="edmox-specimen__meta"><?= $escaper->escapeHtml($specimen['meta']) ?></span>
+                                <span class="edmox-specimen__artist"><?= $escaper->escapeHtml($specimen['artist']) ?></span>
+                            </span>
+                        </a>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        <?php endif; ?>
+    </div>
+</section>
