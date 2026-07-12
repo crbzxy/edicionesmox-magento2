@@ -1,135 +1,119 @@
 //
-//  MUI (Material UI, https://mui.com) default theme tokens, ported to LESS.
-//  Values match @mui/material's createTheme() defaults (light mode) —
-//  not a "MUI-inspired" palette, the actual shipped defaults.
+//  Storefront tokens — mapeo compatible con mixins/componentes existentes.
+//  Valores = paleta dark de Ediciones Mox (edicionesmox.art / edmox),
+//  no los defaults light de MUI.
 //  _____________________________________________
 
-//  Palette — theme.palette
-@mui-primary: #1976D2;
-@mui-primary-light: #42A5F5;
-@mui-primary-dark: #1565C0;
-@mui-primary-contrast-text: #FFFFFF;
+@import '_edicionesmox-tokens.less';
 
-@mui-secondary: #9C27B0;
-@mui-secondary-light: #BA68C8;
-@mui-secondary-dark: #7B1FA2;
-@mui-secondary-contrast-text: #FFFFFF;
+//  Palette
+@mui-primary: @edmox-red;
+@mui-primary-light: @edmox-red-emphasis;
+@mui-primary-dark: @edmox-red-muted;
+@mui-primary-contrast-text: @edmox-white;
 
-@mui-error: #D32F2F;
-@mui-error-light: #EF5350;
+@mui-secondary: #1C1C1C;
+@mui-secondary-light: @edmox-ink-elevated;
+@mui-secondary-dark: @edmox-black;
+@mui-secondary-contrast-text: @edmox-white;
+
+@mui-error: #EF5350;
+@mui-error-light: #F44336;
 @mui-error-dark: #C62828;
-@mui-error-contrast-text: #FFFFFF;
+@mui-error-contrast-text: @edmox-white;
 
-@mui-warning: #ED6C02;
-@mui-warning-light: #FF9800;
-@mui-warning-dark: #E65100;
-@mui-warning-contrast-text: #FFFFFF;
+@mui-warning: #fbbf24;
+@mui-warning-light: #fcd34d;
+@mui-warning-dark: #d97706;
+@mui-warning-contrast-text: @edmox-ink;
 
-@mui-info: #0288D1;
-@mui-info-light: #03A9F4;
-@mui-info-dark: #01579B;
-@mui-info-contrast-text: #FFFFFF;
+@mui-info: @edmox-slate;
+@mui-info-light: @edmox-mist;
+@mui-info-dark: @edmox-graphite;
+@mui-info-contrast-text: @edmox-white;
 
-@mui-success: #2E7D32;
-@mui-success-light: #4CAF50;
-@mui-success-dark: #1B5E20;
-@mui-success-contrast-text: #FFFFFF;
+@mui-success: #4CAF50;
+@mui-success-light: #81C784;
+@mui-success-dark: #2E7D32;
+@mui-success-contrast-text: @edmox-white;
 
-//  theme.palette.common
-@mui-common-white: #FFFFFF;
-@mui-common-black: #000000;
+@mui-common-white: @edmox-white;
+@mui-common-black: @edmox-black;
 
-//  theme.palette.grey
-@mui-grey-50: #FAFAFA;
-@mui-grey-100: #F5F5F5;
-@mui-grey-900: #212121;
+@mui-grey-50: @edmox-ink-elevated;
+@mui-grey-100: #1C1C1C;
+@mui-grey-900: @edmox-fog;
 
-//  theme.palette.text / background / divider
-@mui-text-primary: rgba(0, 0, 0, 0.87);
-@mui-text-secondary: rgba(0, 0, 0, 0.6);
-@mui-text-disabled: rgba(0, 0, 0, 0.38);
-@mui-background-default: #FFFFFF;
-@mui-background-paper: #FFFFFF;
-@mui-divider: rgba(0, 0, 0, 0.12);
+@mui-text-primary: @edmox-white;
+@mui-text-secondary: rgba(255, 255, 255, 0.62);
+@mui-text-disabled: rgba(255, 255, 255, 0.38);
+@mui-background-default: @edmox-ink;
+@mui-background-paper: @edmox-ink-elevated;
+@mui-divider: rgba(255, 255, 255, 0.1);
 
-//  Component-specific borders (not a single global "outline" role in MUI —
-//  OutlinedInput and the outlined Button variant use different alphas)
-@mui-input-border: rgba(0, 0, 0, 0.23);
-@mui-input-border-hover: rgba(0, 0, 0, 0.87);
+@mui-input-border: rgba(255, 255, 255, 0.23);
+@mui-input-border-hover: rgba(255, 255, 255, 0.72);
 @mui-button-outlined-border: fade(@mui-primary, 50%);
 
-//  theme.palette.action
-@mui-action-hover: 4%;
-@mui-action-selected: 8%;
-@mui-action-focus: 12%;
+@mui-action-hover: 8%;
+@mui-action-selected: 12%;
+@mui-action-focus: 16%;
 @mui-action-disabled: 38%;
 @mui-action-disabled-bg: 12%;
 
-//  Alert (standard variant): background = lighten(color, .9), text = darken(color, .6)
-//  https://github.com/mui/material-ui/blob/master/packages/mui-material/src/Alert/Alert.js
-@mui-alert-info-bg: lighten(@mui-info, 44%);
-@mui-alert-info-color: darken(@mui-info, 20%);
-@mui-alert-warning-bg: lighten(@mui-warning, 44%);
-@mui-alert-warning-color: darken(@mui-warning, 20%);
-@mui-alert-success-bg: lighten(@mui-success, 44%);
-@mui-alert-success-color: darken(@mui-success, 20%);
-@mui-alert-error-bg: lighten(@mui-error, 44%);
-@mui-alert-error-color: darken(@mui-error, 20%);
+@mui-alert-info-bg: fade(@edmox-slate, 24%);
+@mui-alert-info-color: @edmox-fog;
+@mui-alert-warning-bg: fade(@mui-warning, 18%);
+@mui-alert-warning-color: @mui-warning;
+@mui-alert-success-bg: fade(@mui-success, 18%);
+@mui-alert-success-color: @mui-success-light;
+@mui-alert-error-bg: fade(@mui-error, 18%);
+@mui-alert-error-color: @mui-error-light;
 
-//  Shape — theme.shape.borderRadius is a single 4px value in real MUI (no
-//  multi-tier scale). lg/xl kept as an EdicionesMox extension for larger
-//  surfaces that many MUI themes bump up manually (Dialog/Menu paper).
-@mui-shape-xs: 4px;
-@mui-shape-sm: 4px;
-@mui-shape-md: 4px;
-@mui-shape-lg: 8px;
-@mui-shape-xl: 12px;
+//  Shape — edmox usa borderRadius: 0
+@mui-shape-xs: 0;
+@mui-shape-sm: 0;
+@mui-shape-md: 0;
+@mui-shape-lg: 0;
+@mui-shape-xl: @edmox-logo-radius;
 @mui-shape-full: 9999px;
 
-//  Typography — theme.typography (Roboto). Names kept from the previous
-//  type-scale for call-site compatibility; values now match the closest
-//  real MUI variant (see comments).
-@mui-font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
-@mui-display-lg: 96px; // MUI h1
-@mui-headline-lg: 48px; // MUI h3
-@mui-headline-md: 34px; // MUI h4
-@mui-title-lg: 20px; // MUI h6
-@mui-title-md: 16px; // MUI subtitle1
-@mui-body-lg: 16px; // MUI body1
-@mui-body-md: 14px; // MUI body2
-@mui-body-sm: 12px; // MUI caption
-@mui-label-lg: 14px; // MUI button
-@mui-label-md: 12px; // MUI overline / caption
+//  Typography
+@mui-font-family: 'Roboto', system-ui, 'Segoe UI', sans-serif;
+@mui-display-lg: 88px;
+@mui-headline-lg: 44px;
+@mui-headline-md: 32px;
+@mui-title-lg: 20px;
+@mui-title-md: 16px;
+@mui-body-lg: 15px;
+@mui-body-md: 13px;
+@mui-body-sm: 12px;
+@mui-label-lg: 14px;
+@mui-label-md: 10px;
 
-//  Elevation — real @mui/material default shadow strings (theme.shadows[1],
-//  [3] and [6]; Snackbar itself defaults to elevation 6).
-@mui-elevation-1: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
-@mui-elevation-2: 0px 3px 3px -2px rgba(0, 0, 0, 0.2), 0px 3px 4px 0px rgba(0, 0, 0, 0.14), 0px 1px 8px 0px rgba(0, 0, 0, 0.12);
-@mui-elevation-3: 0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12);
+@mui-elevation-1: none;
+@mui-elevation-2: @edmox-vitrine-shadow;
+@mui-elevation-3: @edmox-vitrine-shadow;
 
-//  theme.transitions
 @mui-transition-duration: 0.2s;
-@mui-transition-easing: cubic-bezier(0.4, 0, 0.2, 1);
+@mui-transition-easing: @edmox-transition-easing;
 
-//  Component metrics (Button medium / TextField outlined defaults)
-@mui-button-height: 36px;
+@mui-button-height: 40px;
 @mui-button-radius: @mui-shape-xs;
-@mui-field-height: 56px;
+@mui-field-height: 48px;
 @mui-field-radius: @mui-shape-xs;
 
-//  Layout — gutter horizontal (1rem = 16px); footer excluido en _layout.less
-@edmox-page-gutter: 1rem;
-@edmox-page-gutter-lg: 2rem;
-@edmox-nav-item-padding: 12px 16px;
+@edmox-page-gutter: 16px;
+@edmox-page-gutter-lg: 24px;
+@edmox-nav-item-padding: 8px 0;
 
-//  Backward-compatible aliases (Ediciones Mox tokens)
 @edicionesmox-color-primary: @mui-primary;
 @edicionesmox-color-text: @mui-text-primary;
-@edicionesmox-color-white: @mui-background-paper;
+@edicionesmox-color-white: @edmox-white;
 @edicionesmox-color-error: @mui-error;
 @edicionesmox-color-success: @mui-success;
-@edicionesmox-color-accent: #12DEF9;
+@edicionesmox-color-accent: @edmox-red-emphasis;
 @edicionesmox-color-stormy: @mui-text-secondary;
 @edicionesmox-color-disabled: fade(@mui-text-primary, @mui-action-disabled-bg);
-@edicionesmox-color-cloud: @mui-grey-50;
-@edicionesmox-color-sky: @mui-background-default;
+@edicionesmox-color-cloud: @edmox-ink-elevated;
+@edicionesmox-color-sky: @edmox-ink;

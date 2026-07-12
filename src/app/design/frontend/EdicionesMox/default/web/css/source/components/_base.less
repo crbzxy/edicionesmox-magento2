@@ -1,5 +1,5 @@
 //
-//  Base / typography / surfaces
+//  Base / typography / surfaces — dark archive
 //  _____________________________________________
 
 & when (@media-common = true) {
@@ -7,9 +7,12 @@
         background: @mui-background-default;
         color: @mui-text-primary;
         font-family: @mui-font-family;
-        font-size: @mui-body-md;
-        letter-spacing: 0.25px;
-        line-height: 1.5;
+        font-size: @mui-body-lg;
+        -moz-osx-font-smoothing: grayscale;
+        -webkit-font-smoothing: antialiased;
+        letter-spacing: 0;
+        line-height: 1.6;
+        text-rendering: optimizeLegibility;
     }
 
     a {
@@ -17,25 +20,47 @@
         color: @mui-primary;
 
         &:hover {
-            color: @mui-primary-dark;
+            color: @mui-primary-light;
         }
 
         &:visited {
-            color: @mui-primary-dark;
+            color: @mui-primary;
         }
     }
 
-    .page-header,
-    .page-footer {
-        background: @mui-background-paper;
+    .page-header {
+        background: fade(@mui-background-default, 85%);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid fade(@edmox-white, 6%);
     }
 
     .page-footer {
+        background: @mui-background-default;
         border-top: 1px solid @mui-divider;
+    }
+
+    .copyright {
+        background: @edmox-black;
+        color: @mui-text-secondary;
+        text-align: center;
     }
 
     :focus-visible {
         outline: 2px solid @mui-primary;
-        outline-offset: 2px;
+        outline-offset: 4px;
+    }
+}
+
+// Luma pisa .page-footer a #f4f4f4 en styles-l (min-width 768px)
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+    .page-footer {
+        background: @mui-background-default;
+        margin-top: auto;
+        padding-bottom: 24px;
+    }
+
+    .copyright {
+        background: @edmox-black;
+        color: @mui-text-secondary;
     }
 }

@@ -4,17 +4,8 @@
  * @var \Magento\Framework\Escaper $escaper
  * @var \EdicionesMox\Storefront\ViewModel\Navigation|null $navigationViewModel
  */
-$storeName = $block->getThemeName() ? $block->getThemeName() : $block->getLogoAlt();
-/**
- * @var \Magento\Theme\ViewModel\Block\Html\Header\LogoSizeResolverInterface|null $logoSizeResolver
- */
-$logoSizeResolver = $block->getLogoSizeResolver();
-$logoWidth = $logoSizeResolver !== null && $logoSizeResolver->getWidth()
-    ? $logoSizeResolver->getWidth()
-    : $block->getLogoWidth();
-$logoHeight = $logoSizeResolver !== null && $logoSizeResolver->getHeight()
-    ? $logoSizeResolver->getHeight()
-    : $block->getLogoHeight();
+$storeName = 'Ediciones Mox';
+$logoSrc = $block->getViewFileUrl('images/edmox/logo-edmox.webp');
 $navigationViewModel = $block->getData('navigation_view_model');
 $ariaLabelToggleNav = $navigationViewModel
     ? $navigationViewModel->getAriaLabelToggleNav()
@@ -24,15 +15,15 @@ $ariaLabelToggleNav = $navigationViewModel
     <span><?= $escaper->escapeHtml(__('Toggle Nav')) ?></span>
 </span>
 <a
-    class="logo"
+    class="logo edmox-logo"
     href="<?= $escaper->escapeUrl($block->getUrl('')) ?>"
     title="<?= $escaper->escapeHtmlAttr($storeName) ?>"
-    aria-label="store logo">
-    <img src="<?= $escaper->escapeUrl($block->getLogoSrc()) ?>"
-         title="<?= $escaper->escapeHtmlAttr($block->getLogoAlt()) ?>"
-         alt="<?= $escaper->escapeHtmlAttr($block->getLogoAlt()) ?>"
-        <?= $logoWidth ? 'width="' . $escaper->escapeHtmlAttr($logoWidth) . '"' : '' ?>
-        <?= $logoHeight ? 'height="' . $escaper->escapeHtmlAttr($logoHeight) . '"' : '' ?>
+    aria-label="<?= $escaper->escapeHtmlAttr(__('Ediciones Mox — inicio')) ?>">
+    <img src="<?= $escaper->escapeUrl($logoSrc) ?>"
+         title="<?= $escaper->escapeHtmlAttr($storeName) ?>"
+         alt="<?= $escaper->escapeHtmlAttr($storeName) ?>"
+         width="140"
+         height="40"
     />
 </a>
 <script type="text/x-magento-init">

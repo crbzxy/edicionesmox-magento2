@@ -1,15 +1,70 @@
 //
-//  Header — tokens MUI sin romper el layout float/clearfix de Luma
+//  Header — barra fija estilo galería edmox
 //  _____________________________________________
 
 & when (@media-common = true) {
     .edmox-page {
         .panel.wrapper {
-            border-bottom: 1px solid @mui-divider;
+            background: transparent;
+            border-bottom: 0;
         }
 
         .panel.header {
+            color: @mui-text-secondary;
             font-size: @mui-body-sm;
+        }
+
+        .header.content {
+            align-items: center;
+            min-height: 64px;
+            padding-bottom: 12px;
+            padding-top: 12px;
+        }
+
+        .edmox-logo {
+            border-radius: @edmox-logo-radius;
+            display: inline-flex;
+            line-height: 0;
+            .mui-transition(~"opacity, transform");
+
+            img {
+                border-radius: @edmox-logo-radius;
+                display: block;
+                height: auto;
+                max-height: 40px;
+                width: auto;
+            }
+
+            &:hover {
+                opacity: 0.92;
+                transform: scale(1.02);
+            }
+        }
+
+        .minicart-wrapper .action.showcart {
+            color: @mui-text-secondary;
+
+            &:hover {
+                color: @mui-text-primary;
+            }
+        }
+
+        .block-search .label,
+        .block-search .control input {
+            color: @mui-text-primary;
+        }
+
+        .block-search .control input {
+            background: @edmox-vitrine-glass;
+            border-color: @edmox-vitrine-border;
+        }
+    }
+}
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+    .edmox-page {
+        .header.content {
+            min-height: 72px;
         }
     }
 }

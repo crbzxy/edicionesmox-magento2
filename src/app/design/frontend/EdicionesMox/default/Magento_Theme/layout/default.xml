@@ -3,7 +3,22 @@
       xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
         <attribute name="class" value="edmox-page"/>
-
         <referenceContainer name="compare-link-wrapper" remove="true"/>
+
+        <referenceBlock name="logo">
+            <arguments>
+                <argument name="logo_file" xsi:type="string">images/edmox/logo-edmox.webp</argument>
+                <argument name="logo_alt" xsi:type="string">Ediciones Mox</argument>
+                <argument name="logo_width" xsi:type="number">140</argument>
+                <argument name="logo_height" xsi:type="number">40</argument>
+            </arguments>
+        </referenceBlock>
+
+        <referenceContainer name="footer">
+            <block class="Magento\Framework\View\Element\Template"
+                   name="edmox.footer.cta"
+                   template="Magento_Theme::html/edmox-footer-cta.phtml"
+                   after="-"/>
+        </referenceContainer>
     </body>
 </page>

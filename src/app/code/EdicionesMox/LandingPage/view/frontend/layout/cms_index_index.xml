@@ -2,11 +2,18 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
+        <attribute name="class" value="edmox-gallery-home"/>
         <referenceContainer name="content">
             <block class="Magento\Framework\View\Element\Template"
-                   name="landingpage.home.link"
-                   template="EdicionesMox_LandingPage::page/home-link.phtml"
-                   before="-"/>
+                   name="edmox.gallery.home"
+                   template="EdicionesMox_LandingPage::gallery/home.phtml"
+                   before="-">
+                <arguments>
+                    <argument name="gallery_view_model" xsi:type="object">
+                        EdicionesMox\LandingPage\ViewModel\HomeGallery
+                    </argument>
+                </arguments>
+            </block>
         </referenceContainer>
     </body>
 </page>

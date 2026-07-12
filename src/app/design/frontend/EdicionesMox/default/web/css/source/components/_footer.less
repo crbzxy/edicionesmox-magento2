@@ -1,12 +1,90 @@
 //
-//  Footer — tokens MUI sin romper el layout de bloques de Luma
+//  Footer — CTA Instagram + marca (dark)
 //  _____________________________________________
 
 & when (@media-common = true) {
     .edmox-page {
+        .page-footer,
         .page-footer .footer.content {
-            padding-bottom: 32px;
-            padding-top: 32px;
+            background: @mui-background-default;
         }
+
+        .page-footer .footer.content {
+            padding-bottom: 48px;
+            padding-top: 48px;
+        }
+
+        .edmox-footer-brand {
+            align-items: flex-start;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            margin-bottom: 32px;
+            width: 100%;
+        }
+
+        .edmox-footer-brand__logo {
+            border-radius: @edmox-logo-radius;
+            display: block;
+            height: auto;
+            max-width: 140px;
+        }
+
+        .edmox-footer-brand__cta {
+            font-size: 0.7rem;
+            letter-spacing: 0.12em;
+            padding: 12px 24px;
+            text-transform: uppercase;
+
+            &:hover {
+                filter: brightness(1.08);
+            }
+
+            &:active {
+                filter: brightness(0.95);
+            }
+        }
+
+        .footer.content .links a,
+        .footer.content .links a:visited {
+            color: @mui-text-secondary;
+
+            &:hover {
+                color: @mui-text-primary;
+            }
+        }
+
+        .block.newsletter {
+            .field .control input {
+                background: @edmox-vitrine-glass;
+                border-color: @edmox-vitrine-border;
+                color: @mui-text-primary;
+            }
+        }
+    }
+}
+
+// Luma fuerza .page-footer { background: #f4f4f4 } en styles-l
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+    .edmox-page {
+        .page-footer,
+        .page-footer .footer.content {
+            background: @mui-background-default;
+        }
+
+        .edmox-footer-brand {
+            align-items: center;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        .footer.content .links a,
+        .footer.content .links a:visited {
+            color: @mui-text-secondary;
+        }
+    }
+
+    .page-footer {
+        background: @mui-background-default;
     }
 }

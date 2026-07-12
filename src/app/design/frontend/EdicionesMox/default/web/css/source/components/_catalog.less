@@ -104,28 +104,107 @@
     }
 
     .edmox-page.catalog-product-view {
-        .product.media {
-            container-name: product-gallery;
-            container-type: inline-size;
-            margin-bottom: 24px;
-        }
-
         .page-title-wrapper .page-title {
             font-size: @mui-headline-md;
+        }
+
+        // Reserva hueco antes de que Fotorama monte (evita saltos de layout).
+        .product.media {
+            margin-bottom: 24px;
+            max-width: 100%;
+            min-height: 280px;
+
+            .fotorama__stage {
+                border-radius: @mui-shape-md;
+                overflow: hidden;
+            }
+
+            .gallery-placeholder,
+            .fotorama-item,
+            .fotorama {
+                max-width: 100%;
+            }
+        }
+
+        .product.media,
+        .product-info-main,
+        .product.info.detailed {
+            animation: edmox-pdp-rise 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+
+        .product.media {
+            animation-delay: 0.04s;
+        }
+
+        .product-info-main {
+            animation-delay: 0.12s;
+        }
+
+        .product.info.detailed {
+            animation-delay: 0.2s;
+        }
+    }
+
+    @keyframes edmox-pdp-rise {
+        from {
+            opacity: 0;
+            transform: translate3d(0, 28px, 0);
+        }
+
+        to {
+            opacity: 1;
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .edmox-page.catalog-product-view {
+            .product.media,
+            .product-info-main,
+            .product.info.detailed {
+                animation: none;
+            }
         }
     }
 }
 
 .media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+    // Grid estable con áreas: anula floats de Luma para que la galería
+    // no “salte” de izquierda a derecha al inicializar Fotorama.
     .edmox-page.catalog-product-view {
         .column.main {
             display: grid;
             gap: 32px;
-            grid-template-columns: 1fr 1fr;
+            grid-template-areas:
+                'gallery info'
+                'details details';
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        }
+
+        .product.media,
+        .product-info-main {
+            clear: none;
+            float: none !important;
+            margin-left: 0;
+            margin-right: 0;
+            padding-left: 0;
+            padding-right: 0;
+            width: auto !important;
         }
 
         .product.media {
+            grid-area: gallery;
             margin-bottom: 0;
+            min-height: 360px;
+        }
+
+        .product-info-main {
+            grid-area: info;
+        }
+
+        .product.info.detailed {
+            grid-area: details;
+            width: 100%;
         }
     }
 
@@ -141,12 +220,5 @@
 .media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__l) {
     .edmox-page.page-products .products-grid .product-items {
         grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    }
-}
-
-@container product-gallery (min-width: 400px) {
-    .fotorama__stage {
-        border-radius: @mui-shape-md;
-        overflow: hidden;
     }
 }

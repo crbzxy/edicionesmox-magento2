@@ -1,21 +1,23 @@
 {
-    "name": "edicionesmox/module-landing-page",
-    "description": "Storefront home gallery for Ediciones Mox: CMS index override, catalog-backed Destacados ViewModel (PDP links), and a scaffold frontend route.",
+    "name": "edicionesmox/module-catalog",
+    "description": "Brand catalog seed (categories, products) and sample-data menu cleanup for Ediciones Mox.",
     "type": "magento2-module",
     "license": "proprietary",
     "require": {
         "php": "~8.3.0||~8.4.0",
         "magento/framework": "*",
         "magento/module-catalog": "*",
+        "magento/module-catalog-inventory": "*",
         "magento/module-cms": "*",
-        "edicionesmox/module-catalog": "*"
+        "magento/module-inventory-api": "*",
+        "magento/module-store": "*"
     },
     "autoload": {
         "files": [
             "registration.php"
         ],
         "psr-4": {
-            "EdicionesMox\\LandingPage\\": ""
+            "EdicionesMox\\Catalog\\": ""
         }
     }
 }

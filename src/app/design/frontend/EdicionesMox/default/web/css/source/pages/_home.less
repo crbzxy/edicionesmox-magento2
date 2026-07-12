@@ -1,16 +1,427 @@
 //
-//  Home CMS containers
+//  Home galería — adaptación edicionesmox.art
 //  _____________________________________________
 
 & when (@media-common = true) {
-    .edmox-promo {
-        margin-bottom: 32px;
+    .edmox-gallery-home {
+        .page-main {
+            max-width: none;
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        .page-title-wrapper,
+        .breadcrumbs {
+            display: none;
+        }
+
+        .columns .column.main {
+            padding: 0;
+        }
     }
 
-    .edmox-promo {
-        background: @mui-background-paper;
-        border-radius: @mui-shape-md;
-        box-shadow: @mui-elevation-1;
+    .edmox-bounds {
+        box-sizing: border-box;
+        margin-left: auto;
+        margin-right: auto;
+        max-width: @edmox-content-max;
+        padding-left: @edmox-page-gutter;
+        padding-right: @edmox-page-gutter;
+        width: 100%;
+    }
+
+    .edmox-overline {
+        font-family: @mui-font-family;
+        font-size: @mui-label-md;
+        font-weight: 500;
+        letter-spacing: 0.2em;
+        line-height: 1.5;
+        margin: 0;
+        text-transform: uppercase;
+    }
+
+    .edmox-overline--muted {
+        color: @mui-text-secondary;
+    }
+
+    .edmox-overline--primary {
+        color: @mui-primary;
+    }
+
+    .edmox-section-title {
+        color: @mui-text-primary;
+        font-family: @mui-font-family;
+        font-size: 2rem;
+        font-style: italic;
+        font-weight: 300;
+        letter-spacing: -0.02em;
+        line-height: 1.15;
+        margin: 8px 0 0;
+    }
+
+    .edmox-vitrine {
+        background: @edmox-vitrine-glass;
+        border: 1px solid @edmox-vitrine-border;
+        box-shadow: @edmox-vitrine-shadow;
+        backdrop-filter: blur(12px);
+    }
+
+    .edmox-hero {
+        align-items: center;
+        display: flex;
+        min-height: 100svh;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .edmox-hero__bg {
+        inset: 0;
+        position: absolute;
+        z-index: 0;
+
+        img {
+            display: block;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.3;
+            width: 100%;
+        }
+    }
+
+    .edmox-hero__veil {
+        background: linear-gradient(
+            to top,
+            @mui-background-default,
+            fade(@mui-background-default, 70%),
+            fade(@mui-background-default, 40%)
+        );
+        inset: 0;
+        position: absolute;
+    }
+
+    .edmox-hero__grid {
+        align-items: center;
+        display: grid;
+        gap: 32px;
+        padding-bottom: 64px;
+        padding-top: 96px;
+        position: relative;
+        z-index: 1;
+    }
+
+    .edmox-hero__title {
+        color: @mui-text-primary;
+        font-size: 2.75rem;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        line-height: 0.95;
+        margin: 16px 0 0;
+    }
+
+    .edmox-hero__accent {
+        color: @mui-primary;
+    }
+
+    .edmox-hero__desc {
+        color: @mui-text-secondary;
+        font-size: @mui-body-md;
+        line-height: 1.6;
+        margin: 32px 0 0;
+        max-width: 420px;
+    }
+
+    .edmox-hero__scroll {
+        animation: edmox-hero-scroll-hint 2.4s ease-in-out infinite;
+        display: block;
+        margin-top: 48px;
+    }
+
+    @keyframes edmox-hero-scroll-hint {
+        0%,
+        100% {
+            opacity: 0.55;
+        }
+
+        50% {
+            opacity: 1;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .edmox-hero__scroll {
+            animation: none;
+            opacity: 0.85;
+        }
+    }
+
+    .edmox-hero__feature {
+        margin: 0;
+        overflow: hidden;
+        position: relative;
+
+        img {
+            display: block;
+            height: 360px;
+            object-fit: cover;
+            object-position: center 40%;
+            width: 100%;
+        }
+    }
+
+    .edmox-hero__feature-caption {
+        background: linear-gradient(to top, fade(@mui-background-default, 92%), transparent);
+        bottom: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        left: 0;
         padding: 24px;
+        position: absolute;
+        right: 0;
+    }
+
+    .edmox-hero__feature-text {
+        color: @mui-text-primary;
+        font-size: @mui-body-md;
+        font-weight: 500;
+    }
+
+    .edmox-archive {
+        padding: 64px 0;
+        scroll-margin-top: 88px;
+    }
+
+    .edmox-archive__header {
+        align-items: flex-start;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        margin-bottom: 48px;
+    }
+
+    .edmox-chip {
+        border: 1px solid @mui-divider;
+        color: @mui-text-primary;
+        display: inline-flex;
+        font-size: @mui-label-md;
+        font-weight: 500;
+        letter-spacing: 0.15em;
+        padding: 8px 16px;
+        text-decoration: none;
+        text-transform: uppercase;
+        .mui-transition(~"color, border-color, background-color");
+
+        &:hover,
+        &:focus-visible {
+            background: fade(@mui-primary, 12%);
+            border-color: @mui-primary;
+            color: @mui-primary;
+            text-decoration: none;
+        }
+    }
+
+    .edmox-archive__grid {
+        display: grid;
+        gap: 24px;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .edmox-specimen__link {
+        color: inherit;
+        display: block;
+        text-decoration: none;
+
+        &:hover .edmox-specimen__name,
+        &:focus-visible .edmox-specimen__name {
+            color: @mui-primary;
+        }
+    }
+
+    .edmox-specimen__media {
+        display: block;
+        overflow: hidden;
+
+        img {
+            display: block;
+            height: auto;
+            transition: transform @mui-transition-duration @mui-transition-easing;
+            width: 100%;
+        }
+    }
+
+    .edmox-specimen__link:hover .edmox-specimen__media img,
+    .edmox-specimen__link:focus-visible .edmox-specimen__media img {
+        transform: scale(1.03);
+    }
+
+    .edmox-specimen__body {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        padding-top: 16px;
+    }
+
+    .edmox-specimen__name {
+        color: @mui-text-primary;
+        font-size: @mui-title-md;
+        font-weight: 600;
+        .mui-transition(color);
+    }
+
+    .edmox-specimen__meta,
+    .edmox-specimen__artist {
+        color: @mui-text-secondary;
+        font-size: @mui-body-sm;
+    }
+
+    .edmox-about {
+        border-top: 1px solid @mui-divider;
+        padding: 64px 0 96px;
+        scroll-margin-top: 88px;
+    }
+
+    .edmox-about__grid {
+        display: grid;
+        gap: 48px;
+    }
+
+    .edmox-about__text {
+        color: @mui-text-secondary;
+        font-size: @mui-body-md;
+        line-height: 1.6;
+        margin: 16px 0 0;
+    }
+
+    .edmox-about__aside {
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+        justify-content: center;
+    }
+
+    .edmox-stats {
+        display: grid;
+        gap: 24px;
+        grid-template-columns: 1fr 1fr;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .edmox-stats__item {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        padding: 24px;
+
+        strong {
+            color: @mui-primary;
+            font-size: @mui-title-lg;
+            font-weight: 700;
+        }
+    }
+
+    .edmox-values {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        padding: 24px;
+    }
+
+    .edmox-values__title {
+        color: @mui-text-primary;
+        font-size: @mui-body-md;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        margin: 0;
+        text-transform: uppercase;
+    }
+
+    .edmox-values__item {
+        border-top: 1px solid @mui-divider;
+        padding-top: 16px;
+
+        &:first-of-type {
+            border-top: 0;
+            padding-top: 0;
+        }
+    }
+
+    .edmox-values__name {
+        color: @mui-text-primary;
+        font-size: @mui-body-md;
+        font-weight: 600;
+        margin: 0;
+    }
+
+    .edmox-values__desc {
+        color: @mui-text-secondary;
+        font-size: @mui-body-sm;
+        line-height: 1.6;
+        margin: 4px 0 0;
+    }
+}
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+    .edmox-bounds {
+        padding-left: @edmox-page-gutter-lg;
+        padding-right: @edmox-page-gutter-lg;
+    }
+
+    .edmox-section-title {
+        font-size: 2.75rem;
+    }
+
+    .edmox-hero__title {
+        font-size: 4.5rem;
+    }
+
+    .edmox-hero__grid {
+        padding-bottom: 96px;
+        padding-top: 128px;
+    }
+
+    .edmox-archive {
+        padding: 96px 0;
+    }
+
+    .edmox-archive__header {
+        align-items: flex-end;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .edmox-archive__grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .edmox-about {
+        padding: 96px 0 120px;
+    }
+}
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__l) {
+    .edmox-hero__title {
+        font-size: 5.5rem;
+    }
+
+    .edmox-hero__grid {
+        gap: 48px;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .edmox-hero__feature img {
+        height: 500px;
+    }
+
+    .edmox-archive__grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .edmox-about__grid {
+        gap: 64px;
+        grid-template-columns: 1fr 1fr;
     }
 }
