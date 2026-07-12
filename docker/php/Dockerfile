@@ -1,8 +1,6 @@
 ARG PHP_VERSION=8.3
 FROM php:${PHP_VERSION}-fpm
 
-ARG CORPORATE_CA_CERT=
-
 # --- Dependencias del sistema requeridas por las extensiones de PHP de Magento ---
 RUN apt-get update && apt-get install -y --no-install-recommends \
         git unzip libicu-dev libxml2-dev libxslt1-dev libzip-dev \
@@ -13,6 +11,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # --- Certificado raíz corporativo (Netskope SSL inspection) ---
 # Copiamos cualquier .crt que exista en docker/php/certs/ al almacén de
 # confianza del contenedor. Si la carpeta está vacía, este paso no hace nada.
+# El switch es la PRESENCIA del archivo, no una variable (ver .env.example).
+# Nota: esta capa va ANTES de pecl/composer a propósito — detrás del proxy
+# corporativo, pecl install necesita confiar en el CA para descargar.
 COPY certs/ /usr/local/share/ca-certificates/corporate/
 RUN update-ca-certificates || true
 
@@ -35,7 +36,7 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
         xsl \
         zip \
         opcache \
-    && pecl install redis \
+    && pecl install redis-6.3.0 \
     && docker-php-ext-enable redis
 
 # --- Composer ---

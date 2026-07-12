@@ -13,11 +13,12 @@ x-service-defaults: &service-defaults
 # misma imagen hasta tres veces con tags distintos.
 x-php-image: &php-image ${PROJECT_NAME:-edicionesmox-magento2}-php:dev
 
+# El certificado corporativo NO se pasa por variable: el Dockerfile copia
+# cualquier .crt presente en docker/php/certs/ (ver .env.example).
 x-php-build: &php-build
   context: ./docker/php
   args:
     PHP_VERSION: ${PHP_VERSION:-8.3}
-    CORPORATE_CA_CERT: ${CORPORATE_CA_CERT:-}
 
 x-magento-php-volumes: &magento-php-volumes
   - ./src:/var/www/html:cached
@@ -58,10 +59,14 @@ services:
       php-fpm:
         condition: service_healthy
     ports:
-      - "${NGINX_BIND_ADDRESS:-0.0.0.0}:${NGINX_PORT:-8080}:80"
+      # Default 127.0.0.1: mismo criterio que db/redis/opensearch. Para exponer
+      # a la LAN, setea NGINX_BIND_ADDRESS=0.0.0.0 en .env.
+      - "${NGINX_BIND_ADDRESS:-127.0.0.1}:${NGINX_PORT:-8080}:80"
     volumes: *magento-nginx-volumes
     healthcheck:
-      test: ["CMD-SHELL", "nginx -t"]
+      # Verifica que nginx escuche de verdad (nginx -t solo validaba sintaxis
+      # de la config y daba healthy aunque el proceso no sirviera nada).
+      test: ["CMD-SHELL", "nc -z 127.0.0.1 80"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -77,7 +82,9 @@ services:
     volumes: *magento-php-volumes
     environment: *php-environment
     healthcheck:
-      test: ["CMD-SHELL", "php-fpm -t"]
+      # Conexión TCP real al pool (php-fpm -t solo validaba sintaxis de la
+      # config, pasaba aunque el master estuviera muerto).
+      test: ["CMD", "php", "-r", "exit((int)!fsockopen('127.0.0.1', 9000));"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -139,11 +146,10 @@ services:
     volumes:
       - db_data:/var/lib/mysql
     healthcheck:
-      test:
-        [
-          "CMD-SHELL",
-          "mariadb-admin ping -h localhost -uroot -p$${MARIADB_ROOT_PASSWORD} --silent",
-        ]
+      # healthcheck.sh viene en la imagen oficial de MariaDB y usa un usuario
+      # interno propio: la contraseña de root deja de quedar visible en
+      # `docker inspect` / lista de procesos.
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
       interval: 10s
       timeout: 10s
       retries: 10
