@@ -20,6 +20,13 @@ for dir in var generated pub/static vendor lib; do
     fi
 done
 
+# El caché de Composer también es un volumen (creado root) y composer corre
+# como www-data desde el Makefile (make composer-install / install-oss).
+if [ -d /var/www/.composer ] && [ ! -f /var/www/.composer/.chowned ]; then
+    chown -R www-data:www-data /var/www/.composer
+    touch /var/www/.composer/.chowned
+fi
+
 if [ ! -f /var/www/html/generated/code/Magento/Framework/App/Http/Interceptor.php ]; then
     echo "WARN: generated/ vacío — ejecuta: make compile" >&2
 fi

@@ -3,7 +3,7 @@
 .PHONY: help up down build shell logs restart ps status config doctor \
 	cache-flush clean-theme-css opcache-reload theme-deploy perf-setup \
 	upgrade compile perf-check diff-luma-base \
-	check-admin-env setup-install admin-create install-oss
+	check-admin-env setup-install admin-create install-oss composer-install
 
 .DEFAULT_GOAL := help
 
@@ -11,10 +11,14 @@
 # aquí lo necesitamos para setup-install / admin-create).
 -include .env
 
-# Punto único hacia el contenedor de PHP y bin/magento. Centralizado para que
-# un cambio (p.ej. ejecutar como www-data) aplique a todos los targets a la vez.
+# Punto único hacia el contenedor de PHP y bin/magento.
+# bin/magento y composer corren como www-data (mismo usuario que los workers
+# de php-fpm): así los archivos que generan en var/generated/pub-static nacen
+# con el dueño correcto y los chown -R posteriores dejan de ser necesarios.
+# PHP_EXEC (root) queda para operaciones que lo requieren (chown, kill, rm).
 PHP_EXEC := docker compose exec php-fpm
-MAGENTO  := $(PHP_EXEC) bin/magento
+PHP_WWW  := docker compose exec -u www-data php-fpm
+MAGENTO  := $(PHP_WWW) bin/magento
 
 ##@ Ayuda
 
@@ -99,6 +103,9 @@ clean-theme-css: ## (interno) Borra los CSS materializados del tema EdicionesMox
 opcache-reload: ## Recarga php-fpm para vaciar OPcache (tras compile/upgrade)
 	$(PHP_EXEC) bash -c 'kill -USR2 1'
 
+# El chown es red de seguridad: con bin/magento corriendo como www-data ya no
+# debería encontrar nada que corregir (make doctor lo verifica). Si doctor
+# reporta 0 archivos root durante un tiempo, se puede retirar.
 theme-deploy: ## Redeploya estáticos del tema EdicionesMox (tras cambios en LESS/CSS)
 	$(MAKE) clean-theme-css
 	$(MAGENTO) setup:static-content:deploy es_MX -f --theme EdicionesMox/default --jobs=4
@@ -187,10 +194,22 @@ admin-create: check-admin-env ## Crea el usuario admin de .env sin reinstalar
 		--admin-firstname="$(ADMIN_FIRSTNAME)" \
 		--admin-lastname="$(ADMIN_LASTNAME)"
 
-# Descarga Magento Open Source dentro de ./src usando composer
-# (requiere que la carpeta src/ esté vacía).
+# Recupera vendor/ tras perder el volumen (docker compose down -v) usando
+# src/composer.json + src/composer.lock. No toca la base de datos.
+composer-install: ## Reinstala vendor/ desde composer.lock (tras borrar el volumen)
+	$(PHP_WWW) composer install --no-interaction
+
+# Descarga Magento Open Source dentro de ./src usando composer.
+# No se puede hacer create-project directo a /var/www/html: los volúmenes
+# montados (var, vendor, ...) hacen que el directorio no esté vacío y composer
+# lo rechaza. Se descarga a /tmp y se copia con tar por encima de los mounts.
 # Uso: make install-oss [VERSION=2.4.8]  (default: MAGENTO_VERSION de .env)
 install-oss: ## Descarga Magento OSS en ./src (VERSION=x.y.z, default .env)
-	docker compose run --rm php-fpm composer create-project \
-		--repository-url=https://mirror.mage-os.org/ \
-		magento/project-community-edition=$(or $(VERSION),$(MAGENTO_VERSION)) /var/www/html
+	docker compose run --rm php-fpm bash -c '\
+		set -e; \
+		composer create-project --no-interaction \
+			--repository-url=https://mirror.mage-os.org/ \
+			magento/project-community-edition=$(or $(VERSION),$(MAGENTO_VERSION)) /tmp/magento; \
+		(cd /tmp/magento && tar -cf - .) | (cd /var/www/html && tar -xf -); \
+		rm -rf /tmp/magento; \
+		chown -R www-data:www-data /var/www/html /var/www/.composer'

@@ -186,6 +186,13 @@ make diff-luma-base   # detecta drift entre _luma-base.less y Luma tras un upgra
 
 ## Rendimiento en Windows
 
+> **La mejora más grande disponible** (opcional): clonar el repo dentro del
+> filesystem de WSL2 (`\\wsl$\...`, ext4) en vez de `C:\`. El bind mount de
+> `./src` deja de cruzar la frontera NTFS↔Linux y `pub/media`, autoload y
+> cualquier I/O sobre `src/` se vuelven nativos. Se edita igual de cómodo con
+> VS Code + extensión Remote WSL. Este repo funciona idéntico en ambos lados;
+> los named volumes de abajo son la mitigación para quien se queda en `C:\`.
+
 Magento en Docker Desktop sobre NTFS es lento por defecto. Este boilerplate
 mitiga eso con volúmenes Linux para `var/`, `generated/`, `pub/static/`,
 `vendor/` y `lib/` (el framework core de Magento — miles de archivos PHP que

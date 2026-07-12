@@ -1,4 +1,6 @@
-name: ${PROJECT_NAME}
+# Defaults en la interpolación: sin ellos, cualquier `docker compose ...`
+# ejecutado sin .env presente falla con un error críptico.
+name: ${PROJECT_NAME:-edicionesmox-magento2}
 
 x-service-defaults: &service-defaults
   restart: unless-stopped
@@ -6,11 +8,16 @@ x-service-defaults: &service-defaults
   networks:
     - magento
 
+# Una sola imagen PHP para php-fpm, cron y cli. Solo php-fpm declara `build:`;
+# los otros dos consumen el tag ya construido — antes compose construía la
+# misma imagen hasta tres veces con tags distintos.
+x-php-image: &php-image ${PROJECT_NAME:-edicionesmox-magento2}-php:dev
+
 x-php-build: &php-build
   context: ./docker/php
   args:
-    PHP_VERSION: ${PHP_VERSION}
-    CORPORATE_CA_CERT: ${CORPORATE_CA_CERT}
+    PHP_VERSION: ${PHP_VERSION:-8.3}
+    CORPORATE_CA_CERT: ${CORPORATE_CA_CERT:-}
 
 x-magento-php-volumes: &magento-php-volumes
   - ./src:/var/www/html:cached
@@ -61,6 +68,7 @@ services:
 
   php-fpm:
     <<: *service-defaults
+    image: *php-image
     build: *php-build
     container_name: ${PROJECT_NAME}_php
     depends_on: *magento-depends-on
@@ -76,7 +84,7 @@ services:
 
   cron:
     <<: *service-defaults
-    build: *php-build
+    image: *php-image
     container_name: ${PROJECT_NAME}_cron
     # Mismo usuario que php-fpm: si el cron corre como root, var/ y generated/
     # quedan con archivos de root y php-fpm (www-data) deja de poder escribirlos.
@@ -96,7 +104,7 @@ services:
 
   cli:
     <<: *service-defaults
-    build: *php-build
+    image: *php-image
     container_name: ${PROJECT_NAME}_cli
     profiles:
       - tools
