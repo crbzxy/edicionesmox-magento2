@@ -39,3 +39,24 @@ jobs:
       # limpieza incremental, no como bloqueo del primer CI.
       - name: Magento Coding Standard (phpcs)
         run: vendor/bin/phpcs --standard=phpcs.xml.dist --warning-severity=0
+
+  compose:
+    name: docker compose config (interpolación y defaults)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Valida el contrato: .env.example debe producir una config interpolable.
+      - name: Validar compose con .env.example
+        run: |
+          cp .env.example .env
+          docker compose config --quiet
+
+      # Valida los defaults: compose no debe reventar sin .env presente.
+      - name: Validar compose sin .env
+        run: |
+          rm .env
+          docker compose config --quiet
+
+      - name: Sintaxis de scripts bash
+        run: bash -n docker/php/docker-entrypoint.sh docker/scripts/doctor.sh

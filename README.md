@@ -16,6 +16,25 @@ sobre cada servicio.
 | cron        | build local (mismo `docker/php` que php-fpm) | corre `bin/magento cron:run` cada 60s — sin este servicio los indexers en "Update by Schedule" nunca se procesan solos |
 | mailpit     | `axllent/mailpit`                | atrapa los correos que envía Magento (checkout, contraseñas, etc.) |
 
+### Arquitectura en un vistazo
+
+```text
+navegador ── :8080 ──▶ nginx ── fastcgi :9000 ──▶ php-fpm ──▶ db (MariaDB)
+                        │                          │     ├──▶ redis (cache/FPC/sesiones)
+                        │                          │     ├──▶ opensearch (catálogo)
+                        │                          │     └──▶ mailpit (SMTP :1025)
+                        │                          │
+                        ▼                          ▼         cron = misma imagen PHP,
+                  ./src (bind mount NTFS: editas desde el host)   corre cron:run cada 60 s
+                        +
+                  named volumes Linux sobre-montados en las rutas calientes:
+                  var/  generated/  pub/static/  vendor/  lib/  (I/O nativo)
+```
+
+php-fpm, cron y cli comparten **una** imagen (`docker/php/Dockerfile`). Los
+`bin/magento` del Makefile corren como `www-data`; el entrypoint corrige la
+propiedad de los volúmenes una sola vez (markers `.chowned`).
+
 Deliberadamente **no** incluye Varnish ni RabbitMQ — para desarrollo local no
 son indispensables (Magento cae a `db` como backend de colas y a Redis/nginx
 como cache). Si más adelante los necesitas, se agregan como dos servicios más
@@ -170,19 +189,44 @@ src/
 
 ## Comandos útiles
 
+`make` (o `make help`) lista todos los targets agrupados. Los del día a día:
+
 ```bash
+make doctor        # diagnóstico completo: conectividad, Magento, permisos, indexadores
 make shell         # entra al contenedor de PHP
 make logs          # logs de nginx + php-fpm
 make restart       # reinicia todos los contenedores
 make down          # apaga todo (los datos persisten en volúmenes Docker)
 make cache-flush   # bin/magento cache:flush
 make theme-deploy  # redeploya estáticos de EdicionesMox/default (usar tras editar LESS/CSS)
-make upgrade       # script único: setup:upgrade + di:compile + static-deploy + reindex + chown
+make upgrade       # script único: setup:upgrade + di:compile + static-deploy + reindex
 make perf-check    # diagnóstico rápido de rendimiento
 make perf-setup    # despliega estáticos + compila DI (tras borrar volúmenes)
-make compile       # regenera generated/ si falta Http\Interceptor
-make diff-luma-base   # detecta drift entre _luma-base.less y Luma tras un upgrade
+make compile       # regenera generated/ si falta Http\Interceptor (recarga OPcache solo)
+make composer-install  # recupera vendor/ tras perder el volumen (down -v)
+make diff-luma-base    # detecta drift entre _luma-base.less y Luma tras un upgrade
 ```
+
+Todos los `bin/magento` del Makefile corren como `www-data` (mismo usuario que
+php-fpm), así los archivos generados nacen con el dueño correcto.
+
+## Comandos destructivos y restauración de volúmenes
+
+`make down` es seguro: conserva todos los volúmenes. El único comando
+destructivo del flujo es **`docker compose down -v`** (no tiene target de make
+a propósito): borra la base de datos, OpenSearch, Redis, `vendor/`,
+`generated/`, `pub/static/` y `var/`. Si lo corres, la recuperación es:
+
+```bash
+make up
+make composer-install   # vendor/ desde src/composer.lock
+make setup-install      # reinstala Magento (la DB se perdió)
+make perf-setup         # estáticos + DI
+```
+
+Si solo perdiste los volúmenes de artefactos (no la DB), basta con
+`make composer-install` (si falta vendor) + `make perf-setup`. `make doctor`
+te dice exactamente qué falta.
 
 ## Rendimiento en Windows
 
@@ -208,7 +252,13 @@ estáticos desplegados (nginx sirve JS/CSS directo, sin pasar por `static.php`).
 | 100+ requests JS en pending, carga > 60 s | `pub/static/` vacío | `make perf-setup` |
 | `Http\Interceptor does not exist` | `generated/` vacío | `make compile` |
 | Error 500, permission denied en `var/` | permisos del volumen | borra el marker (`.chowned`) del volumen afectado y `docker compose restart php-fpm cron` — ver comentario en `docker/php/docker-entrypoint.sh` |
-| Todo lento tras `docker compose down -v` | volúmenes borrados | `make perf-setup` |
+| Todo lento tras `docker compose down -v` | volúmenes borrados | `make composer-install` (si falta vendor) + `make perf-setup` |
+| 502 Bad Gateway tras recrear php-fpm | nginx cacheó la IP vieja | ya mitigado (resolver dinámico en `default.conf`); si persiste: `docker compose restart nginx` |
+| `bin/magento` no existe / vendor vacío | volumen `vendor` borrado | `make composer-install` |
+| Cambios en PHP no se reflejan | OPcache con `validate_timestamps=0` | `make opcache-reload` (compile/upgrade ya lo hacen solos) |
+| Upload de imagen falla con 413 | — | ya resuelto (`client_max_body_size 64m` en nginx) |
+| Los correos no aparecen en Mailpit | SMTP de Magento sin configurar | ver sección "Para que los correos lleguen a Mailpit" |
+| No sabes qué está roto | — | `make doctor` |
 
 ### Diagnóstico
 
