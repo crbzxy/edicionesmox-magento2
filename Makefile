@@ -1,4 +1,8 @@
-.PHONY: up down shell logs restart install-oss build ps perf-setup compile perf-check cache-flush theme-deploy upgrade diff-luma-base
+.PHONY: up down shell logs restart install-oss build ps perf-setup compile perf-check cache-flush theme-deploy upgrade diff-luma-base setup-install admin-create check-admin-env
+
+# Carga las variables de .env (docker compose también lo lee por su cuenta;
+# aquí lo necesitamos para setup-install / admin-create).
+-include .env
 
 # Levanta todos los contenedores en segundo plano
 up:
@@ -91,6 +95,49 @@ diff-luma-base:
 		vendor/magento/theme-frontend-luma/web/css/source/_theme.less \
 		&& echo "diff-luma-base: sin cambios" \
 		|| echo "diff-luma-base: _luma-base.less desincronizado — revisar diff arriba y actualizar"
+
+# Verifica que la sección Admin de .env esté completa antes de usarla.
+check-admin-env:
+	@test -n "$(ADMIN_USER)" -a -n "$(ADMIN_PASSWORD)" -a -n "$(ADMIN_EMAIL)" \
+		|| { echo "Faltan ADMIN_USER / ADMIN_PASSWORD / ADMIN_EMAIL en .env — copia la seccion Admin de .env.example y completala"; exit 1; }
+
+# Instala Magento de punta a punta con las variables de .env (db, redis,
+# opensearch y usuario admin). Ejecutar después de `make install-oss` y `make up`.
+setup-install: check-admin-env
+	docker compose exec php-fpm bin/magento setup:install \
+		--base-url=http://localhost:$(NGINX_PORT)/ \
+		--db-host=db \
+		--db-name=$(DB_NAME) \
+		--db-user=$(DB_USER) \
+		--db-password=$(DB_PASSWORD) \
+		--admin-firstname="$(ADMIN_FIRSTNAME)" \
+		--admin-lastname="$(ADMIN_LASTNAME)" \
+		--admin-email="$(ADMIN_EMAIL)" \
+		--admin-user="$(ADMIN_USER)" \
+		--admin-password="$(ADMIN_PASSWORD)" \
+		--language=es_MX \
+		--currency=MXN \
+		--timezone=America/Mexico_City \
+		--use-rewrites=1 \
+		--search-engine=opensearch \
+		--opensearch-host=opensearch \
+		--opensearch-port=9200 \
+		--cache-backend=redis \
+		--cache-backend-redis-server=redis \
+		--page-cache=redis \
+		--page-cache-redis-server=redis \
+		--session-save=redis \
+		--session-save-redis-host=redis
+
+# Crea el usuario admin declarado en .env sobre una instancia ya instalada
+# (útil tras borrar la base o para regenerar credenciales sin reinstalar).
+admin-create: check-admin-env
+	docker compose exec php-fpm bin/magento admin:user:create \
+		--admin-user="$(ADMIN_USER)" \
+		--admin-password="$(ADMIN_PASSWORD)" \
+		--admin-email="$(ADMIN_EMAIL)" \
+		--admin-firstname="$(ADMIN_FIRSTNAME)" \
+		--admin-lastname="$(ADMIN_LASTNAME)"
 
 # Descarga Magento Open Source dentro de ./src usando composer
 # (requiere que la carpeta src/ esté vacía).

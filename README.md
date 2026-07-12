@@ -75,40 +75,22 @@ make install-oss VERSION=2.4.8
 Esto descarga el código en `./src`, que está montado dentro del contenedor
 `php-fpm` en `/var/www/html` y servido por nginx.
 
-Luego, dentro del contenedor:
+Las credenciales del usuario admin se declaran en `.env` (sección
+`=== Usuario admin de Magento ===` — copia los valores de `.env.example` y
+personalízalos; `.env` está en `.gitignore`, así que no se versionan). Luego:
 
 ```bash
+make setup-install   # bin/magento setup:install con las variables de .env
+
 make shell
-
-bin/magento setup:install \
-  --base-url=http://localhost:8080/ \
-  --db-host=db \
-  --db-name=magento \
-  --db-user=magento \
-  --db-password=magento \
-  --admin-firstname=Carlos \
-  --admin-lastname=Boor \
-  --admin-email=carlos.boor@gmail.com \
-  --admin-user=admin \
-  --admin-password=Admin123! \
-  --language=es_MX \
-  --currency=MXN \
-  --timezone=America/Mexico_City \
-  --use-rewrites=1 \
-  --search-engine=opensearch \
-  --opensearch-host=opensearch \
-  --opensearch-port=9200 \
-  --cache-backend=redis \
-  --cache-backend-redis-server=redis \
-  --page-cache=redis \
-  --page-cache-redis-server=redis \
-  --session-save=redis \
-  --session-save-redis-host=redis
-
 bin/magento deploy:mode:set developer
 bin/magento indexer:reindex
 bin/magento cache:flush
 ```
+
+Si más adelante necesitas regenerar el usuario admin (por ejemplo tras borrar
+la base de datos) sin reinstalar, cambia los valores en `.env` y corre
+`make admin-create`.
 
 Abre `http://localhost:8080/` (storefront) y `http://localhost:8080/admin`
 (panel). Mailpit queda en `http://localhost:8025` para revisar los correos
