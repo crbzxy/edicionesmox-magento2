@@ -38,28 +38,17 @@ define([
     }
 
     return function (widget) {
-        $.widget('mage.catalogAddToCart', widget, {
-            ajaxSubmit: function (form) {
-                var feedbackHandler = function (event, data) {
-                    if (!data || !data.form || data.form[0] !== form[0]) {
-                        return;
-                    }
-
-                    if (data.response && data.response.backUrl) {
-                        $(document).off('ajax:addToCart', feedbackHandler);
-                        return;
-                    }
-
-                    showToast($t('Product added to cart'));
-                    $(document).off('ajax:addToCart', feedbackHandler);
-                };
-
-                $(document).on('ajax:addToCart', feedbackHandler);
-
-                return this._super(form);
+        // Un solo listener global (el mixin se evalúa una vez): el widget core
+        // dispara ajax:addToCart solo en éxito, así que no hace falta suscribirse
+        // por submit — eso acumulaba handlers cuando la petición fallaba.
+        $(document).on('ajax:addToCart.edmoxFeedback', function (event, data) {
+            if (data && data.response && data.response.backUrl) {
+                return;
             }
+
+            showToast($t('Product added to cart'));
         });
 
-        return $.mage.catalogAddToCart;
+        return widget;
     };
 });

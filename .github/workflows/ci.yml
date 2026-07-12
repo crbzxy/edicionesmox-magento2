@@ -24,14 +24,14 @@ jobs:
 
       - name: PHP syntax check (php -l)
         run: |
-          find src/app/code/EdicionesMox src/app/design/frontend/EdicionesMox -name '*.php' -o -name '*.phtml' \
-            | xargs -n1 -I{} php -l {}
+          find src/app/code/EdicionesMox src/app/design/frontend/EdicionesMox \( -name '*.php' -o -name '*.phtml' \) -print0 \
+            | xargs -0 -n1 php -l
 
       - name: Well-formed XML check
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq libxml2-utils
-          find src/app/code/EdicionesMox src/app/design/frontend/EdicionesMox -name '*.xml' \
-            | xargs -n1 xmllint --noout
+          find src/app/code/EdicionesMox src/app/design/frontend/EdicionesMox -name '*.xml' -print0 \
+            | xargs -0 xmllint --noout
 
       # warning-severity=0: el ruleset Magento2 genera ~70 warnings de estilo CSS/LESS
       # preexistentes (comillas, mayúsculas de color) en el tema Ediciones Mox. El gate falla

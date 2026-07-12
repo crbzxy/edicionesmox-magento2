@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace EdicionesMox\LandingPage\Controller\Page;
 
 use Magento\Framework\App\Action\HttpGetActionInterface;
+use Magento\Framework\View\Result\Page;
 use Magento\Framework\View\Result\PageFactory;
 
 class View implements HttpGetActionInterface
@@ -13,11 +14,8 @@ class View implements HttpGetActionInterface
     ) {
     }
 
-    public function execute()
+    public function execute(): Page
     {
-        $resultPage = $this->pageFactory->create();
-        $resultPage->getConfig()->getTitle()->set(__('Mi nueva página'));
-
-        return $resultPage;
+        return $this->pageFactory->create();
     }
 }

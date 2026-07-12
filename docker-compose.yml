@@ -78,6 +78,9 @@ services:
     <<: *service-defaults
     build: *php-build
     container_name: ${PROJECT_NAME}_cron
+    # Mismo usuario que php-fpm: si el cron corre como root, var/ y generated/
+    # quedan con archivos de root y php-fpm (www-data) deja de poder escribirlos.
+    user: www-data
     depends_on: *magento-depends-on
     volumes: *magento-php-volumes
     environment: *php-environment

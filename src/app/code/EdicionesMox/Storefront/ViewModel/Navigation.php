@@ -8,8 +8,6 @@ use Magento\Framework\View\Element\Block\ArgumentInterface;
 
 class Navigation implements ArgumentInterface
 {
-    private const MOBILE_BREAKPOINT = 768;
-
     public function __construct(
         private readonly CustomerSession $customerSession
     ) {
@@ -18,11 +16,6 @@ class Navigation implements ArgumentInterface
     public function getAriaLabelToggleNav(): string
     {
         return (string) __('Toggle main navigation');
-    }
-
-    public function getBreakpointMobile(): int
-    {
-        return self::MOBILE_BREAKPOINT;
     }
 
     public function isCustomerLoggedIn(): bool
