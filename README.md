@@ -8,7 +8,7 @@ sobre cada servicio.
 
 | Servicio    | Imagen                          | Notas |
 |-------------|----------------------------------|-------|
-| nginx       | `nginx:1.26-alpine`              | vhost estándar recomendado por Adobe |
+| nginx       | `nginx:1.28-alpine`              | vhost estándar recomendado por Adobe |
 | php-fpm     | build local (`docker/php`)       | PHP 8.3 + extensiones requeridas |
 | db          | `mariadb:11.4`                   | alternativa gratuita a MySQL 8.4 |
 | opensearch  | `opensearchproject/opensearch:2.19.0` | motor de búsqueda obligatorio desde 2.4.x |
@@ -28,6 +28,15 @@ Magento Open Source 2.4.8 (la release estable actual, soportada hasta abril
 Redis 7.2+. Ya existe 2.4.9 (mayo 2026), pero al ser tan reciente muchas
 extensiones de terceros todavía no la certifican — por eso el boilerplate
 apunta a 2.4.8.
+
+## Requisitos
+
+- Docker Desktop con backend WSL2 (Windows) o Docker Engine (Linux/macOS).
+- `make`: **Windows no lo trae nativo**. Ejecuta los comandos `make` desde
+  **Git Bash** (instálalo con `pacman`/`winget` o usa el que trae Git for
+  Windows + `make` de MSYS2) o desde **WSL**. PowerShell/CMD no funcionan
+  para esto. Alternativa sin make: copia el comando `docker compose ...` del
+  target correspondiente del `Makefile` y pégalo en tu terminal.
 
 ## 1. Preparar el proyecto
 
@@ -95,6 +104,17 @@ la base de datos) sin reinstalar, cambia los valores en `.env` y corre
 Abre `http://localhost:8080/` (storefront) y `http://localhost:8080/admin`
 (panel). Mailpit queda en `http://localhost:8025` para revisar los correos
 que Magento envía sin necesidad de un SMTP real.
+
+**Para que los correos lleguen a Mailpit** hay que apuntar el SMTP de Magento
+al contenedor (una sola vez, queda en la DB):
+
+```bash
+make shell
+bin/magento config:set system/smtp/transport smtp
+bin/magento config:set system/smtp/host mailpit
+bin/magento config:set system/smtp/port 1025
+bin/magento cache:flush
+```
 
 ## Estructura de un proyecto Magento 2 (dentro de `src/`)
 
