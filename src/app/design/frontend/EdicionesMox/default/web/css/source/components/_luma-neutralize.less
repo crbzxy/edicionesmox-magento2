@@ -1,0 +1,462 @@
+//
+//  Luma neutralize — anula fondos y colores claros que Luma hardcodea
+//  por selector (fuera de variables), detectados auditando el CSS compilado.
+//  Agrupado por zona; todo con tokens MUI para que el tema controle el 100%.
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .edmox-page {
+        //
+        //  Modales (login, confirmaciones, slide panels)
+        //  ---------------------------------------------
+
+        .modal-popup .modal-inner-wrap,
+        .modal-slide .modal-inner-wrap,
+        .custom-slide .modal-inner-wrap,
+        // Luma usa [class] en móvil para subir especificidad
+        .modal-popup.modal-slide .modal-inner-wrap[class],
+        .custom-slide .modal-inner-wrap[class] {
+            background-color: @mui-background-paper;
+        }
+
+        .modal-popup .modal-title {
+            border-bottom-color: @mui-divider;
+            color: @mui-text-primary;
+        }
+
+        .modal-custom .action-close:before,
+        .modal-popup .action-close:before,
+        .modal-slide .action-close:before {
+            color: @mui-text-secondary;
+        }
+
+        // Divisor circular "o" del modal de autenticación
+        .block-authentication .block[class] + .block:before {
+            background: @mui-background-paper;
+            border-color: @mui-divider;
+            color: @mui-text-secondary;
+        }
+
+        //
+        //  Overlays de carga AJAX (Luma: velo blanco)
+        //  ---------------------------------------------
+
+        .loading-mask {
+            background: fade(@edmox-ink, 60%);
+        }
+
+        .load.indicator {
+            background-color: fade(@edmox-ink, 70%);
+        }
+
+        //
+        //  Autocompletado de búsqueda
+        //  ---------------------------------------------
+
+        .search-autocomplete ul:not(:empty) {
+            background: @mui-background-paper;
+            border-color: @mui-divider;
+        }
+
+        .search-autocomplete ul li {
+            border-top-color: @mui-divider;
+            color: @mui-text-primary;
+
+            &:hover,
+            &.selected {
+                background: fade(@mui-text-primary, @mui-action-hover);
+            }
+
+            .amount {
+                color: @mui-text-secondary;
+            }
+        }
+
+        //
+        //  Mensajes globales (cookies / noscript: amarillo Luma)
+        //  ---------------------------------------------
+
+        .message.global.noscript,
+        .message.global.cookie {
+            background: @mui-background-paper;
+            border-top: 1px solid @mui-divider;
+            color: @mui-text-primary;
+
+            a,
+            a:visited {
+                color: @mui-primary;
+            }
+        }
+
+        //
+        //  Toolbar de catálogo (paginador, selects, modo grid/list)
+        //  ---------------------------------------------
+
+        .pages .action {
+            background: @mui-background-paper;
+            border-color: @mui-divider;
+            color: @mui-text-secondary;
+
+            &:hover {
+                color: @mui-text-primary;
+            }
+        }
+
+        .pages a.page {
+            color: @mui-text-secondary;
+
+            &:visited {
+                color: @mui-text-secondary;
+            }
+
+            &:hover {
+                color: @mui-text-primary;
+            }
+        }
+
+        .pages strong.page {
+            background: fade(@mui-text-primary, @mui-action-selected);
+            color: @mui-text-primary;
+        }
+
+        .modes-mode {
+            background: @mui-background-paper;
+            border-color: @mui-divider;
+            color: @mui-text-secondary;
+
+            &:hover {
+                background: fade(@mui-text-primary, @mui-action-hover);
+                color: @mui-text-secondary;
+            }
+
+            &.active {
+                background: fade(@mui-text-primary, @mui-action-selected);
+                color: @mui-text-primary;
+            }
+        }
+
+        //
+        //  Layered navigation (filtros)
+        //  ---------------------------------------------
+
+        .filter-title strong {
+            background-color: @mui-background-paper;
+            border-color: @mui-divider;
+            color: @mui-text-primary;
+        }
+
+        // Badge naranja Luma con el conteo de filtros activos
+        .filter-title strong[data-count]:after {
+            background: @mui-primary;
+            color: @mui-primary-contrast-text;
+        }
+
+        .filter.active .filter-options {
+            background: @mui-background-default;
+        }
+
+        .filter-options-content a:hover,
+        .filter-options-content a:hover + .count {
+            background-color: fade(@mui-text-primary, @mui-action-hover);
+        }
+
+        .filter-no-options .filter-title:before {
+            background: fade(@edmox-ink, 50%);
+        }
+
+        //
+        //  Cuenta de cliente
+        //  ---------------------------------------------
+
+        .block-collapsible-nav .content {
+            background: @mui-background-paper;
+        }
+
+        .block-collapsible-nav .item a:hover {
+            background: fade(@mui-text-primary, @mui-action-hover);
+        }
+
+        // Ítem activo: Luma marca con naranja #ff5501
+        .block-collapsible-nav .item.current a,
+        .block-collapsible-nav .item.current strong {
+            border-color: @mui-primary;
+            color: @mui-primary;
+        }
+
+        .password-strength-meter {
+            background-color: @mui-background-paper;
+        }
+
+        .password-none .password-strength-meter:before {
+            background-color: @mui-background-paper;
+        }
+
+        .password-weak .password-strength-meter:before {
+            background-color: fade(@mui-error, 32%);
+        }
+
+        .password-medium .password-strength-meter:before {
+            background-color: fade(@mui-warning, 28%);
+        }
+
+        .password-strong .password-strength-meter:before {
+            background-color: fade(@mui-success, 28%);
+        }
+
+        .password-very-strong .password-strength-meter:before {
+            background-color: fade(@mui-success, 45%);
+        }
+
+        .table tfoot,
+        .order-details-items tfoot td {
+            background: @mui-background-paper;
+        }
+
+        //
+        //  Tooltips (formularios + checkout)
+        //  ---------------------------------------------
+
+        .field .tooltip .tooltip-content {
+            background: @mui-background-paper;
+            border-color: @mui-divider;
+            color: @mui-text-primary;
+
+            &:after {
+                border-right-color: @mui-background-paper;
+            }
+
+            &:before {
+                border-right-color: fade(@mui-text-primary, 30%);
+            }
+        }
+
+        .field-tooltip .field-tooltip-content {
+            background: @mui-background-paper;
+            color: @mui-text-primary;
+
+            &:after {
+                border-right-color: @mui-background-paper;
+            }
+
+            &:before {
+                border-right-color: fade(@mui-text-primary, 30%);
+            }
+        }
+
+        .shipping-policy-block.field-tooltip .field-tooltip-content {
+            &:after {
+                border-bottom-color: @mui-background-paper;
+            }
+
+            &:before {
+                border-bottom-color: fade(@mui-text-primary, 30%);
+            }
+        }
+
+        .ui-tooltip {
+            background: @mui-background-paper;
+            border-color: @mui-divider;
+            color: @mui-text-primary;
+        }
+
+        //
+        //  Checkout — restos claros y naranja Luma
+        //  ---------------------------------------------
+
+        .opc-estimated-wrapper {
+            background: @mui-background-paper;
+            border-bottom-color: @mui-divider;
+        }
+
+        .opc-wrapper .form-login,
+        .opc-wrapper .form-shipping-address,
+        .opc-wrapper .methods-shipping {
+            background: @mui-background-paper;
+            border-bottom-color: @mui-divider;
+        }
+
+        .opc-progress-bar-item:before,
+        .opc-progress-bar-item > span:before,
+        .opc-progress-bar-item > span:after {
+            background: @mui-grey-100;
+        }
+
+        .opc-progress-bar-item > span {
+            color: @mui-text-secondary;
+        }
+
+        .opc-progress-bar-item._active:before,
+        .opc-progress-bar-item._active > span:before {
+            background: @mui-primary;
+        }
+
+        .opc-progress-bar-item._active > span {
+            color: @mui-text-primary;
+        }
+
+        .opc-wrapper .shipping-address-item.selected-item {
+            border-color: @mui-primary;
+
+            &:after {
+                background: @mui-primary;
+            }
+        }
+
+        // Contador del minicart: Luma lo pinta naranja con 4 clases de
+        // especificidad (.action.showcart .counter.qty), hay que igualarla
+        .minicart-wrapper .action.showcart .counter.qty {
+            background: @mui-primary;
+            color: @mui-primary-contrast-text;
+        }
+
+        //
+        //  Grid de productos: Luma fuerza blanco en hover con
+        //  .products-grid (gana a .edmox-page .product-item-info)
+        //  ---------------------------------------------
+
+        .products-grid .product-item-info:hover,
+        .products-grid .product-item-info.active {
+            background: @mui-background-paper;
+            border-color: @mui-divider;
+            box-shadow: @mui-elevation-2;
+        }
+
+        .products-grid .product-item-inner,
+        .page-products .products-grid .product-item-inner:before,
+        .wishlist-index-index .product-item-inner {
+            background: @mui-background-paper;
+            border-color: @mui-divider;
+        }
+
+        //
+        //  Swatches
+        //  ---------------------------------------------
+
+        .swatch-option.text,
+        .swatch-attribute.size .swatch-option,
+        .swatch-attribute.manufacturer .swatch-option {
+            background: @mui-background-paper;
+            color: @mui-text-secondary;
+        }
+
+        .swatch-option.text.selected,
+        .swatch-attribute.size .swatch-option.selected,
+        .swatch-attribute.manufacturer .swatch-option.selected {
+            background: fade(@mui-text-primary, @mui-action-selected);
+            color: @mui-text-primary;
+        }
+
+        .swatch-option-tooltip,
+        .swatch-option-tooltip-layered {
+            background: @mui-background-paper;
+            border-color: @mui-divider;
+            color: @mui-text-primary;
+        }
+
+        //
+        //  Dropdowns varios (switcher idioma/moneda, wishlist)
+        //  ---------------------------------------------
+
+        // El switcher necesita el selector completo de Luma (.panel.wrapper)
+        .page-header .panel.wrapper .switcher .options ul.dropdown,
+        .page-footer .switcher .options ul.dropdown,
+        .giftregisty-dropdown ul.dropdown,
+        .wishlist-dropdown ul.dropdown,
+        .wishlist.split.button .items {
+            background: @mui-background-paper;
+            border-color: @mui-divider;
+
+            &:before {
+                border-bottom-color: @mui-background-paper;
+            }
+
+            li:hover {
+                background: fade(@mui-text-primary, @mui-action-hover);
+            }
+        }
+
+        .wishlist.window.popup,
+        .block-wishlist-management .wishlist-select-items {
+            background: @mui-background-paper;
+            border-color: @mui-divider;
+        }
+
+        .block-wishlist-management .wishlist-select-items .item a:hover {
+            background: fade(@mui-text-primary, @mui-action-hover);
+        }
+
+        //
+        //  Page Builder (tabs) y CMS
+        //  ---------------------------------------------
+
+        div[data-content-type='tabs'] .tabs-navigation li.tab-header {
+            background: @mui-background-paper;
+        }
+
+        div[data-content-type='tabs'] .tabs-navigation li.tab-header.ui-state-active {
+            background: @mui-background-default;
+        }
+
+        .cms-content-important {
+            background-color: @mui-background-paper;
+            color: @mui-text-primary;
+        }
+
+        //
+        //  Accesibilidad (skip link visible al enfocar)
+        //  ---------------------------------------------
+
+        .action.skip:focus {
+            background: @mui-background-paper;
+            color: @mui-text-primary;
+        }
+    }
+}
+
+//
+//  Desktop (Luma styles-l)
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+    .edmox-page {
+        // Dropdown de login (checkout) y menú de cliente del header
+        .authentication-dropdown {
+            background-color: @mui-background-paper;
+            border-color: @mui-divider;
+        }
+
+        .customer-welcome ul {
+            background: @mui-background-paper;
+            border: 1px solid @mui-divider;
+
+            li:hover {
+                background: fade(@mui-text-primary, @mui-action-hover);
+            }
+        }
+
+        .customer-welcome li a {
+            color: @mui-text-primary;
+
+            &:hover {
+                background: fade(@mui-text-primary, @mui-action-hover);
+                color: @mui-text-primary;
+            }
+        }
+
+        // Hover claro de Luma en submenús del menú principal
+        .navigation .level0 .submenu a:hover,
+        .navigation .level0 .submenu a.ui-state-focus {
+            background: fade(@mui-text-primary, @mui-action-hover);
+            color: @mui-text-primary;
+        }
+
+        // Filtros en layout de una columna
+        &.page-layout-1column .filter-options-content {
+            background: @mui-background-paper;
+
+            .item:hover {
+                background-color: fade(@mui-text-primary, @mui-action-hover);
+            }
+        }
+    }
+}

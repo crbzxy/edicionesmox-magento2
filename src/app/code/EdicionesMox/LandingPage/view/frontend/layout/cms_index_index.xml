@@ -7,7 +7,13 @@
             <block class="Magento\Framework\View\Element\Template"
                    name="edmox.gallery.home"
                    template="EdicionesMox_LandingPage::gallery/home.phtml"
-                   before="-"/>
+                   before="-">
+                <arguments>
+                    <argument name="gallery_view_model" xsi:type="object">
+                        EdicionesMox\LandingPage\ViewModel\HomeGallery
+                    </argument>
+                </arguments>
+            </block>
         </referenceContainer>
     </body>
 </page>

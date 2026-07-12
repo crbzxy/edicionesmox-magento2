@@ -1,45 +1,19 @@
 <?php
 /**
- * Home galería — adaptación de edicionesmox.art / crbzxy/edmox
+ * Home galería — piezas desde catálogo Magento (categoría Destacados).
  *
  * @var \Magento\Framework\View\Element\Template $block
  * @var \Magento\Framework\Escaper $escaper
+ * @var \EdicionesMox\LandingPage\ViewModel\HomeGallery $gallery
  */
 
+$gallery = $block->getData('gallery_view_model');
+$specimens = $gallery->getSpecimens();
+$pieceCount = $gallery->getPieceCount();
+$coleccionUrl = $gallery->getColeccionUrl();
+$instagramUrl = $gallery->getInstagramUrl();
 $heroBg = $block->getViewFileUrl('images/edmox/hero-bg.webp');
 $heroFeatured = $block->getViewFileUrl('images/edmox/hero.webp');
-$specimens = [
-    [
-        'id' => 'mox-001',
-        'name' => 'CHUPALINAS / Edición GID',
-        'meta' => 'PLA pintado · 2026',
-        'artist' => 'Ediciones Mox',
-        'image' => 'images/edmox/specimen-mox-001.webp',
-    ],
-    [
-        'id' => 'mox-002',
-        'name' => 'GOLDITOS / Serie kawaii',
-        'meta' => 'PLA pintado · 2026',
-        'artist' => 'Ediciones Mox',
-        'image' => 'images/edmox/specimen-mox-002.webp',
-    ],
-    [
-        'id' => 'mox-003',
-        'name' => 'ZURASHI / Mutante dual',
-        'meta' => 'PLA pintado · 2026',
-        'artist' => 'Ediciones Mox',
-        'image' => 'images/edmox/specimen-mox-003.webp',
-    ],
-    [
-        'id' => 'mox-004',
-        'name' => 'CHUPALINAS / Gold Shift',
-        'meta' => 'PLA pintado · 2026',
-        'artist' => 'Ediciones Mox',
-        'image' => 'images/edmox/specimen-mox-004.webp',
-    ],
-];
-$pieceCount = count($specimens);
-$instagramUrl = 'https://www.instagram.com/edicionesmox/?hl=es';
 ?>
 <div class="edmox-gallery">
     <section class="edmox-hero" aria-label="<?= $escaper->escapeHtmlAttr(__('Archivo de soft vinyl')) ?>">
@@ -94,35 +68,39 @@ $instagramUrl = 'https://www.instagram.com/edicionesmox/?hl=es';
                     </p>
                     <h2 class="edmox-section-title"><?= $escaper->escapeHtml(__('La colección')) ?></h2>
                 </div>
-                <a class="edmox-chip" href="<?= $escaper->escapeUrl($block->getUrl('')) ?>#archive">
-                    <?= $escaper->escapeHtml(__('PLA pintado')) ?>
+                <a class="edmox-chip" href="<?= $escaper->escapeUrl($coleccionUrl) ?>">
+                    <?= $escaper->escapeHtml(__('Ver colección')) ?>
                 </a>
             </header>
-            <ul class="edmox-archive__grid">
-                <?php foreach ($specimens as $specimen): ?>
-                    <li class="edmox-specimen">
-                        <a class="edmox-specimen__link"
-                           href="<?= $escaper->escapeUrl($instagramUrl) ?>"
-                           target="_blank"
-                           rel="noopener noreferrer"
-                           aria-label="<?= $escaper->escapeHtmlAttr($specimen['name']) ?>">
-                            <span class="edmox-vitrine edmox-specimen__media">
-                                <img
-                                    src="<?= $escaper->escapeUrl($block->getViewFileUrl($specimen['image'])) ?>"
-                                    alt="<?= $escaper->escapeHtmlAttr($specimen['name']) ?>"
-                                    width="480"
-                                    height="480"
-                                    loading="lazy"/>
-                            </span>
-                            <span class="edmox-specimen__body">
-                                <span class="edmox-specimen__name"><?= $escaper->escapeHtml($specimen['name']) ?></span>
-                                <span class="edmox-specimen__meta"><?= $escaper->escapeHtml($specimen['meta']) ?></span>
-                                <span class="edmox-specimen__artist"><?= $escaper->escapeHtml($specimen['artist']) ?></span>
-                            </span>
-                        </a>
-                    </li>
-                <?php endforeach; ?>
-            </ul>
+            <?php if ($specimens === []): ?>
+                <p class="edmox-archive__empty">
+                    <?= $escaper->escapeHtml(__('Pronto publicaremos las primeras piezas del archivo.')) ?>
+                </p>
+            <?php else: ?>
+                <ul class="edmox-archive__grid">
+                    <?php foreach ($specimens as $specimen): ?>
+                        <li class="edmox-specimen">
+                            <a class="edmox-specimen__link"
+                               href="<?= $escaper->escapeUrl($specimen['url']) ?>"
+                               aria-label="<?= $escaper->escapeHtmlAttr($specimen['name']) ?>">
+                                <span class="edmox-vitrine edmox-specimen__media">
+                                    <img
+                                        src="<?= $escaper->escapeUrl($specimen['imageUrl']) ?>"
+                                        alt="<?= $escaper->escapeHtmlAttr($specimen['name']) ?>"
+                                        width="480"
+                                        height="480"
+                                        loading="lazy"/>
+                                </span>
+                                <span class="edmox-specimen__body">
+                                    <span class="edmox-specimen__name"><?= $escaper->escapeHtml($specimen['name']) ?></span>
+                                    <span class="edmox-specimen__meta"><?= $escaper->escapeHtml($specimen['meta']) ?></span>
+                                    <span class="edmox-specimen__artist"><?= $escaper->escapeHtml($specimen['artist']) ?></span>
+                                </span>
+                            </a>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            <?php endif; ?>
         </div>
     </section>
 
@@ -148,6 +126,13 @@ $instagramUrl = 'https://www.instagram.com/edicionesmox/?hl=es';
                         . 'taller en la Ciudad de México. Cada pieza del archivo es diseño propio, '
                         . 'producción artesanal y tirajes numerados.'
                     )) ?>
+                </p>
+                <p class="edmox-about__text">
+                    <a href="<?= $escaper->escapeUrl($instagramUrl) ?>"
+                       target="_blank"
+                       rel="noopener noreferrer">
+                        <?= $escaper->escapeHtml(__('Síguenos en Instagram')) ?>
+                    </a>
                 </p>
             </div>
             <div class="edmox-about__aside">
