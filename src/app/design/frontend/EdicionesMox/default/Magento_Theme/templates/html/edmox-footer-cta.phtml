@@ -1,24 +1,29 @@
 <?php
 /**
- * CTA Instagram del pie — alineado con edicionesmox.art
+ * Footer CTA — marca Ediciones Mox + enlace Instagram
  *
  * @var \Magento\Framework\View\Element\Template $block
  * @var \Magento\Framework\Escaper $escaper
  */
+
+$logoUrl = $block->getViewFileUrl('images/edmox/logo-edmox-footer.webp');
 $instagramUrl = 'https://www.instagram.com/edicionesmox/?hl=es';
-$logoSrc = $block->getViewFileUrl('images/edmox/logo-edmox-footer.webp');
 ?>
 <div class="edmox-footer-brand">
-    <img class="edmox-footer-brand__logo"
-         src="<?= $escaper->escapeUrl($logoSrc) ?>"
-         alt="<?= $escaper->escapeHtmlAttr(__('Ediciones Mox')) ?>"
-         width="120"
-         height="40"
-         loading="lazy"/>
-    <a class="action primary edmox-footer-brand__cta"
+    <a href="<?= $escaper->escapeUrl($block->getUrl('')) ?>"
+       class="edmox-footer-brand__link"
+       aria-label="<?= $escaper->escapeHtmlAttr(__('Ediciones Mox — inicio')) ?>">
+        <img class="edmox-footer-brand__logo"
+             src="<?= $escaper->escapeUrl($logoUrl) ?>"
+             alt="<?= $escaper->escapeHtmlAttr(__('Ediciones Mox')) ?>"
+             width="140"
+             height="40"
+             loading="lazy"/>
+    </a>
+    <a class="edmox-footer-brand__cta"
        href="<?= $escaper->escapeUrl($instagramUrl) ?>"
        target="_blank"
        rel="noopener noreferrer">
-        <?= $escaper->escapeHtml(__('Escríbenos en Instagram →')) ?>
+        <?= $escaper->escapeHtml(__('Síguenos en Instagram')) ?>
     </a>
 </div>

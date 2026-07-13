@@ -1,26 +1,32 @@
 //
-//  Cards & product tiles — MUI elevation
+//  Cards & surfaces — bloques de checkout / widgets (PLP cards van en _product-card)
 //  _____________________________________________
 
 & when (@media-common = true) {
     .edmox-page {
-        .product-item,
         .block,
         .box,
         .cart-summary,
         .opc-block-summary {
             background: @mui-background-paper;
+            border: 1px solid @mui-divider;
             border-radius: @mui-shape-md;
             box-shadow: @mui-elevation-1;
         }
 
-        .product-item-info {
-            background: @mui-background-paper;
-            border-radius: @mui-shape-md;
-            .mui-transition(box-shadow);
+        // Widgets / related fuera del PLP: tile ligero, sin caja pesada tipo Luma
+        &:not(.page-products) {
+            .product-item-info {
+                background: transparent;
+                border: 0;
+                box-shadow: none;
+                .mui-transition-slow(~"opacity, transform");
 
-            &:hover {
-                box-shadow: @mui-elevation-2;
+                &:hover {
+                    box-shadow: none;
+                    opacity: 1;
+                    transform: translateY(-2px);
+                }
             }
         }
     }

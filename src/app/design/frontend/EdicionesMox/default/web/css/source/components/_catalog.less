@@ -1,27 +1,43 @@
 //
-//  Magento_Catalog — PLP grid + PDP layout + MUI surfaces
+//  Magento_Catalog — PLP inspirado en Hyvä demo, brand Ediciones Mox
+//  Ref: https://demo.hyva.io/default/dining/dining-storage.html
 //  _____________________________________________
 
 & when (@media-common = true) {
     .edmox-page.page-products {
+        .columns {
+            display: block;
+        }
+
         .page-title-wrapper .page-title {
             color: @mui-text-primary;
-            font-size: @mui-headline-md;
-            font-weight: @font-weight__regular;
-            letter-spacing: 0;
-            margin-bottom: 24px;
+            font-size: 2.25rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            margin: 0 0 24px;
+            text-wrap: balance;
         }
 
         .breadcrumbs {
             color: @mui-text-secondary;
-            font-size: @mui-body-md;
-            margin-bottom: 16px;
+            font-size: @mui-body-sm;
+            margin-bottom: 24px;
+
+            .items {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 4px 8px;
+            }
 
             a {
-                color: @mui-primary;
+                color: @mui-text-secondary;
+                text-decoration: none;
+                .mui-transition(color);
 
-                &:hover {
-                    color: @mui-primary-dark;
+                &:hover,
+                &:focus-visible {
+                    color: @mui-primary;
                 }
             }
 
@@ -29,40 +45,121 @@
                 color: @mui-text-primary;
                 font-weight: 500;
             }
+
+            .item:not(:last-child):after {
+                color: @mui-text-disabled;
+            }
         }
 
-        .sidebar-main,
-        .sidebar-additional {
+        // Sidebar "Shop By" — flat, sin cajas pesadas (look Hyvä)
+        .sidebar.sidebar-main,
+        .sidebar.sidebar-additional {
             .block {
-                background: @mui-background-paper;
-                border: 1px solid @mui-divider;
-                border-radius: @mui-shape-md;
-                box-shadow: @mui-elevation-1;
-                margin-bottom: 24px;
-                padding: 16px;
+                background: transparent;
+                border: 0;
+                border-radius: 0;
+                box-shadow: none;
+                margin-bottom: 32px;
+                padding: 0;
             }
 
-            .block-title {
+            .block-title,
+            .block-subtitle,
+            .filter-options-title {
+                border-bottom: 1px solid @mui-divider;
                 color: @mui-text-primary;
-                font-size: @mui-title-md;
-                font-weight: 500;
+                font-size: @mui-body-md;
+                font-weight: 600;
+                letter-spacing: 0.04em;
                 margin-bottom: 12px;
+                padding-bottom: 8px;
+                text-transform: uppercase;
             }
 
-            .items a {
-                color: @mui-text-secondary;
-                font-size: @mui-body-md;
+            .filter-options-content {
+                margin-bottom: 24px;
+            }
 
-                &:hover {
+            .items,
+            .item {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+            }
+
+            .item {
+                margin-bottom: 4px;
+            }
+
+            .items a,
+            .filter-options-content a {
+                color: @mui-text-secondary;
+                display: inline-block;
+                font-size: @mui-body-md;
+                line-height: 1.5;
+                padding: 6px 0;
+                text-decoration: none;
+                .mui-transition(color);
+
+                &:hover,
+                &:focus-visible {
+                    background: transparent;
                     color: @mui-primary;
                 }
             }
+
+            .count {
+                color: @mui-text-disabled;
+                font-size: @mui-body-sm;
+            }
+        }
+
+        .filter-title strong {
+            background: transparent;
+            border: 1px solid @mui-divider;
+            color: @mui-text-primary;
+        }
+
+        // Toolbar minimal
+        .toolbar-products {
+            align-items: center;
+            background: transparent;
+            border: 0;
+            border-bottom: 1px solid @mui-divider;
+            border-radius: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            justify-content: space-between;
+            margin-bottom: 32px;
+            padding: 0 0 16px;
+
+            .toolbar-amount {
+                color: @mui-text-secondary;
+                font-size: @mui-body-sm;
+            }
+
+            .sorter-label,
+            .limiter-label {
+                color: @mui-text-secondary;
+                font-size: @mui-body-sm;
+            }
+
+            select {
+                .mui-outlined-field();
+                height: 40px;
+                min-width: 140px;
+            }
+        }
+
+        .products.wrapper {
+            margin-bottom: 48px;
         }
 
         .products-grid .product-items {
             display: grid;
-            gap: 24px;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 32px 24px;
+            grid-template-columns: 1fr;
             list-style: none;
             margin: 0;
             padding: 0;
@@ -74,32 +171,60 @@
         }
 
         .products-grid .product-item {
+            animation: edmox-plp-fade-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+            background: transparent;
+            border: 0;
+            border-radius: 0;
+            box-shadow: none;
             display: block;
             float: none;
             margin: 0;
+            padding: 0;
             width: auto !important;
-        }
 
-        .toolbar-products {
-            background: @mui-background-paper;
-            border: 1px solid @mui-divider;
-            border-radius: @mui-shape-sm;
-            margin-bottom: 24px;
-            padding: 12px 16px;
+            &:nth-child(1) { animation-delay: 0.04s; }
+            &:nth-child(2) { animation-delay: 0.08s; }
+            &:nth-child(3) { animation-delay: 0.12s; }
+            &:nth-child(4) { animation-delay: 0.16s; }
+            &:nth-child(5) { animation-delay: 0.2s; }
+            &:nth-child(6) { animation-delay: 0.24s; }
+            &:nth-child(7) { animation-delay: 0.28s; }
+            &:nth-child(8) { animation-delay: 0.32s; }
+            &:nth-child(9) { animation-delay: 0.36s; }
         }
 
         .message.info.empty {
             background: @mui-alert-info-bg;
-            border-radius: @mui-shape-md;
+            border: 1px solid @mui-divider;
+            border-radius: 0;
             color: @mui-alert-info-color;
             font-size: @mui-body-lg;
-            padding: 24px;
+            padding: 32px 24px;
         }
 
-        .edmox-plp .category-image {
-            border-radius: @mui-shape-md;
-            margin-bottom: 24px;
-            overflow: hidden;
+        .edmox-plp {
+            .category-image {
+                border: 1px solid @edmox-vitrine-border;
+                margin-bottom: 32px;
+                overflow: hidden;
+
+                img {
+                    display: block;
+                    width: 100%;
+                }
+            }
+
+            .category-description {
+                color: @mui-text-secondary;
+                font-size: @mui-body-md;
+                line-height: 1.6;
+                margin-bottom: 32px;
+                max-width: 640px;
+            }
+        }
+
+        .pages {
+            margin-top: 16px;
         }
     }
 
@@ -115,7 +240,7 @@
             min-height: 280px;
 
             .fotorama__stage {
-                border-radius: @mui-shape-md;
+                .edmox-glass-surface();
                 overflow: hidden;
             }
 
@@ -157,6 +282,18 @@
         }
     }
 
+    @keyframes edmox-plp-fade-in {
+        from {
+            opacity: 0;
+            transform: translate3d(0, 16px, 0);
+        }
+
+        to {
+            opacity: 1;
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
     @media (prefers-reduced-motion: reduce) {
         .edmox-page.catalog-product-view {
             .product.media,
@@ -165,10 +302,49 @@
                 animation: none;
             }
         }
+
+        .edmox-page.page-products .products-grid .product-item {
+            animation: none;
+        }
     }
 }
 
 .media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+    .edmox-page.page-products {
+        .page-title-wrapper .page-title {
+            font-size: 2.75rem;
+            margin-bottom: 32px;
+        }
+
+        .products-grid .product-items {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        // Layout 2 columnas: filtros | grilla (como Hyvä)
+        .columns {
+            display: grid;
+            gap: 40px;
+            grid-template-columns: minmax(200px, 260px) minmax(0, 1fr);
+        }
+
+        .sidebar.sidebar-main {
+            grid-column: 1;
+            grid-row: 1;
+            width: auto !important;
+        }
+
+        .column.main {
+            grid-column: 2;
+            grid-row: 1;
+            width: auto !important;
+        }
+
+        .sidebar.sidebar-additional {
+            grid-column: 1 / -1;
+            width: auto !important;
+        }
+    }
+
     // Grid estable con áreas: anula floats de Luma para que la galería
     // no “salte” de izquierda a derecha al inicializar Fotorama.
     .edmox-page.catalog-product-view {
@@ -207,18 +383,22 @@
             width: 100%;
         }
     }
-
-    .edmox-page.page-products .products-grid .product-items {
-        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    }
-
-    .edmox-page.page-products .page-title-wrapper .page-title {
-        font-size: @mui-headline-lg;
-    }
 }
 
 .media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__l) {
-    .edmox-page.page-products .products-grid .product-items {
-        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    .edmox-page.page-products {
+        .page-title-wrapper .page-title {
+            font-size: 3rem;
+        }
+
+        .products-grid .product-items {
+            gap: 40px 32px;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .columns {
+            gap: 48px;
+            grid-template-columns: 280px minmax(0, 1fr);
+        }
     }
 }

@@ -60,10 +60,9 @@
     }
 
     .edmox-vitrine {
-        background: @edmox-vitrine-glass;
-        border: 1px solid @edmox-vitrine-border;
-        box-shadow: @edmox-vitrine-shadow;
+        .edmox-glass-surface();
         backdrop-filter: blur(12px);
+        box-shadow: @edmox-vitrine-shadow;
     }
 
     .edmox-hero {
@@ -113,9 +112,10 @@
         color: @mui-text-primary;
         font-size: 2.75rem;
         font-weight: 700;
-        letter-spacing: -0.02em;
+        letter-spacing: -0.03em;
         line-height: 0.95;
         margin: 16px 0 0;
+        text-wrap: balance;
     }
 
     .edmox-hero__accent {
@@ -201,15 +201,16 @@
 
     .edmox-chip {
         border: 1px solid @mui-divider;
+        border-radius: @mui-shape-full;
         color: @mui-text-primary;
         display: inline-flex;
         font-size: @mui-label-md;
         font-weight: 500;
         letter-spacing: 0.15em;
-        padding: 8px 16px;
+        padding: 10px 20px;
         text-decoration: none;
         text-transform: uppercase;
-        .mui-transition(~"color, border-color, background-color");
+        .mui-transition-slow(~"color, border-color, background-color, transform");
 
         &:hover,
         &:focus-visible {
@@ -217,6 +218,11 @@
             border-color: @mui-primary;
             color: @mui-primary;
             text-decoration: none;
+            transform: translateY(-1px);
+        }
+
+        &:active {
+            transform: translateY(0);
         }
     }
 
@@ -226,6 +232,37 @@
         list-style: none;
         margin: 0;
         padding: 0;
+    }
+
+    .edmox-specimen {
+        animation: edmox-archive-rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+
+        &:nth-child(1) { animation-delay: 0.05s; }
+        &:nth-child(2) { animation-delay: 0.1s; }
+        &:nth-child(3) { animation-delay: 0.15s; }
+        &:nth-child(4) { animation-delay: 0.2s; }
+        &:nth-child(5) { animation-delay: 0.25s; }
+        &:nth-child(6) { animation-delay: 0.3s; }
+        &:nth-child(7) { animation-delay: 0.35s; }
+        &:nth-child(8) { animation-delay: 0.4s; }
+    }
+
+    @keyframes edmox-archive-rise {
+        from {
+            opacity: 0;
+            transform: translate3d(0, 20px, 0);
+        }
+
+        to {
+            opacity: 1;
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .edmox-specimen {
+            animation: none;
+        }
     }
 
     .edmox-specimen__link {
@@ -240,20 +277,23 @@
     }
 
     .edmox-specimen__media {
+        .edmox-image-reveal();
+        aspect-ratio: 1;
         display: block;
-        overflow: hidden;
 
         img {
-            display: block;
-            height: auto;
-            transition: transform @mui-transition-duration @mui-transition-easing;
-            width: 100%;
+            object-fit: cover;
         }
     }
 
     .edmox-specimen__link:hover .edmox-specimen__media img,
     .edmox-specimen__link:focus-visible .edmox-specimen__media img {
-        transform: scale(1.03);
+        transform: scale(1.05);
+    }
+
+    .edmox-specimen__link:hover .edmox-specimen__media,
+    .edmox-specimen__link:focus-visible .edmox-specimen__media {
+        border-color: @edmox-vitrine-border-hover;
     }
 
     .edmox-specimen__body {

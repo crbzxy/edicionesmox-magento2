@@ -6,6 +6,55 @@
     transition: @props @mui-transition-duration @mui-transition-easing;
 }
 
+.mui-transition-slow(@props: all) {
+    transition: @props @edmox-transition-slow @edmox-transition-easing;
+}
+
+//  Superficie vitrina — glass + borde sutil (home, cards, header)
+.edmox-glass-surface() {
+    background: @edmox-vitrine-glass;
+    border: 1px solid @edmox-vitrine-border;
+    .mui-transition-slow(~"border-color, box-shadow, background-color");
+}
+
+//  Zoom suave en imágenes de catálogo / archivo
+.edmox-image-reveal() {
+    overflow: hidden;
+
+    img {
+        display: block;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        width: 100%;
+        .mui-transition-slow(transform);
+    }
+}
+
+//  Subrayado animado para nav y links de sección
+.edmox-link-underline(@color: @mui-primary) {
+    position: relative;
+    text-decoration: none;
+
+    &::after {
+        background: @color;
+        bottom: 0;
+        content: '';
+        height: 1px;
+        left: 0;
+        position: absolute;
+        transform: scaleX(0);
+        transform-origin: left center;
+        .mui-transition(transform);
+        width: 100%;
+    }
+
+    &:hover::after,
+    &:focus-visible::after {
+        transform: scaleX(1);
+    }
+}
+
 //  Approximates MuiButtonBase's hover/focus overlay (theme.palette.action)
 //  with an inset box-shadow instead of a pseudo-element — same visual result.
 .mui-state-layer(@color: @mui-text-primary) {

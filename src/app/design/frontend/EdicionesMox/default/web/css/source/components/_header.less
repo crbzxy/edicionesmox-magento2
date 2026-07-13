@@ -1,5 +1,5 @@
 //
-//  Header — barra fija estilo galería edmox
+//  Header — barra sticky con glass morphism
 //  _____________________________________________
 
 & when (@media-common = true) {
@@ -16,6 +16,7 @@
 
         .header.content {
             align-items: center;
+            gap: 16px;
             min-height: 64px;
             padding-bottom: 12px;
             padding-top: 12px;
@@ -24,8 +25,9 @@
         .edmox-logo {
             border-radius: @edmox-logo-radius;
             display: inline-flex;
+            flex-shrink: 0;
             line-height: 0;
-            .mui-transition(~"opacity, transform");
+            .mui-transition-slow(~"opacity, transform");
 
             img {
                 border-radius: @edmox-logo-radius;
@@ -41,22 +43,46 @@
             }
         }
 
+        .block-search {
+            flex: 1 1 auto;
+            max-width: 360px;
+        }
+
+        .block-search .label {
+            color: @mui-text-secondary;
+        }
+
+        .block-search .control input {
+            .edmox-glass-surface();
+            border-radius: @mui-shape-full;
+            color: @mui-text-primary;
+            font-size: @mui-body-md;
+            height: 40px;
+            padding: 0 16px;
+
+            &:hover {
+                border-color: @edmox-vitrine-border-hover;
+            }
+
+            &:focus {
+                border-color: fade(@mui-primary, 50%);
+                outline: none;
+            }
+        }
+
         .minicart-wrapper .action.showcart {
             color: @mui-text-secondary;
+            .mui-transition(color);
 
             &:hover {
                 color: @mui-text-primary;
             }
         }
 
-        .block-search .label,
-        .block-search .control input {
-            color: @mui-text-primary;
-        }
-
-        .block-search .control input {
-            background: @edmox-vitrine-glass;
-            border-color: @edmox-vitrine-border;
+        .minicart-wrapper .action.showcart .counter.qty {
+            font-size: @mui-body-sm;
+            font-weight: 600;
+            min-width: 18px;
         }
     }
 }
@@ -65,6 +91,15 @@
     .edmox-page {
         .header.content {
             min-height: 72px;
+        }
+
+        .edmox-logo img {
+            max-height: 44px;
+        }
+
+        .block-search {
+            margin-left: auto;
+            max-width: 420px;
         }
     }
 }

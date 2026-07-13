@@ -11,7 +11,7 @@
 
         .page-footer .footer.content {
             padding-bottom: 48px;
-            padding-top: 48px;
+            padding-top: 56px;
         }
 
         .edmox-footer-brand {
@@ -28,10 +28,17 @@
             display: block;
             height: auto;
             max-width: 140px;
+            .mui-transition-slow(opacity);
+
+            &:hover {
+                opacity: 0.88;
+            }
         }
 
         .edmox-footer-brand__cta {
-            font-size: 0.7rem;
+            .mui-outlined-button();
+            border-radius: @mui-shape-full;
+            font-size: @mui-label-md;
             letter-spacing: 0.12em;
             padding: 12px 24px;
             text-transform: uppercase;
@@ -48,6 +55,8 @@
         .footer.content .links a,
         .footer.content .links a:visited {
             color: @mui-text-secondary;
+            font-size: @mui-body-md;
+            .mui-transition(color);
 
             &:hover {
                 color: @mui-text-primary;
@@ -56,9 +65,11 @@
 
         .block.newsletter {
             .field .control input {
-                background: @edmox-vitrine-glass;
-                border-color: @edmox-vitrine-border;
+                .edmox-glass-surface();
+                border-radius: @mui-shape-full;
                 color: @mui-text-primary;
+                height: 44px;
+                padding: 0 16px;
             }
         }
     }

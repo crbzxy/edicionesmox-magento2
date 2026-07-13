@@ -3,6 +3,16 @@
 //  _____________________________________________
 
 & when (@media-common = true) {
+    html {
+        scroll-behavior: smooth;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        html {
+            scroll-behavior: auto;
+        }
+    }
+
     body {
         background: @mui-background-default;
         color: @mui-text-primary;
@@ -13,6 +23,11 @@
         letter-spacing: 0;
         line-height: 1.6;
         text-rendering: optimizeLegibility;
+    }
+
+    ::selection {
+        background: fade(@mui-primary, 32%);
+        color: @mui-text-primary;
     }
 
     a {
@@ -29,19 +44,36 @@
     }
 
     .page-header {
-        background: fade(@mui-background-default, 85%);
-        backdrop-filter: blur(20px);
+        background: @edmox-surface-glass;
+        backdrop-filter: blur(@edmox-header-blur);
         border-bottom: 1px solid fade(@edmox-white, 6%);
+        position: sticky;
+        top: 0;
+        z-index: 50;
     }
 
     .page-footer {
         background: @mui-background-default;
         border-top: 1px solid @mui-divider;
+        position: relative;
+
+        &::before {
+            background: @edmox-accent-gradient;
+            content: '';
+            height: 1px;
+            left: 0;
+            opacity: 0.7;
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
     }
 
     .copyright {
         background: @edmox-black;
         color: @mui-text-secondary;
+        font-size: @mui-body-sm;
+        letter-spacing: 0.04em;
         text-align: center;
     }
 

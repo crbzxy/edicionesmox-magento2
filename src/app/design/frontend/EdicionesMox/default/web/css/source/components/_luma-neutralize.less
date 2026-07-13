@@ -93,30 +93,41 @@
         //  ---------------------------------------------
 
         .pages .action {
-            background: @mui-background-paper;
+            background: transparent;
             border-color: @mui-divider;
+            border-radius: @mui-shape-full;
             color: @mui-text-secondary;
+            min-width: 36px;
+            .mui-transition(~"color, border-color, background-color");
 
             &:hover {
+                background: fade(@mui-text-primary, @mui-action-hover);
+                border-color: @edmox-vitrine-border-hover;
                 color: @mui-text-primary;
             }
         }
 
         .pages a.page {
+            border-radius: @mui-shape-full;
             color: @mui-text-secondary;
+            min-width: 36px;
+            .mui-transition(~"color, background-color");
 
             &:visited {
                 color: @mui-text-secondary;
             }
 
             &:hover {
+                background: fade(@mui-text-primary, @mui-action-hover);
                 color: @mui-text-primary;
             }
         }
 
         .pages strong.page {
-            background: fade(@mui-text-primary, @mui-action-selected);
-            color: @mui-text-primary;
+            background: fade(@mui-primary, 16%);
+            border-radius: @mui-shape-full;
+            color: @mui-primary;
+            font-weight: 600;
         }
 
         .modes-mode {
@@ -310,15 +321,14 @@
         }
 
         //
-        //  Grid de productos: Luma fuerza blanco en hover con
-        //  .products-grid (gana a .edmox-page .product-item-info)
+        //  Grid de productos: anular hover blanco de Luma (look Hyvä flat)
         //  ---------------------------------------------
 
         .products-grid .product-item-info:hover,
         .products-grid .product-item-info.active {
-            background: @mui-background-paper;
-            border-color: @mui-divider;
-            box-shadow: @mui-elevation-2;
+            background: transparent;
+            border-color: transparent;
+            box-shadow: none;
         }
 
         .products-grid .product-item-inner,
