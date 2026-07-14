@@ -19,6 +19,17 @@ class HomeGallery implements ArgumentInterface
 
     private const INSTAGRAM_URL = 'https://www.instagram.com/edicionesmox/?hl=es';
 
+    /**
+     * Memoización: el mismo view model se comparte entre archive.phtml y about.phtml,
+     * que juntos piden specimens/count tres veces por render.
+     *
+     * @var list<array{sku: string, name: string, meta: string, artist: string, url: string, imageUrl: string}>|null
+     */
+    private ?array $specimens = null;
+
+    /** @var array<string, int> */
+    private array $categoryIdByUrlKey = [];
+
     public function __construct(
         private readonly CategoryCollectionFactory $categoryCollectionFactory,
         private readonly CategoryRepositoryInterface $categoryRepository,
@@ -59,6 +70,25 @@ class HomeGallery implements ArgumentInterface
      * }>
      */
     public function getSpecimens(): array
+    {
+        if ($this->specimens !== null) {
+            return $this->specimens;
+        }
+
+        return $this->specimens = $this->loadSpecimens();
+    }
+
+    /**
+     * @return list<array{
+     *     sku: string,
+     *     name: string,
+     *     meta: string,
+     *     artist: string,
+     *     url: string,
+     *     imageUrl: string
+     * }>
+     */
+    private function loadSpecimens(): array
     {
         try {
             $categoryId = $this->resolveCategoryIdByUrlKey(BrandCatalog::DESTACADOS_URL_KEY);
@@ -110,6 +140,10 @@ class HomeGallery implements ArgumentInterface
      */
     private function resolveCategoryIdByUrlKey(string $urlKey): int
     {
+        if (isset($this->categoryIdByUrlKey[$urlKey])) {
+            return $this->categoryIdByUrlKey[$urlKey];
+        }
+
         $collection = $this->categoryCollectionFactory->create();
         $collection->setStoreId((int) $this->storeManager->getStore()->getId());
         $collection->addAttributeToFilter('url_key', $urlKey);
@@ -122,6 +156,6 @@ class HomeGallery implements ArgumentInterface
             );
         }
 
-        return $categoryId;
+        return $this->categoryIdByUrlKey[$urlKey] = $categoryId;
     }
 }
