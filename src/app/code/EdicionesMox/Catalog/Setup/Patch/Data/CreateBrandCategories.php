@@ -117,7 +117,7 @@ class CreateBrandCategories implements DataPatchInterface
 
     public static function getDependencies(): array
     {
-        return [];
+        return [ConfigureSeoUrls::class];
     }
 
     public function getAliases(): array

@@ -17,6 +17,7 @@ for dir in var generated pub/static vendor lib; do
         chown -R www-data:www-data "/var/www/html/$dir"
         chmod -R ug+rwx "/var/www/html/$dir"
         touch "$marker"
+        chown www-data:www-data "$marker"
     fi
 done
 

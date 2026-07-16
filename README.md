@@ -120,9 +120,13 @@ Si más adelante necesitas regenerar el usuario admin (por ejemplo tras borrar
 la base de datos) sin reinstalar, cambia los valores en `.env` y corre
 `make admin-create`.
 
-Abre `http://localhost:8080/` (storefront) y `http://localhost:8080/admin`
-(panel). Mailpit queda en `http://localhost:8025` para revisar los correos
-que Magento envía sin necesidad de un SMTP real.
+Abre `https://localhost:8443/` (storefront) y `https://localhost:8443/admin`
+(panel). El certificado es self-signed (generado por el propio contenedor de
+nginx), así que el navegador va a mostrar advertencia de conexión no segura —
+es esperado en local, solo acéptala. El puerto 8080 (`http://localhost:8080/`)
+ya no sirve contenido, solo redirige a https. Mailpit queda en
+`http://localhost:8025` para revisar los correos que Magento envía sin
+necesidad de un SMTP real.
 
 **Para que los correos lleguen a Mailpit** hay que apuntar el SMTP de Magento
 al contenedor (una sola vez, queda en la DB):

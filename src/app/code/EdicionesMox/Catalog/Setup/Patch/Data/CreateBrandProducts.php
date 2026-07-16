@@ -148,7 +148,9 @@ class CreateBrandProducts implements DataPatchInterface
         $product->setAttributeSetId($attributeSetId);
         $product->setSku($definition['sku']);
         $product->setName($definition['name']);
-        $product->setUrlKey($definition['sku']);
+        // Sin url_key explícito: ProductUrlKeyAutogeneratorObserver genera el
+        // slug SEO a partir del nombre (ver UseSeoFriendlyUrls, que corrige
+        // los productos ya creados con el SKU como url_key).
         $product->setPrice($definition['price']);
         $product->setVisibility(Visibility::VISIBILITY_BOTH);
         $product->setStatus(Status::STATUS_ENABLED);
@@ -281,7 +283,7 @@ class CreateBrandProducts implements DataPatchInterface
 
     public static function getDependencies(): array
     {
-        return [CreateBrandCategories::class];
+        return [CreateBrandCategories::class, ConfigureSeoUrls::class];
     }
 
     public function getAliases(): array

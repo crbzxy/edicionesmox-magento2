@@ -18,8 +18,8 @@ docker compose exec -T redis redis-cli ping 2>/dev/null | grep -q PONG \
     && ok "redis responde" || fail "redis no responde"
 docker compose exec -T php-fpm curl -fsS http://opensearch:9200/_cluster/health >/dev/null 2>&1 \
     && ok "opensearch responde" || fail "opensearch no responde"
-docker compose exec -T php-fpm curl -fsS -o /dev/null http://nginx/ \
-    && ok "nginx responde" || fail "nginx no responde (¿Magento instalado?)"
+docker compose exec -T php-fpm curl -fsSk -o /dev/null https://nginx/ \
+    && ok "nginx responde (https)" || fail "nginx no responde en https (¿Magento instalado?)"
 
 echo
 echo "== magento =="

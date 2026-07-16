@@ -69,7 +69,7 @@ perf-check: ## Diagnóstico rápido de rendimiento (generated, static, tiempos)
 		STATIC=$$(find pub/static/frontend/EdicionesMox/default/es_MX -type f 2>/dev/null | wc -l); \
 		echo "static files (EdicionesMox/default/es_MX): $$STATIC"; \
 		[ "$$STATIC" -ge 100 ] 2>/dev/null && echo "static: OK" || echo "static: FAIL — ejecuta: make theme-deploy (o make upgrade)"; \
-		JS=$$(curl -s -o /dev/null -w "%{time_total}" http://nginx/static/frontend/EdicionesMox/default/es_MX/requirejs/require.js); \
+		JS=$$(curl -sk -o /dev/null -w "%{time_total}" https://nginx/static/frontend/EdicionesMox/default/es_MX/requirejs/require.js); \
 		echo "js sample time: $${JS}s (objetivo: < 0.05s)"; \
 	'
 
@@ -156,7 +156,10 @@ check-admin-env: ## Valida que ADMIN_* estén definidas en .env (no imprime valo
 # que cache:flush no borre las sesiones de los usuarios.
 setup-install: check-admin-env ## bin/magento setup:install con las variables de .env
 	$(MAGENTO) setup:install \
-		--base-url=http://localhost:$(NGINX_PORT)/ \
+		--base-url=https://localhost:$(NGINX_HTTPS_PORT)/ \
+		--base-url-secure=https://localhost:$(NGINX_HTTPS_PORT)/ \
+		--use-secure=1 \
+		--use-secure-admin=1 \
 		--backend-frontname=admin \
 		--db-host=db \
 		--db-name=$(DB_NAME) \
